@@ -1,18 +1,18 @@
-import { useEffect, useState } from 'react';
-import './App.css';
-import { getRecipients } from '../src/api/recipients';
+//import { useEffect, useState } from 'react';
+//import { getRecipients } from '../src/api/recipients';
+import "./App.css";
 
 function App() {
-  const [recipients, setRecipients] = useState(null);
+  // const [recipients, setRecipients] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const responseData = await getRecipients();
-      setRecipients(responseData.results);
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const responseData = await getRecipients();
+  //     setRecipients(responseData.results);
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   return (
     <>
