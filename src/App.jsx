@@ -1,12 +1,28 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { useEffect, useState } from "react";
 import "./App.css";
+import { getRecipients } from "../src/api/recipients";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [recipients, setRecipients] = useState(null);
 
-  return <div>Hello</div>;
+  useEffect(() => {
+    const fetchData = async () => {
+      const responseData = await getRecipients();
+      setRecipients(responseData.results);
+    };
+
+    fetchData();
+  }, []);
+
+  return (
+    <>
+      {recipients?.map((recipient) => (
+        <div key={recipient.id}>
+          <img src={recipient.backgroundImageURL} />
+        </div>
+      ))}
+    </>
+  );
 }
 
 export default App;
