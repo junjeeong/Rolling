@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import "./App.css";
-import { getRecipients } from "../src/api/recipients";
+import { useEffect, useState } from 'react';
+import './App.css';
+import { getRecipients } from '../src/api/recipients';
 
 function App() {
   const [recipients, setRecipients] = useState(null);
@@ -16,11 +16,11 @@ function App() {
 
   return (
     <>
-      {recipients?.map((recipient) => (
+      {/* {recipients?.map((recipient) => (
         <div key={recipient.id}>
           <img src={recipient.backgroundImageURL} />
         </div>
-      ))}
+      ))} */}
     </>
   );
 }
