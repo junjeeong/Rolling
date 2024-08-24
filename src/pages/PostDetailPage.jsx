@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getRecipientById } from "../api/recipients.js";
 import { HeaderService } from "../components/Header/HeaderService.jsx";
 
+// getRecipientById api 테스트 페이지 /9-3/recipients/${id}/
 function PostDetailPage() {
   const { id } = useParams();
   const [error, setError] = useState(null);

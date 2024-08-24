@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 const Container = styled.div`
   background-color: white;
   display: flex;
@@ -24,6 +24,7 @@ const RecipientInfo = styled.div`
   gap: 20px;
   align-items: center;
 `;
+// 헤더 밑에 서비스 정보를 보여주는 컴포넌트
 export const HeaderService = ({ recipient }) => {
   return (
     <Container>
