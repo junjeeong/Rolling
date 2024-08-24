@@ -18,4 +18,4 @@ const addRecipient = async (formData) => {
   return response.data;
 };
 
-export { getRecipients, getRecipientById };
+export { getRecipients, getRecipientById, addRecipient };

@@ -1,25 +1,134 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import BackgroundOption from "../../components/option/BackgroundOption";
 import useOptionSize from "../../hooks/useOptionSize";
-import { getBackgroundImages } from "../../api/backgroundImages";
+import useRecipientPost from "../../hooks/useRecipientPost";
+import useBackgroundImages from "../../hooks/useBackgroundImages";
+
+const PageContainer = styled.div`
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Header = styled.div`
+  width: 100%;
+  margin-bottom: 16px;
+
+  @media (min-width: 768px) {
+    width: 720px;
+    margin-bottom: 24px;
+  }
+`;
+
+const Label = styled.div`
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+`;
+
+const Content = styled.div`
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 24px;
+
+  @media (min-width: 768px) {
+    width: 720px;
+    margin-bottom: 24px;
+  }
+`;
+
+const Instruction = styled.div`
+  color: #181818;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 36px;
+  text-align: left;
+`;
+
+const SubInstruction = styled.div`
+  color: #555;
+  font-size: 16px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  text-align: left;
+`;
+
+const Tabs = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 16px;
+`;
+
+const Tab = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "isActive",
+})`
+  flex: 1;
+  max-width: 200px;
+  text-align: center;
+  padding: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  border: 2px solid ${({ isActive }) => (isActive ? "#8E44AD" : "transparent")};
+  border-radius: 6px;
+  color: ${({ isActive }) => (isActive ? "#8E44AD" : "#000")};
+`;
+
+const OptionsContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  justify-content: center;
+  margin-top: 12px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+`;
+
+const OptionWrapper = styled.div`
+  cursor: pointer;
+`;
+
+const GenerateButton = styled.button`
+  margin-top: 24px;
+  width: 100%;
+  padding: 16px;
+  background-color: ${({ disabled }) => (disabled ? "#CCCCCC" : "#9935ff")};
+  color: ${({ disabled }) => (disabled ? "#FFFFFF" : "white")};
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+
+  @media (min-width: 768px) {
+    width: 720px;
+    margin-top: 24px;
+  }
+`;
 
 const ToOptionPage = () => {
-  const [selectedColor, setSelectedColor] = useState(null);
+  const [selectedColor, setSelectedColor] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
   const [activeTab, setActiveTab] = useState("color");
-  const [backgroundImages, setBackgroundImages] = useState(null);
+  const [recipientName, setRecipientName] = useState("");
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+  const inputRef = useRef(null);
   // 옵션 커스텀 훅
   const optionSize = useOptionSize();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const responseData = await getBackgroundImages();
-      setBackgroundImages(responseData.imageUrls);
-    };
-
-    fetchData();
-  }, []);
+  // 배경화면 이미지 커스텀 훅
+  const backgroundImages = useBackgroundImages();
+  // 롤링페이퍼 생성 커스텀 훅
+  const postRecipient = useRecipientPost();
 
   const colors = ["beige", "purple", "blue", "green"];
 
@@ -30,125 +139,53 @@ const ToOptionPage = () => {
 
   const handleImageSelect = (image) => {
     setSelectedImage(image);
-    setSelectedColor(null);
+    setSelectedColor(colors[0]);
   };
 
-  const PageContainer = styled.div`
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  `;
+  const handleGenerateClick = async (e) => {
+    e.preventDefault();
 
-  const Header = styled.div`
-    width: 100%;
-    margin-bottom: 16px;
+    if (isButtonEnabled) {
+      const payload = {
+        team: "9-3",
+        name: recipientName,
+        backgroundColor: selectedColor,
+        backgroundImageURL: selectedImage,
+      };
 
-    @media (min-width: 768px) {
-      width: 720px;
-      margin-bottom: 24px;
+      // 롤링 페이퍼 생성
+      await postRecipient(payload);
+      alert("롤링 페이퍼가 생성 되었습니다.");
+      setSelectedColor("");
+      setSelectedImage(null);
+      setRecipientName("");
+      inputRef.current.value = "";
+      inputRef.current.focus();
     }
-  `;
+  };
 
-  const Label = styled.div`
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 8px;
-  `;
+  const handleInputChange = () => {
+    const value = inputRef.current.value;
+    setRecipientName(value);
+  };
 
-  const Input = styled.input`
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-  `;
-
-  const Content = styled.div`
-    width: 100%;
-    max-width: 800px;
-    margin-bottom: 24px;
-
-    @media (min-width: 768px) {
-      width: 720px;
-      margin-bottom: 24px;
+  useEffect(() => {
+    if (recipientName.trim() && (selectedColor || selectedImage)) {
+      setIsButtonEnabled(true);
+    } else {
+      setIsButtonEnabled(false);
     }
-  `;
-
-  const Instruction = styled.div`
-    color: #181818;
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 36px;
-    text-align: left;
-  `;
-
-  const SubInstruction = styled.div`
-    color: #555;
-    font-size: 16px;
-    margin-top: 8px;
-    margin-bottom: 16px;
-    text-align: left;
-  `;
-
-  const Tabs = styled.div`
-    display: flex;
-    justify-content: flex-start;
-    margin-bottom: 16px;
-  `;
-
-  const Tab = styled.div.withConfig({
-    shouldForwardProp: (prop) => prop !== "isActive",
-  })`
-    flex: 1;
-    max-width: 200px;
-    text-align: center;
-    padding: 12px;
-    font-size: 16px;
-    cursor: pointer;
-    border: 2px solid
-      ${({ isActive }) => (isActive ? "#8E44AD" : "transparent")};
-    border-radius: 6px;
-    color: ${({ isActive }) => (isActive ? "#8E44AD" : "#000")};
-  `;
-
-  const OptionsContainer = styled.div`
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    justify-content: center;
-    margin-top: 12px;
-
-    @media (max-width: 768px) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  `;
-
-  const OptionWrapper = styled.div`
-    cursor: pointer;
-  `;
-
-  const GenerateButton = styled.button`
-    margin-top: 24px;
-    width: 100%;
-    padding: 16px;
-    background-color: #9935ff;
-    color: white;
-    font-size: 18px;
-    border: none;
-    border-radius: 8px;
-
-    @media (min-width: 768px) {
-      width: 720px;
-      margin-top: 24px;
-    }
-  `;
+  }, [recipientName, selectedColor, selectedImage]);
 
   return (
     <PageContainer>
       <Header>
         <Label>To.</Label>
-        <Input placeholder="받는 사람 이름을 입력해 주세요" />
+        <Input
+          placeholder="받는 사람 이름을 입력해 주세요"
+          ref={inputRef}
+          onChange={handleInputChange}
+        />
       </Header>
       <Content>
         <Instruction>배경화면을 선택해 주세요.</Instruction>
@@ -192,14 +229,16 @@ const ToOptionPage = () => {
                 <BackgroundOption
                   color="#fff"
                   size={optionSize}
-                  imageUrl={image}
+                  imgUrl={image}
                   isSelected={image === selectedImage}
                 />
               </OptionWrapper>
             ))}
         </OptionsContainer>
       </Content>
-      <GenerateButton>생성하기</GenerateButton>
+      <GenerateButton onClick={handleGenerateClick} disabled={!isButtonEnabled}>
+        생성하기
+      </GenerateButton>
     </PageContainer>
   );
 };
