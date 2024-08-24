@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import BackgroundOption from "../../components/Option/BackgroundOption";
+import BackgroundOption from "../../components/option/BackgroundOption";
 import useOptionSize from "../../hooks/useOptionSize";
 import { getBackgroundImages } from "../../api/backgroundImages";
 
