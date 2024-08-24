@@ -1,0 +1,114 @@
+@import url('assets/fonts/font.css');
+
+:root {
+  font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+  /* Font families */
+  --font-primary: 'Pretendard', sans-serif;
+  --font-handwritten1: 'KyoboHand', sans-serif;
+  --font-handwritten2: 'KyoboHandwriting2023wsa', sans-serif;
+  --font-handwritten3: 'Ssronet', sans-serif;
+  --font-handwritten4: 'KyoboHandwriting2021sjy', sans-serif;
+
+  /* Font weights */
+  --font-thin: 100;
+  --font-light: 300;
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-bold: 700;
+  --font-black: 900;
+
+  /* Gray scale */
+	--gray-100: #F6F6F6;
+	--gray-200: #EEEEEE;
+	--gray-300: #CCCCCC;
+	--gray-400: #999999;
+	--gray-500: #555555;
+	--gray-600: #4A4A4A;
+	--gray-700: #3A3A3A;
+	--gray-800: #2B2B2B;
+	--gray-900: #181818;
+
+	/* primary color */
+	--purple-100: #F8F0FF;
+	--purple-200: #ECD9FF;
+	--purple-300: #DCB9FF;
+	--purple-400: #C894FD;
+	--purple-500: #AB57FF;
+	--purple-600: #9935FF;
+	--purple-700: #861DEE;
+	--purple-800: #6E0AD1;
+	--purple-900: #5603A7;
+
+	--beige-100: #FFF0D6;
+	--beige-200: #FFE2AD;
+	--beige-300: #FFC583;
+	--beige-400: #FFAE65;
+	--beige-500: #FF8832;
+
+	--blue-100: #E2F5FF;
+	--blue-200: #B1E4FF;
+	--blue-300: #7CD2FF;
+	--blue-400: #34B9FF;
+	--blue-500: #00A2FE;
+
+	--green-100: #E4FBDC;
+	--green-200: #D0F5C3;
+	--green-300: #9BE282;
+	--green-400: #60CF37;
+	--green-500: #2BA600;
+
+	--white: #FFFFFF;
+	--black: #000000;
+	--error: #DC3A3A;
+	--surface: #F6F8FF;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
