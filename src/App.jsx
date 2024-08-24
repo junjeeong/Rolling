@@ -1,3 +1,19 @@
+<<<<<<< HEAD
+import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import ToOptionPage from "./pages/post/ToOptionPage";
+
+function App() {
+  return (
+    <Routes>
+      <Route index element={<div>Main Page</div>} />
+      <Route path="post" element={<ToOptionPage />} />
+    </Routes>
+  );
+}
+
+export default App;
+=======
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -33,3 +49,4 @@ function App() {
 }
 
 export default App
+>>>>>>> upstream/dev
