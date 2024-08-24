@@ -23,5 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-## 추가
+# Ignore package files
 package-lock.json
+package.json
