@@ -1,15 +1,21 @@
 import axios from "./axios";
 
+const TEAM = "9-3";
+
 const getRecipients = async () => {
-  const response = await axios.get("/9-3/recipients");
+  const response = await axios.get(`/${TEAM}/recipients/`);
   return response.data;
 };
 
-export { getRecipients };
-
 const getRecipientById = async (id) => {
-  const response = await axios.get(`/9-3/recipients/${id}/`);
+  const response = await axios.get(`/${TEAM}/recipients/${id}/`);
   console.log(response.data);
   return response.data;
 };
-export { getRecipientById };
+
+const addRecipient = async (formData) => {
+  const response = await axios.post(`/${TEAM}/recipients/`, formData);
+  return response.data;
+};
+
+export { getRecipients, getRecipientById };
