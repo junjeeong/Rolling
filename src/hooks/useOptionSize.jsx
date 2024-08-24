@@ -11,6 +11,7 @@ const getOptionSize = () => {
   }
 };
 
+// 반응형 카드 사이즈 커스텀 훅
 const useOptionSize = () => {
   const [optionSize, setOptionSize] = useState(getOptionSize());
 
@@ -18,10 +19,11 @@ const useOptionSize = () => {
     const handleResize = () => {
       setOptionSize(getOptionSize());
     };
-
+    // resize 이벤트 추가
     window.addEventListener("resize", handleResize);
 
     return () => {
+      // resize 이벤트 삭제
       window.removeEventListener("resize", handleResize);
     };
   }, []);

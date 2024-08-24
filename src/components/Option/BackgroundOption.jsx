@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import checkImage from "../../assets/images/bg_option_check.png";
 
-const BackgroundOption = ({ color, size, isSelected, imageUrl }) => {
+const BackgroundOption = ({ color, size, isSelected, imgUrl }) => {
   return (
-    <Container backgroundColor={color} size={size} imageUrl={imageUrl}>
+    <Container color={color} size={size} $imgUrl={imgUrl}>
       {isSelected && <CheckIcon src={checkImage} alt="Check" />}
     </Container>
   );
@@ -12,8 +12,8 @@ const BackgroundOption = ({ color, size, isSelected, imageUrl }) => {
 const Container = styled.div`
   width: ${({ size }) => size}px;
   height: ${({ size }) => size}px;
-  background-color: ${({ backgroundColor }) => backgroundColor};
-  background-image: url(${({ imageUrl }) => imageUrl});
+  background-color: ${({ color }) => color};
+  background-image: url(${({ $imgUrl }) => $imgUrl});
   background-size: cover;
   background-position: center;
   display: flex;
