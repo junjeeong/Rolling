@@ -1,29 +1,13 @@
-//import { useEffect, useState } from 'react';
-//import { getRecipients } from '../src/api/recipients';
 import "./App.css";
+import { Routes, Route } from "react-router-dom";
 import ToOptionPage from "./pages/post/ToOptionPage";
 
 function App() {
-  // const [recipients, setRecipients] = useState(null);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const responseData = await getRecipients();
-  //     setRecipients(responseData.results);
-  //   };
-
-  //   fetchData();
-  // }, []);
-
   return (
-    <>
-      <ToOptionPage />
-      {/* {recipients?.map((recipient) => (
-        <div key={recipient.id}>
-          <img src={recipient.backgroundImageURL} />
-        </div>
-      ))} */}
-    </>
+    <Routes>
+      <Route path="/" element={<div>Main Page</div>} />
+      <Route path="/post" element={<ToOptionPage />} />
+    </Routes>
   );
 }
 
