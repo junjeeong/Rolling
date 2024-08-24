@@ -1,14 +1,12 @@
 @import url("assets/fonts/font.css");
-
-
 :root {
-  font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
   /* Font families */
-  --font-primary: 'Pretendard', sans-serif;
-  --font-handwritten1: 'KyoboHand', sans-serif;
-  --font-handwritten2: 'KyoboHandwriting2023wsa', sans-serif;
-  --font-handwritten3: 'Ssronet', sans-serif;
-  --font-handwritten4: 'KyoboHandwriting2021sjy', sans-serif;
+  --font-primary: "Pretendard", sans-serif;
+  --font-handwritten1: "KyoboHand", sans-serif;
+  --font-handwritten2: "KyoboHandwriting2023wsa", sans-serif;
+  --font-handwritten3: "Ssronet", sans-serif;
+  --font-handwritten4: "KyoboHandwriting2021sjy", sans-serif;
 
   /* Font weights */
   --font-thin: 100;
@@ -62,49 +60,49 @@
   --black: #000000;
   --error: #dc3a3a;
   --surface: #f6f8ff;
-	--gray-100: #F6F6F6;
-	--gray-200: #EEEEEE;
-	--gray-300: #CCCCCC;
-	--gray-400: #999999;
-	--gray-500: #555555;
-	--gray-600: #4A4A4A;
-	--gray-700: #3A3A3A;
-	--gray-800: #2B2B2B;
-	--gray-900: #181818;
+  --gray-100: #f6f6f6;
+  --gray-200: #eeeeee;
+  --gray-300: #cccccc;
+  --gray-400: #999999;
+  --gray-500: #555555;
+  --gray-600: #4a4a4a;
+  --gray-700: #3a3a3a;
+  --gray-800: #2b2b2b;
+  --gray-900: #181818;
 
-	/* primary color */
-	--purple-100: #F8F0FF;
-	--purple-200: #ECD9FF;
-	--purple-300: #DCB9FF;
-	--purple-400: #C894FD;
-	--purple-500: #AB57FF;
-	--purple-600: #9935FF;
-	--purple-700: #861DEE;
-	--purple-800: #6E0AD1;
-	--purple-900: #5603A7;
+  /* primary color */
+  --purple-100: #f8f0ff;
+  --purple-200: #ecd9ff;
+  --purple-300: #dcb9ff;
+  --purple-400: #c894fd;
+  --purple-500: #ab57ff;
+  --purple-600: #9935ff;
+  --purple-700: #861dee;
+  --purple-800: #6e0ad1;
+  --purple-900: #5603a7;
 
-	--beige-100: #FFF0D6;
-	--beige-200: #FFE2AD;
-	--beige-300: #FFC583;
-	--beige-400: #FFAE65;
-	--beige-500: #FF8832;
+  --beige-100: #fff0d6;
+  --beige-200: #ffe2ad;
+  --beige-300: #ffc583;
+  --beige-400: #ffae65;
+  --beige-500: #ff8832;
 
-	--blue-100: #E2F5FF;
-	--blue-200: #B1E4FF;
-	--blue-300: #7CD2FF;
-	--blue-400: #34B9FF;
-	--blue-500: #00A2FE;
+  --blue-100: #e2f5ff;
+  --blue-200: #b1e4ff;
+  --blue-300: #7cd2ff;
+  --blue-400: #34b9ff;
+  --blue-500: #00a2fe;
 
-	--green-100: #E4FBDC;
-	--green-200: #D0F5C3;
-	--green-300: #9BE282;
-	--green-400: #60CF37;
-	--green-500: #2BA600;
+  --green-100: #e4fbdc;
+  --green-200: #d0f5c3;
+  --green-300: #9be282;
+  --green-400: #60cf37;
+  --green-500: #2ba600;
 
-	--white: #FFFFFF;
-	--black: #000000;
-	--error: #DC3A3A;
-	--surface: #F6F8FF;
+  --white: #ffffff;
+  --black: #000000;
+  --error: #dc3a3a;
+  --surface: #f6f8ff;
 }
 
 * {
@@ -219,17 +217,14 @@ section {
 body {
   line-height: 1;
 }
-
 ol,
 ul {
   list-style: none;
 }
-
 blockquote,
 q {
   quotes: none;
 }
-
 blockquote:before,
 blockquote:after,
 q:before,
