@@ -5,8 +5,8 @@ import ToOptionPage from "./pages/post/ToOptionPage";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<div>Main Page</div>} />
-      <Route path="/post" element={<ToOptionPage />} />
+      <Route index element={<div>Main Page</div>} />
+      <Route path="post" element={<ToOptionPage />} />
     </Routes>
   );
 }
