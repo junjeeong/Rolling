@@ -14,6 +14,9 @@ const ServiceWrap = styled.div`
   justify-content: space-between;
   align-items: center;
   text-align: center;
+  font-size: 28px;
+  color: var(--gray-800);
+  font-weight: var(--font-bold);
 `;
 
 const RecipientInfo = styled.div`
