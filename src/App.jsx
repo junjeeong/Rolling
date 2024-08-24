@@ -1,27 +1,15 @@
-import { useEffect, useState } from 'react';
-import './App.css';
-import { getRecipients } from '../src/api/recipients';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import PostDetailPage from './pages/PostDetailPage';
 
 function App() {
-  const [recipients, setRecipients] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const responseData = await getRecipients();
-      setRecipients(responseData.results);
-    };
-
-    fetchData();
-  }, []);
-
   return (
-    <>
-      {/* {recipients?.map((recipient) => (
-        <div key={recipient.id}>
-          <img src={recipient.backgroundImageURL} />
-        </div>
-      ))} */}
-    </>
+    <Router>
+      <Routes>
+        <Route index element={<div>Main Page</div>} />
+        <Route path="post/:id" element={<PostDetailPage />} />
+      </Routes>
+    </Router>
   );
 }
 
