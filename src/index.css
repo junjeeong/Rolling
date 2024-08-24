@@ -1,13 +1,13 @@
-@import url('assets/fonts/font.css');
+@import url("assets/fonts/font.css");
 
 :root {
-  font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
   /* Font families */
-  --font-primary: 'Pretendard', sans-serif;
-  --font-handwritten1: 'KyoboHand', sans-serif;
-  --font-handwritten2: 'KyoboHandwriting2023wsa', sans-serif;
-  --font-handwritten3: 'Ssronet', sans-serif;
-  --font-handwritten4: 'KyoboHandwriting2021sjy', sans-serif;
+  --font-primary: "Pretendard", sans-serif;
+  --font-handwritten1: "KyoboHand", sans-serif;
+  --font-handwritten2: "KyoboHandwriting2023wsa", sans-serif;
+  --font-handwritten3: "Ssronet", sans-serif;
+  --font-handwritten4: "KyoboHandwriting2021sjy", sans-serif;
 
   /* Font weights */
   --font-thin: 100;
@@ -186,7 +186,7 @@ blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-  content: '';
+  content: "";
   content: none;
 }
 table {

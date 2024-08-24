@@ -1,7 +1,7 @@
-import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { getRecipientById } from '../api/recipients.js';
-import { HeaderService } from '../components/Header/HeaderService.jsx';
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getRecipientById } from "../api/recipients.js";
+import { HeaderService } from "../components/Header/HeaderService.jsx";
 
 function PostDetailPage() {
   const { id } = useParams();
@@ -27,12 +27,12 @@ function PostDetailPage() {
       <h1>Post Detail Page</h1>
       <h1>Post Detail Page</h1>
       <p>Post ID: {id}</p>
-      {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+      {error && <p style={{ color: "red" }}>Error: {error}</p>}
       {recipient && (
         <div>
           <h2>{recipient.name}</h2>
           <p>Background Color: {recipient.backgroundColor}</p>
-          <img src={recipient.backgroundImageURL} alt="Background" style={{ width: '300px', height: 'auto' }} />
+          <img src={recipient.backgroundImageURL} alt="Background" style={{ width: "300px", height: "auto" }} />
           <p>Created At: {new Date(recipient.createdAt).toLocaleString()}</p>
           <p>Message Count: {recipient.messageCount}</p>
           <p>Reaction Count: {recipient.reactionCount}</p>
