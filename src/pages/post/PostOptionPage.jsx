@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import BackgroundOption from "../../components/option/BackgroundOption";
-import useRecipientOptionSize from "../../hooks/useRecipientOptionSize";
+import usePostOptionSize from "../../hooks/usePostOptionSize";
 import { useAddRecipient } from "../../hooks/useAddRecipients";
 import useBackgroundImages from "../../hooks/useBackgroundImages";
 
@@ -125,7 +125,7 @@ const PostOptionPage = () => {
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   const inputRef = useRef(null);
   // 옵션 커스텀 훅
-  const recipientOptionSize = useRecipientOptionSize();
+  const postOptionSize = usePostOptionSize();
   // 배경화면 이미지 커스텀 훅
   const backgroundImages = useBackgroundImages();
   // 롤링페이퍼 생성 커스텀 훅
@@ -216,7 +216,7 @@ const PostOptionPage = () => {
               >
                 <BackgroundOption
                   color={color}
-                  size={recipientOptionSize}
+                  size={postOptionSize}
                   isSelected={color === selectedColor}
                 />
               </OptionWrapper>
@@ -229,7 +229,7 @@ const PostOptionPage = () => {
               >
                 <BackgroundOption
                   color="#fff"
-                  size={recipientOptionSize}
+                  size={postOptionSize}
                   imgUrl={image}
                   isSelected={image === selectedImage}
                 />
