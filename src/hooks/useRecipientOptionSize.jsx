@@ -12,7 +12,7 @@ const getOptionSize = () => {
 };
 
 // 반응형 카드 사이즈 커스텀 훅
-const useOptionSize = () => {
+const useRecipientOptionSize = () => {
   const [optionSize, setOptionSize] = useState(getOptionSize());
 
   useEffect(() => {
@@ -31,4 +31,4 @@ const useOptionSize = () => {
   return optionSize;
 };
 
-export default useOptionSize;
+export default useRecipientOptionSize;
