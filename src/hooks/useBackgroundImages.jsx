@@ -7,8 +7,8 @@ const useBackgroundImages = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // sessionStorage에서 기존 데이터 가져오기
-      const cachedData = sessionStorage.getItem("backgroundImages");
+      // localStorage에서 기존 데이터 가져오기
+      const cachedData = localStorage.getItem("backgroundImages");
 
       if (cachedData) {
         // 캐시된 데이터가 있으면 파싱하여 상태에 저장
@@ -19,8 +19,8 @@ const useBackgroundImages = () => {
           const responseData = await getBackgroundImages();
           setBackgroundImages(responseData.imageUrls);
 
-          // sessionStorage에 데이터 저장
-          sessionStorage.setItem(
+          // localStorage에 데이터 저장
+          localStorage.setItem(
             "backgroundImages",
             JSON.stringify(responseData.imageUrls)
           );
