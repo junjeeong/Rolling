@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
-import BackgroundOption from "../../components/option/BackgroundOption";
+import BackgroundOption from "../../components/Option/BackgroundOption";
 import usePostOptionSize from "../../hooks/usePostOptionSize";
 import { useAddRecipient } from "../../hooks/useAddRecipients";
 import useBackgroundImages from "../../hooks/useBackgroundImages";
