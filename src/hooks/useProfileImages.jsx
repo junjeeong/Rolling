@@ -7,8 +7,8 @@ const useProfileImages = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // sessionStorage에서 기존 데이터 가져오기
-      const cachedData = sessionStorage.getItem("profileImages");
+      // localStorage에서 기존 데이터 가져오기
+      const cachedData = localStorage.getItem("profileImages");
 
       if (cachedData) {
         // 캐시된 데이터가 있으면 파싱하여 상태에 저장
@@ -19,8 +19,8 @@ const useProfileImages = () => {
           const responseData = await getProfileImages();
           setProfileImages(responseData.imageUrls);
 
-          // sessionStorage에 데이터 저장
-          sessionStorage.setItem(
+          // localStorage에 데이터 저장
+          localStorage.setItem(
             "profileImages",
             JSON.stringify(responseData.imageUrls)
           );
