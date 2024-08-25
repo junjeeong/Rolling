@@ -1,16 +1,17 @@
 import { useState } from "react";
 import { deleteRecipientById } from "../api/recipients";
 
-const useDeleteData = () => {
+// 특정 ID의 롤링 페이퍼 대상을 삭제하기 위한 커스텀 훅
+const useDeleteRecipient = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const deleteData = async (deleteFunction, ...args) => {
+  const deleteRecipient = async (recipientId) => {
     setLoading(true);
     setError(null);
     try {
-      const result = await deleteFunction(...args);
+      const result = await deleteRecipientById(recipientId);
       setData(result);
     } catch (err) {
       setError(err);
@@ -19,15 +20,8 @@ const useDeleteData = () => {
     }
   };
 
-  return { data, loading, error, deleteData };
-};
-
-// 특정 ID의 롤링 페이퍼 대상 삭제하기
-const useDeleteRecipient = () => {
-  const { data, loading, error, deleteData } = useDeleteData();
   return {
-    deleteRecipient: (recipientId) =>
-      deleteData(deleteRecipientById, recipientId),
+    deleteRecipient,
     data,
     loading,
     error,

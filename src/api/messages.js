@@ -8,7 +8,7 @@ const getMessageById = async (messageId) => {
   return response.data;
 };
 
-// 메세지 업데이트하기 (전체 수정)
+// 메세지 전체 수정하기
 const updateMessageById = async (messageId, messageData) => {
   const response = await axios.put(
     `/${TEAM}/messages/${messageId}/`,
