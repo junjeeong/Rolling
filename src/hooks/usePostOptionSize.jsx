@@ -11,8 +11,8 @@ const getOptionSize = () => {
   }
 };
 
-// 반응형 카드 사이즈 커스텀 훅
-const useOptionSize = () => {
+// 반응형 롤링 페이퍼 사이즈 커스텀 훅
+const usePostOptionSize = () => {
   const [optionSize, setOptionSize] = useState(getOptionSize());
 
   useEffect(() => {
@@ -31,4 +31,4 @@ const useOptionSize = () => {
   return optionSize;
 };
 
-export default useOptionSize;
+export default usePostOptionSize;

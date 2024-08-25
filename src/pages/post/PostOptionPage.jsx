@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
-import BackgroundOption from "../../components/option/BackgroundOption";
-import useOptionSize from "../../hooks/useOptionSize";
-import useRecipientPost from "../../hooks/useRecipientPost";
+import BackgroundOption from "../../components/Option/BackgroundOption";
+import usePostOptionSize from "../../hooks/usePostOptionSize";
+import { useAddRecipient } from "../../hooks/useAddRecipients";
 import useBackgroundImages from "../../hooks/useBackgroundImages";
 
 const PageContainer = styled.div`
@@ -117,7 +117,7 @@ const GenerateButton = styled.button`
   }
 `;
 
-const ToOptionPage = () => {
+const PostOptionPage = () => {
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
   const [activeTab, setActiveTab] = useState("color");
@@ -125,11 +125,11 @@ const ToOptionPage = () => {
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   const inputRef = useRef(null);
   // 옵션 커스텀 훅
-  const optionSize = useOptionSize();
+  const postOptionSize = usePostOptionSize();
   // 배경화면 이미지 커스텀 훅
   const backgroundImages = useBackgroundImages();
   // 롤링페이퍼 생성 커스텀 훅
-  const postRecipient = useRecipientPost();
+  const { addRecipient } = useAddRecipient();
 
   const colors = ["beige", "purple", "blue", "green"];
 
@@ -155,7 +155,7 @@ const ToOptionPage = () => {
       };
 
       // 롤링 페이퍼 생성
-      await postRecipient(payload);
+      await addRecipient(payload);
       alert("롤링 페이퍼가 생성 되었습니다.");
       setSelectedColor("");
       setSelectedImage(null);
@@ -216,7 +216,7 @@ const ToOptionPage = () => {
               >
                 <BackgroundOption
                   color={color}
-                  size={optionSize}
+                  size={postOptionSize}
                   isSelected={color === selectedColor}
                 />
               </OptionWrapper>
@@ -229,7 +229,7 @@ const ToOptionPage = () => {
               >
                 <BackgroundOption
                   color="#fff"
-                  size={optionSize}
+                  size={postOptionSize}
                   imgUrl={image}
                   isSelected={image === selectedImage}
                 />
@@ -244,4 +244,4 @@ const ToOptionPage = () => {
   );
 };
 
-export default ToOptionPage;
+export default PostOptionPage;
