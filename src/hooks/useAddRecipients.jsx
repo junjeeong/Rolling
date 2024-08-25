@@ -6,7 +6,6 @@ import {
 } from "../api/recipients";
 
 const useAddData = () => {
-  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -15,23 +14,23 @@ const useAddData = () => {
     setError(null);
     try {
       const result = await addFunction(...args);
-      setData(result);
+      return result;
     } catch (err) {
       setError(err);
+      throw err;
     } finally {
       setLoading(false);
     }
   };
 
-  return { data, loading, error, addData };
+  return { loading, error, addData };
 };
 
 // 롤링 페이퍼 대상 추가하기
 const useAddRecipient = () => {
-  const { data, loading, error, addData } = useAddData();
+  const { loading, error, addData } = useAddData();
   return {
     addRecipient: (recipientData) => addData(addRecipient, recipientData),
-    data,
     loading,
     error,
   };
@@ -39,11 +38,10 @@ const useAddRecipient = () => {
 
 // 특정 롤링 페이퍼 대상에게 메시지 추가하기
 const useAddMessageToRecipient = (recipientId) => {
-  const { data, loading, error, addData } = useAddData();
+  const { loading, error, addData } = useAddData();
   return {
     addMessage: (messageData) =>
       addData(addMessageToRecipient, recipientId, messageData),
-    data,
     loading,
     error,
   };
@@ -51,11 +49,10 @@ const useAddMessageToRecipient = (recipientId) => {
 
 // 특정 롤링 페이퍼 대상의 메시지에 리액션 추가하기
 const useAddReactionToRecipientMessage = (recipientId) => {
-  const { data, loading, error, addData } = useAddData();
+  const { loading, error, addData } = useAddData();
   return {
     addReaction: (reactionData) =>
       addData(addReactionToRecipientMessage, recipientId, reactionData),
-    data,
     loading,
     error,
   };
