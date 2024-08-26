@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import PostDetailPage from './pages/post/PostDetailPage';
-import ToOptionPage from './pages/post/ToOptionPage';
+import PostOptionPage from './pages/post/PostOptionPage';
 import { DefaultLayout } from './styles/DefaultLayout';
+import PostMessagePage from './pages/post/PostMessagePage';
 import { Home } from './pages/Home';
 
 function App() {
@@ -10,8 +11,9 @@ function App() {
     <Routes>
       <Route path="/" element={<DefaultLayout />}>
         <Route index element={<Home />} />
-        <Route path="post" element={<ToOptionPage />} />
+        <Route path="post" element={<PostOptionPage />} />
         <Route path="post/:id" element={<PostDetailPage />} />
+        <Route path="post/:id/message" element={<PostMessagePage />} />
       </Route>
     </Routes>
   );
