@@ -29,7 +29,6 @@ function PostDetailPage() {
 
     fetchData();
   }, [id, recipient_id]);
-  console.log('11', message);
 
   return (
     <div>

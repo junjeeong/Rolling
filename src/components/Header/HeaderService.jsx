@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { EmojiPicker } from '../EmojiPicker';
 const Container = styled.div`
   background-color: white;
   display: flex;
@@ -33,7 +34,7 @@ export const HeaderService = ({ recipient }) => {
           <p>To: {recipient.name}</p>
           <RecipientInfo>
             <p>Message Count: {recipient.messageCount}</p>
-            <p>Reaction Count: {recipient.reactionCount}</p>
+            <EmojiPicker />
           </RecipientInfo>
         </ServiceWrap>
       )}
