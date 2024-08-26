@@ -1,8 +1,9 @@
 import { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import BackgroundOption from "../../components/option/BackgroundOption";
-import useOptionSize from "../../hooks/useOptionSize";
-import useRecipientPost from "../../hooks/useRecipientPost";
+import BackgroundOption from "../../components/Option/BackgroundOption";
+import usePostOptionSize from "../../hooks/usePostOptionSize";
+import { useAddRecipient } from "../../hooks/useAddRecipients";
 import useBackgroundImages from "../../hooks/useBackgroundImages";
 
 const PageContainer = styled.div`
@@ -10,6 +11,7 @@ const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 70px;
 `;
 
 const Header = styled.div`
@@ -28,12 +30,30 @@ const Label = styled.div`
   margin-bottom: 8px;
 `;
 
-const Input = styled.input`
+const InputContainer = styled.div`
+  width: 100%;
+  position: relative;
+`;
+
+const Input = styled.input.attrs((props) => ({
+  hasError: undefined,
+}))`
   width: 100%;
   padding: 12px;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid ${({ hasError }) => (hasError ? "red" : "#ccc")};
   font-size: 16px;
+  outline: ${({ hasError }) => (hasError ? "red" : "none")};
+
+  &:focus {
+    border-color: ${({ hasError }) => (hasError ? "red" : "#8E44AD")};
+  }
+`;
+
+const ErrorMessage = styled.div`
+  color: red;
+  font-size: 14px;
+  margin-top: 4px;
 `;
 
 const Content = styled.div`
@@ -116,20 +136,24 @@ const GenerateButton = styled.button`
   }
 `;
 
-const ToOptionPage = () => {
+const PostOptionPage = () => {
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
   const [activeTab, setActiveTab] = useState("color");
   const [recipientName, setRecipientName] = useState("");
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+  const [hasError, setHasError] = useState(false);
   const inputRef = useRef(null);
   // 옵션 커스텀 훅
-  const optionSize = useOptionSize();
+  const postOptionSize = usePostOptionSize();
   // 배경화면 이미지 커스텀 훅
   const backgroundImages = useBackgroundImages();
   // 롤링페이퍼 생성 커스텀 훅
-  const postRecipient = useRecipientPost();
+  const { addRecipient } = useAddRecipient();
+  // 롤링페이퍼 생성 성공 후에 이동할 navigate 훅
+  const navigate = useNavigate();
 
+  const TEAM = "9-3";
   const colors = ["beige", "purple", "blue", "green"];
 
   const handleColorSelect = (color) => {
@@ -147,26 +171,36 @@ const ToOptionPage = () => {
 
     if (isButtonEnabled) {
       const payload = {
-        team: "9-3",
+        team: TEAM,
         name: recipientName,
         backgroundColor: selectedColor,
         backgroundImageURL: selectedImage,
       };
 
-      // 롤링 페이퍼 생성
-      await postRecipient(payload);
-      alert("롤링 페이퍼가 생성 되었습니다.");
-      setSelectedColor("");
-      setSelectedImage(null);
-      setRecipientName("");
-      inputRef.current.value = "";
-      inputRef.current.focus();
+      try {
+        // 롤링 페이퍼 생성
+        const result = await addRecipient(payload);
+        console.log(result);
+        // 생성된 ID로 페이지 이동
+        const id = result.id;
+        navigate(`/post/${id}`);
+      } catch (error) {
+        console.error("Error creating post:", error);
+        alert("롤링 페이퍼 생성에 실패했습니다.");
+      }
     }
   };
 
   const handleInputChange = () => {
     const value = inputRef.current.value;
     setRecipientName(value);
+    setHasError(false);
+  };
+
+  const handleInputBlur = () => {
+    if (!recipientName.trim()) {
+      setHasError(true);
+    }
   };
 
   useEffect(() => {
@@ -181,11 +215,16 @@ const ToOptionPage = () => {
     <PageContainer>
       <Header>
         <Label>To.</Label>
-        <Input
-          placeholder="받는 사람 이름을 입력해 주세요"
-          ref={inputRef}
-          onChange={handleInputChange}
-        />
+        <InputContainer>
+          <Input
+            placeholder="받는 사람 이름을 입력해 주세요"
+            ref={inputRef}
+            onChange={handleInputChange}
+            onBlur={handleInputBlur}
+            hasError={hasError}
+          />
+          {hasError && <ErrorMessage>값을 입력해 주세요.</ErrorMessage>}
+        </InputContainer>
       </Header>
       <Content>
         <Instruction>배경화면을 선택해 주세요.</Instruction>
@@ -215,7 +254,7 @@ const ToOptionPage = () => {
               >
                 <BackgroundOption
                   color={color}
-                  size={optionSize}
+                  size={postOptionSize}
                   isSelected={color === selectedColor}
                 />
               </OptionWrapper>
@@ -228,7 +267,7 @@ const ToOptionPage = () => {
               >
                 <BackgroundOption
                   color="#fff"
-                  size={optionSize}
+                  size={postOptionSize}
                   imgUrl={image}
                   isSelected={image === selectedImage}
                 />
@@ -243,4 +282,4 @@ const ToOptionPage = () => {
   );
 };
 
-export default ToOptionPage;
+export default PostOptionPage;

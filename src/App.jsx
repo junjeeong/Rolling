@@ -1,15 +1,20 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PostDetailPage from "./pages/PostDetailPage";
-import ToOptionPage from "./pages/post/ToOptionPage";
+import PostMessagePage from "./pages/post/PostMessagePage";
+import PostOptionPage from "./pages/post/PostOptionPage";
+import Header from "./components/common/Header";
 
 function App() {
   return (
-    <Routes>
-      <Route index element={<div>Main Page</div>} />
-      <Route path="post" element={<ToOptionPage />} />
-      <Route path="post/:id" element={<PostDetailPage />} />
-    </Routes>
+    <BrowserRouter>
+      <Header />
+      <Routes>
+        <Route index element={<div>Main Page</div>} />
+        <Route path="post" element={<PostOptionPage />} />
+        <Route path="post/:id" element={<PostDetailPage />} />
+        <Route path="post/:id/message" element={<PostMessagePage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
