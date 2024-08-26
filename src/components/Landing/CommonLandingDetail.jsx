@@ -9,7 +9,7 @@ import StartButton from './StartButton';
 import cardImg1 from '../../assets/images/cardImg1.png';
 import cardImg2 from '../../assets/images/cardImg2.png';
 
-export default CommonLandingDetail = ({ 
+const CommonLandingDetail = ({ 
 	className,
  }) => (
   <LandingSection className={className}>
@@ -42,3 +42,5 @@ export default CommonLandingDetail = ({
     <StartButton to='/list'>구경해보기</StartButton>
   </LandingSection>
 );
+
+export default CommonLandingDetail;

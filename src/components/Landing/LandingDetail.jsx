@@ -1,6 +1,8 @@
 import React from 'react';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
-import { MobileLandingDetail, TabletLandingDetail, DesktopLandingDetail } from './LandingDetails';
+import { MobileLandingDetail, TabletLandingDetail, DesktopLandingDetail } from '../Landing/DeviceLandingDetail';
+import cardImg1 from '../../assets/images/cardImg1.png';
+import cardImg2 from '../../assets/images/cardImg2.png';
 
 export default function LandingDetail() {
   const { width } = useWindowDimensions();

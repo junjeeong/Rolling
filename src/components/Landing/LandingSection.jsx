@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Layout from '../../styles/DefaultLayout';
+import { Layout } from '../../styles/DefaultLayout';
 
 const LandingSection = styled(Layout)`
 	display: flex;

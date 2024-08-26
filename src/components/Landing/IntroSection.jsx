@@ -5,6 +5,7 @@ const IntroSection = styled.div`
 	flex-direction: column;
 	align-items: flex-start;
 	position: relative;
+	margin-left: 60px;
 
 	@media (min-width: 1024px) {
 		width: 340px;
