@@ -20,7 +20,7 @@ export default function CommonListDetail() {
     try{
       const limit = 10;
       const users = await getAllUser({ limit, offset });
-      const { results, next } = users;
+      const { results, ...data } = users;
 
       setMessages((prev) => {
         const newMessages = results.filter(
@@ -29,7 +29,7 @@ export default function CommonListDetail() {
         return [...prev, ...newMessages];
       });
 
-      if (next !== null) {
+      if (data !== null) {
         setHasMore(true);
       } else {
         setHasMore(false);

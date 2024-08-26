@@ -22,8 +22,8 @@ const NavigationButton = styled.button`
 	cursor: pointer;
 	z-index: 1;
 	top: 50%;
-	transform: traslateY(-50%);
-	${({ $isNext }) => ($isNext ? 'right: -20px;' : 'left: -20px')}
+	transform: translateY(-50%);
+	${({ isNext }) => (isNext ? 'right: -20px;' : 'left: -20px')}
 
 	&:hover {
 		background-color: var(--gray-100);
