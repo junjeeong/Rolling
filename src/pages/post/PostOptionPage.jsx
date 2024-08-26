@@ -149,10 +149,11 @@ const PostOptionPage = () => {
   // 배경화면 이미지 커스텀 훅
   const backgroundImages = useBackgroundImages();
   // 롤링페이퍼 생성 커스텀 훅
-  const { addRecipient, data } = useAddRecipient();
+  const { addRecipient } = useAddRecipient();
   // 롤링페이퍼 생성 성공 후에 이동할 navigate 훅
   const navigate = useNavigate();
 
+  const TEAM = "9-3";
   const colors = ["beige", "purple", "blue", "green"];
 
   const handleColorSelect = (color) => {
@@ -170,7 +171,7 @@ const PostOptionPage = () => {
 
     if (isButtonEnabled) {
       const payload = {
-        team: "9-3",
+        team: TEAM,
         name: recipientName,
         backgroundColor: selectedColor,
         backgroundImageURL: selectedImage,
