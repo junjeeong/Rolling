@@ -52,16 +52,21 @@ const getReactionsByRecipientId = async (recipientId) => {
 
 
 // 모든 유저 데이터 가져오기
-const getAllUser = async () => {
-  const response = await axios.get(`/${TEAM}/recipients/?limit=${limit}&offset=${offset}`);
+const getAllUser = async (limit = 10, offset = 0) => {
+  const response = await axios.get(`/${TEAM}/recipients/`, {
+    params: {
+      limit,
+      offset,
+    },
+  });
   return response.data;
 };
 
 // 유저 데이터 가져오기
-const getUser = async () => {
-	const response = await axious.get(`/${TEAM}/recipients/${id}/`);
-	return response.data;
-}
+const getUser = async (id) => {
+  const response = await axios.get(`/${TEAM}/recipients/${id}/`);
+  return response.data;
+};
 
 export { 
 	getRecipients, 

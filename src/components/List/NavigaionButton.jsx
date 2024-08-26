@@ -47,7 +47,7 @@ const NavigationButton = styled.button`
 const NavigationButtonComponent = ({ isNext, ...props }) => (
 	<NavigationButton $isNext={isNext} {...props}>
 		<Arrow viewBox='0 0 24 24'>
-			{isNext ? <path d='M8 4l8 8-8 8' /> : <path d='M16 4l-8 8 8' />}
+			{isNext ? <path d='M8 4l8 8-8 8' /> : <path d='M16 4l-8 8 8 8' />}
 		</Arrow>
 	</NavigationButton>
 );

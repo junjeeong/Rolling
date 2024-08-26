@@ -1,8 +1,6 @@
 import { EmojiSelector } from '../Emoji/EmojiSelector';
 import { Card } from './Cards';
 import styled from 'styled-components';
-import { EmojiSelector } from '../Emoji/EmojiSelector';
-// 이모지 추가해야함
 
 const CardContentContainer = styled.div`
 	position: relative;
@@ -122,7 +120,6 @@ const ReactionContainer = styled.ul`
 	}
 `;
 
-// 이모지
 const MainEmoji = styled(EmojiSelector)`
 	flex: 0 0;
 
@@ -134,12 +131,12 @@ const MainEmoji = styled(EmojiSelector)`
 
 const CardContent = ({
 	id,
-	RecipientName,
+	recipientName,
 	messageCount,
 	backgroundImageURL,
 	backgroundColor,
-	profileImage,
-	topReaction,
+	profileImage = [],
+	topReaction = [],
 	handleCardClick,
 }) => {
 	return (
@@ -150,7 +147,7 @@ const CardContent = ({
 		>
 			<CardContentContainer>
 				<RecipientName $hasBackgroundImage={!!backgroundImageURL}>
-					To. {RecipientName}
+					To. {recipientName}
 				</RecipientName>
 				<ProfileImagesContainer>
 					{profileImage.map((profile, index) => (
@@ -178,3 +175,5 @@ const CardContent = ({
 		</Card>
 	)
 }
+
+export default CardContent;

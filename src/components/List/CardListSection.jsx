@@ -31,8 +31,8 @@ const CardListSection = ({ messages }) => {
 		}
 	};
 
-	const handleCardClick = (listId) => {
-		navigate(`/post/${id}`);
+	const handleCardClick = (recipientId) => {
+		navigate(`/post/${recipientId}`);
 	};
 
 
@@ -57,7 +57,7 @@ const CardListSection = ({ messages }) => {
 							recipientName={recipient.name}
 							backgroundColor={recipient.backgroundColor}
 							backgroundImageURL={recipient.backgroundImageURL}
-							messageCount={recipient.massageCount}
+							messageCount={recipient.messageCount}
 							profileImage={recipient.recentMassages}
 							topReaction={recipient.topReactions}
 							handleCardClick={() => handleCardClick(recipient.id)}
@@ -66,8 +66,8 @@ const CardListSection = ({ messages }) => {
 				</AnimatedCardList> 
 				<NextButton
 					onClick={handleNextClick}
-					disabled={(messages.lenth - 4) / currentOffset <= 4}
-					isNext={true}
+					disabled={(messages.length - 4) / currentOffset <= 4}
+					$isNext={true}
 				/>
 			</CardListWrapper>
 		</>

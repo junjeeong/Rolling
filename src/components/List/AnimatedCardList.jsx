@@ -24,7 +24,7 @@ const CardList = styled.div`
 	gap: 20px;
 	transition: transform 0.5s ease-in-out;
 	transform: ${({ $currentOffset }) => 
-		`tranlateX(-${currentOffset * 1180}px)`};
+		`translateX(-${$currentOffset * 1180}px)`};
 
 	@media (max-width: 1248px) {
 		transform: translateX(0);
