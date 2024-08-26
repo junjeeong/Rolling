@@ -85,12 +85,10 @@ export const RelationShip = styled.div`
 
 export function PaperCard({ sender }) {
   if (!sender) return null;
-  console.log('sender', sender);
 
   const { content, createdAt, font, id, profileImageURL, recipientId, relationship, name } = sender;
 
   const formattedDate = new Date(createdAt).toLocaleDateString();
-  // const formattedDate = createdAt.slice(0, 10).replace(/-/g, '.');
   return (
     <Container>
       <ProfileWrap>

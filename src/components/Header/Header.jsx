@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import logoImg from '../../assets/images/logo.png';
 import OutlineButton from '../common/Button/OutlineButton.jsx';
@@ -29,34 +29,17 @@ const Navigation = styled.nav`
   }
 `;
 
-export default function Header() {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  const location = useLocation();
+const Header = ({ existingPath }) => (
+  <HeaderContainer>
+    <Navigation>
+      <div>
+        <Link to="/">
+          <img src={logoImg} alt="롤링 로고" />
+        </Link>
+      </div>
+      {existingPath && <OutlineButton to="/post">롤링 페이퍼 만들기</OutlineButton>}
+    </Navigation>
+  </HeaderContainer>
+);
 
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const listPaths = ['/', '/list'];
-
-  const existingPath = listPaths.includes(location.pathname);
-
-  if (isMobile && !existingPath) {
-    return null;
-  }
-
-  return (
-    <HeaderContainer>
-      <Navigation>
-        <div>
-          <Link to="/">
-            <img src={logoImg} alt="롤링 로고" />
-          </Link>
-        </div>
-        {existingPath && <OutlineButton to="/post">롤링 페이퍼 만들기</OutlineButton>}
-      </Navigation>
-    </HeaderContainer>
-  );
-}
+export default Header;
