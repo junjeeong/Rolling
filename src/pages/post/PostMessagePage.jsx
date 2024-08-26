@@ -241,54 +241,14 @@ const PostMessagePage = () => {
             apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
             initialValue=""
             init={{
-              height: 200,
-              menubar: false,
-              branding: false,
-              statusbar: false,
-              plugins: [
-                "advlist",
-                "autolink",
-                "lists",
-                "link",
-                "image",
-                "charmap",
-                "preview",
-                "anchor",
-                "searchreplace",
-                "visualblocks",
-                "code",
-                "fullscreen",
-                "insertdatetime",
-                "media",
-                "table",
-                "code",
-              ],
-              toolbar:
-                "undo redo | formatselect | bold italic backcolor | \
-                alignleft aligncenter alignright alignjustify | \
-                bullist numlist outdent indent | removeformat",
-              setup: (editor) => {
-                editor.on("init", () => {
-                  editor.setContent(
-                    '<p style="color: #888;">내용을 입력해 주세요...</p>'
-                  );
-                });
-                editor.on("focus", () => {
-                  if (
-                    editor.getContent() ===
-                    '<p style="color: #888;">내용을 입력해 주세요...</p>'
-                  ) {
-                    editor.setContent("");
-                  }
-                });
-                editor.on("blur", () => {
-                  if (editor.getContent() === "") {
-                    editor.setContent(
-                      '<p style="color: #888;">내용을 입력해 주세요...</p>'
-                    );
-                  }
-                });
-              },
+              height: 300,
+              menubar: false, // 상단 메뉴바 비활성화
+              toolbar: false, // 툴바 비활성화
+              plugins: [], // 플러그인 사용하지 않음
+              inline: false, // 인라인 모드를 사용하지 않음, 또는 true로 설정하여 인라인 모드 사용
+              branding: false, // TinyMCE 마크 숨기기
+              content_style:
+                "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
             }}
             onEditorChange={handleEditorChange}
           />
