@@ -50,4 +50,28 @@ const getReactionsByRecipientId = async (recipientId) => {
   return response.data;
 };
 
-export { getRecipients, getRecipientById, addRecipient, deleteRecipientById, addMessageToRecipient, getMessagesByRecipientId, addReactionToRecipient, getReactionsByRecipientId };
+
+// 모든 유저 데이터 가져오기
+const getAllUser = async () => {
+  const response = await axios.get(`/${TEAM}/recipients/?limit=${limit}&offset=${offset}`);
+  return response.data;
+};
+
+// 유저 데이터 가져오기
+const getUser = async () => {
+	const response = await axious.get(`/${TEAM}/recipients/${id}/`);
+	return response.data;
+}
+
+export { 
+	getRecipients, 
+	getRecipientById, 
+	addRecipient, 
+	deleteRecipientById, 
+	addMessageToRecipient, 
+	getMessagesByRecipientId, 
+	addReactionToRecipient, 
+	getReactionsByRecipientId,
+	getAllUser,
+	getUser,
+};
