@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { DefaultLayout } from '../../styles/DefaultLayout';
+import Layout from '../../styles/DefaultLayout';
 
-const LandingSection = styled({ DefaultLayout })`
+const LandingSection = styled(Layout)`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
