@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getRecipientById, getRecipientsMessage } from '../../api/recipients.js';
+import { getRecipientById, getMessagesByRecipientId } from '../../api/recipients.js';
 import { HeaderService } from '../../components/Header/HeaderService.jsx';
 import { AddCard } from '../../components/common/Card/AddCard.jsx';
 import { PaperCard } from '../../components/common/Card/PaperCard.jsx';
@@ -19,7 +19,7 @@ function PostDetailPage() {
         const data = await getRecipientById(id);
         setRecipient(data);
         // 새로운 API 호출
-        const response = await getRecipientsMessage(id);
+        const response = await getMessagesByRecipientId(id);
         setSender(response);
         setMessage(response.results);
       } catch (err) {
@@ -32,7 +32,7 @@ function PostDetailPage() {
   console.log('11', message);
 
   return (
-    <div style={{ backgroundColor: 'red' }}>
+    <div>
       <HeaderService recipient={recipient} />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', padding: '113px 0' }}>
         <AddCard />
