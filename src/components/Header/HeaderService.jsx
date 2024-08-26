@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { EmojiSelector } from '../Emoji/EmojiSelector';
+import { EmojiTopBadge } from '../Emoji/EmojiTopBadge';
 const Container = styled.div`
   background-color: white;
   display: flex;
@@ -25,7 +26,8 @@ const RecipientInfo = styled.div`
   gap: 20px;
   align-items: center;
 `;
-// 헤더 밑에 서비스 정보를 보여주는 컴포넌트
+//getReactionsByRecipientId 함수를 사용하여 수신자의 이모지 정보를 가져올 예정
+
 export const HeaderService = ({ recipient }) => {
   return (
     <Container>
@@ -34,6 +36,7 @@ export const HeaderService = ({ recipient }) => {
           <p>To: {recipient.name}</p>
           <RecipientInfo>
             <p>이모지 총 개수: {recipient.reactionCount}</p>
+            <EmojiTopBadge />
             <EmojiSelector />
           </RecipientInfo>
         </ServiceWrap>
