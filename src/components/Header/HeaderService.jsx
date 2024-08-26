@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { EmojiPicker } from '../EmojiPicker';
+import { EmojiSelector } from '../EmojiSelector';
 const Container = styled.div`
   background-color: white;
   display: flex;
@@ -33,8 +33,8 @@ export const HeaderService = ({ recipient }) => {
         <ServiceWrap>
           <p>To: {recipient.name}</p>
           <RecipientInfo>
-            <p>Message Count: {recipient.messageCount}</p>
-            <EmojiPicker />
+            <p>이모지 총 개수: {recipient.reactionCount}</p>
+            <EmojiSelector />
           </RecipientInfo>
         </ServiceWrap>
       )}

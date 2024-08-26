@@ -39,7 +39,6 @@ function PostDetailPage() {
         {message.map((item) => (
           <PaperCard key={item.id} sender={item} />
         ))}
-
         {error && <p style={{ color: 'red' }}>Error: {error}</p>}
       </div>
     </div>
