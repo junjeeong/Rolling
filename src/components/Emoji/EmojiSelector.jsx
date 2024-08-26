@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 import styled from 'styled-components';
-import OutlineButton from './common/Button/OutlineButton';
-import plus from '../assets/images/icons/emoji_plus.png';
-
+import OutlineButton from '../common/Button/OutlineButton';
+import plus from '../../assets/images/icons/emoji_plus.png';
 const EmojiContainer = styled.div`
   position: relative;
 `;
@@ -76,7 +75,6 @@ export const EmojiSelector = () => {
       {showPicker && (
         <EmojiWrap ref={pickerRef}>
           <EmojiPicker autoFocusSearch={true} onEmojiClick={handleEmojiSelect} />
-          {selectedEmoji || 'Pick an emoji'}
         </EmojiWrap>
       )}
     </EmojiContainer>

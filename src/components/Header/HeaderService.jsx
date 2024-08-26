@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { EmojiSelector } from '../EmojiSelector';
+import { EmojiSelector } from '../Emoji/EmojiSelector';
 const Container = styled.div`
   background-color: white;
   display: flex;
