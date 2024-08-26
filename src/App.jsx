@@ -1,20 +1,21 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import PostDetailPage from "./pages/PostDetailPage";
-import PostMessagePage from "./pages/post/PostMessagePage";
-import PostOptionPage from "./pages/post/PostOptionPage";
-import Header from "./components/common/Header";
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import PostDetailPage from './pages/post/PostDetailPage';
+import PostOptionPage from './pages/post/PostOptionPage';
+import { DefaultLayout } from './styles/DefaultLayout';
+import PostMessagePage from './pages/post/PostMessagePage';
+import { Home } from './pages/Home';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route index element={<div>Main Page</div>} />
+    <Routes>
+      <Route path="/" element={<DefaultLayout />}>
+        <Route index element={<Home />} />
         <Route path="post" element={<PostOptionPage />} />
         <Route path="post/:id" element={<PostDetailPage />} />
         <Route path="post/:id/message" element={<PostMessagePage />} />
-      </Routes>
-    </BrowserRouter>
+      </Route>
+    </Routes>
   );
 }
 
