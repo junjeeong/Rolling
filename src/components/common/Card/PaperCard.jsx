@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
   position: relative;
@@ -79,43 +79,31 @@ export const RelationShip = styled.div`
   font-size: 14px;
   border-radius: 4px;
   padding: 0 8px;
-  color: ${({ rel }) => (rel === "가족" ? "var(--green-500)" : rel === "동료" ? "var(--purple-600)" : rel === "지인" ? "var(--beige-500)" : "var(--blue-500)")};
-  background-color: ${({ rel }) => (rel === "가족" ? "var(--green-100)" : rel === "동료" ? "var(--purple-100)" : rel === "지인" ? "var(--beige-100)" : "var(--blue-100)")};
+  color: ${({ rel }) => (rel === '가족' ? 'var(--green-500)' : rel === '동료' ? 'var(--purple-600)' : rel === '지인' ? 'var(--beige-500)' : 'var(--blue-500)')};
+  background-color: ${({ rel }) => (rel === '가족' ? 'var(--green-100)' : rel === '동료' ? 'var(--purple-100)' : rel === '지인' ? 'var(--beige-100)' : 'var(--blue-100)')};
 `;
 
-export function PaperCard({ recipient }) {
-  if (!recipient) return null;
-  /* 에러 발생
-  변경 전:  const { sender, profileImageURL, relationship, content, font, createdAt } = props;
-  에러 발생 이유
-  props로 전달되는 객체의 키 이름이 다르기 때문에 비구조화 할당 시에 에러가 발생
-  이 방식은 props 객체가 항상 존재하고 필요한 속성을 가지고 있다고 가정합니다. 만약 props가 undefined이거나 createdAt이 undefined인 경우, slice() 메소드를 호출할 때 오류가 발생할 수 있습니다.
-  에러 발생
-  변경 전: const formattedDate = createdAt.slice(0, 10).replace(/-/g, ".");
-  변경 후 되는 이유
-  createdAt의 값이 Date 객체가 아니라 문자열이기 때문에 에러가 발생
-  Date 객체로 변환한 후 toLocaleDateString() 메서드를 사용하여 날짜 형식으로 변환
-  toLocaleDateString() 메서드는 인수를 전달하지 않으면 기본적으로 브라우저의 로캘을 기준으로 날짜를 반환
-   2021-09-15T00:00:00.000Z -> 2021. 9. 15
-   2021-09-15 -> 2021. 9. 15
-   2021-09-15 00:00:00 -> 2021. 9. 15*/
-  const { name, backgroundImageURL, backgroundColor, createdAt, messageCount, reactionCount, recentMessages, topReactions } = recipient;
+export function PaperCard({ sender }) {
+  if (!sender) return null;
+  console.log('sender', sender);
+
+  const { content, createdAt, font, id, profileImageURL, recipientId, relationship, name } = sender;
 
   const formattedDate = new Date(createdAt).toLocaleDateString();
 
   return (
     <Container>
       <ProfileWrap>
-        <Profile src={backgroundImageURL} alt="profile image" />
+        <Profile src={profileImageURL} alt="profile image" />
         <Info>
           <Name>
             From.<strong>{name}</strong>
           </Name>
-          <RelationShip rel={backgroundColor}>{backgroundColor}</RelationShip>
+          <RelationShip rel={relationship}>{relationship}</RelationShip>
         </Info>
       </ProfileWrap>
       <Divider />
-      <ContentBox font="Arial">{`Messages: ${messageCount}, Reactions: ${reactionCount}`}</ContentBox>
+      <ContentBox font={font}>{content}</ContentBox>
       <CreatedTime>{formattedDate}</CreatedTime>
     </Container>
   );

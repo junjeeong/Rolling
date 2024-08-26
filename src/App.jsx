@@ -1,6 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import PostDetailPage from './pages/PostDetailPage';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import PostDetailPage from './pages/post/PostDetailPage';
 import ToOptionPage from './pages/post/ToOptionPage';
 import { DefaultLayout } from './styles/DefaultLayout';
 import { Home } from './pages/Home';

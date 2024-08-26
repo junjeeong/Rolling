@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import plusIcon from '../../../assets/images/icons/plus.png';
 export const Container = styled.div`
-  display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   width: 384px;

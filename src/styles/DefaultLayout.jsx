@@ -11,12 +11,13 @@ const MainLayout = styled.div`
   margin-top: 65px;
 `;
 
-export const DefaultLayout = ({ children }) => {
+export const DefaultLayout = () => {
   return (
     <Layout>
       <Header />
-      <MainLayout>{children}</MainLayout>
-      <Outlet />
+      <MainLayout>
+        <Outlet />
+      </MainLayout>
     </Layout>
   );
 };
