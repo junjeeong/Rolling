@@ -44,7 +44,7 @@ const getMessagesByRecipientId = async (recipientId) => {
 };
 
 // 롤링 페이퍼 대상에게 리액션 달기
-const addReactionToRecipientMessage = async (recipientId, reactionData) => {
+const addReactionToRecipient = async (recipientId, reactionData) => {
   const response = await axios.post(
     `/${TEAM}/recipients/${recipientId}/reactions/`,
     reactionData
@@ -67,6 +67,6 @@ export {
   deleteRecipientById,
   addMessageToRecipient,
   getMessagesByRecipientId,
-  addReactionToRecipientMessage,
+  addReactionToRecipient,
   getReactionsByRecipientId,
 };

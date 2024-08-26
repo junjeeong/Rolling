@@ -2,7 +2,7 @@ import { useState } from "react";
 import {
   addRecipient,
   addMessageToRecipient,
-  addReactionToRecipientMessage,
+  addReactionToRecipient,
 } from "../api/recipients";
 
 const useAddData = () => {
@@ -37,29 +37,25 @@ const useAddRecipient = () => {
 };
 
 // 특정 롤링 페이퍼 대상에게 메시지 추가하기
-const useAddMessageToRecipient = (recipientId) => {
+const useAddMessageToRecipient = () => {
   const { loading, error, addData } = useAddData();
   return {
-    addMessage: (messageData) =>
+    addMessage: (recipientId, messageData) =>
       addData(addMessageToRecipient, recipientId, messageData),
     loading,
     error,
   };
 };
 
-// 특정 롤링 페이퍼 대상의 메시지에 리액션 추가하기
-const useAddReactionToRecipientMessage = (recipientId) => {
+// 특정 롤링 페이퍼 대상에게 리액션 추가하기
+const useAddReactionToRecipient = () => {
   const { loading, error, addData } = useAddData();
   return {
-    addReaction: (reactionData) =>
-      addData(addReactionToRecipientMessage, recipientId, reactionData),
+    addReaction: (recipientId, reactionData) =>
+      addData(addReactionToRecipient, recipientId, reactionData),
     loading,
     error,
   };
 };
 
-export {
-  useAddRecipient,
-  useAddMessageToRecipient,
-  useAddReactionToRecipientMessage,
-};
+export { useAddRecipient, useAddMessageToRecipient, useAddReactionToRecipient };
