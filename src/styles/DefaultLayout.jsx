@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Outlet } from 'react-router-dom';
-import HeaderContainer from '../containers/HeaderContainer';
+import HeaderContainer from '../containers/Header/HeaderContainer';
 
 const Layout = styled.div`
   max-width: 1200px;

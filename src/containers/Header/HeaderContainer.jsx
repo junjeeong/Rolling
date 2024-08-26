@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import Header from '../components/Header/Header';
+import Header from '../../components/Header/Header';
 
 const HeaderContainer = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
