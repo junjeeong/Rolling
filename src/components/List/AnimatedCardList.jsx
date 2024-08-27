@@ -20,7 +20,7 @@ const CardListWrapper = styled.div`
 `;
 
 const CardList = styled.div`
-	display: flex;
+	display: inline-flex; 
 	gap: 20px;
 	transition: transform 0.5s ease-in-out;
 	transform: ${({ $currentOffset }) => 
