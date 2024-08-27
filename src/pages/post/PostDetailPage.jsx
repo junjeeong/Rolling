@@ -7,6 +7,7 @@ import {
 import { HeaderService } from "../../components/Header/HeaderService.jsx";
 import { AddCard } from "../../components/common/Card/AddCard.jsx";
 import { PaperCard } from "../../components/common/Card/PaperCard.jsx";
+import { ModalCard } from "../../components/common/Card/ModalCard.jsx";
 
 // getRecipientById api 테스트 페이지 /9-3/recipients/${id}/
 function PostDetailPage() {
@@ -15,6 +16,7 @@ function PostDetailPage() {
   const [recipient, setRecipient] = useState(null);
   const [sender, setSender] = useState([]);
   const [messages, setMessages] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,10 +51,15 @@ function PostDetailPage() {
         <AddCard />
         {/* messages 배열의 길이만큼 PaperCard  */}
         {messages.map((item) => (
-          <PaperCard key={item.id} sender={item} />
+          <PaperCard
+            key={item.id}
+            sender={item}
+            onClick={() => setModalOpen(true)}
+          />
         ))}
         {error && <p style={{ color: "red" }}>Error: {error}</p>}
       </div>
+      {modalOpen && <ModalCard info={response.results} />}
     </div>
   );
 }

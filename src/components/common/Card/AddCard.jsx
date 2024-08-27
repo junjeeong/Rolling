@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import plusIcon from '../../../assets/images/icons/plus.png';
-import { useNavigate } from 'react-router-dom';
+import styled from "styled-components";
+import plusIcon from "../../../assets/images/icons/plus.png";
+import { useNavigate } from "react-router-dom";
 export const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -32,7 +32,7 @@ export function AddCard() {
 
   return (
     <Container>
-      <AddButton onClick={() => navigate('/post')}>
+      <AddButton onClick={() => navigate(`post/:id/message`)}>
         <Icon src={plusIcon} alt="Add Icon" />
       </AddButton>
     </Container>

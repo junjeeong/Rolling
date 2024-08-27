@@ -1,10 +1,10 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import PostDetailPage from './pages/post/PostDetailPage';
-import PostOptionPage from './pages/post/PostOptionPage';
-import { DefaultLayout } from './styles/DefaultLayout';
-import PostMessagePage from './pages/post/PostMessagePage';
-import { Home } from './pages/Home';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import PostDetailPage from "./pages/post/PostDetailPage";
+import PostOptionPage from "./pages/post/PostOptionPage";
+import { DefaultLayout } from "./styles/DefaultLayout";
+import PostMessagePage from "./pages/post/PostMessagePage";
+import { Home } from "./pages/Home";
 
 function App() {
   return (
