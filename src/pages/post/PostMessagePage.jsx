@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { Editor } from "@tinymce/tinymce-react";
-import { useAddMessageToRecipient } from "../../hooks/useAddRecipients";
-import useProfileImages from "../../hooks/useProfileImages";
-import styled from "styled-components";
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Editor } from '@tinymce/tinymce-react';
+import { useAddMessageToRecipient } from '../../hooks/useAddRecipients';
+import useProfileImages from '../../hooks/useProfileImages';
+import styled from 'styled-components';
 
 const PostMessagePageContainer = styled.div`
   margin-top: 50px;
@@ -27,7 +27,7 @@ const Label = styled.label`
 const Input = styled.input`
   padding: 10px;
   margin-bottom: 5px;
-  border: 1px solid ${(props) => (props.error ? "#ff0000" : "#ccc")};
+  border: 1px solid ${(props) => (props.error ? '#ff0000' : '#ccc')};
   border-radius: 5px;
   font-size: 14px;
 `;
@@ -57,7 +57,7 @@ const DefaultProfileImage = styled.img`
   height: 80px;
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid ${(props) => (props.selected ? "#007bff" : "transparent")};
+  border: 2px solid ${(props) => (props.selected ? '#007bff' : 'transparent')};
   margin-right: 20px;
 
   &:hover {
@@ -83,7 +83,7 @@ const ProfileImageOption = styled.img`
   height: 50px;
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid ${(props) => (props.selected ? "#007bff" : "transparent")};
+  border: 2px solid ${(props) => (props.selected ? '#007bff' : 'transparent')};
 
   &:hover {
     border-color: #007bff;
@@ -96,26 +96,26 @@ const EditorContainer = styled.div`
 
 const Button = styled.button`
   padding: 10px 20px;
-  background-color: ${(props) => (props.disabled ? "#ccc" : "#a063f0")};
+  background-color: ${(props) => (props.disabled ? '#ccc' : '#a063f0')};
   color: white;
   border: none;
   border-radius: 5px;
-  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
   font-size: 16px;
 
   &:hover {
-    background-color: ${(props) => (props.disabled ? "#ccc" : "#8b5dde")};
+    background-color: ${(props) => (props.disabled ? '#ccc' : '#8b5dde')};
   }
 `;
 
 const PostMessagePage = () => {
   const { id: recipientId } = useParams();
-  const [from, setFrom] = useState("");
+  const [from, setFrom] = useState('');
   const [fromError, setFromError] = useState(false);
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
-  const [relationship, setRelationship] = useState("지인");
-  const [font, setFont] = useState("Noto Sans");
+  const [relationship, setRelationship] = useState('지인');
+  const [font, setFont] = useState('Noto Sans');
   const [isFormValid, setIsFormValid] = useState(false);
   const profileImages = useProfileImages();
   // 롤링페이퍼 대상에게 전할 메세지 생성 커스텀 훅
@@ -123,23 +123,18 @@ const PostMessagePage = () => {
   // 롤링페이퍼 대상에게 전할 메세지 생성 성공 후에 이동할 navigate 훅
   const navigate = useNavigate();
 
-  const TEAM = "9-3";
-  const relationshipOptions = ["친구", "지인", "동료", "가족"];
-  const fontOptions = [
-    "Noto Sans",
-    "Pretendard",
-    "나눔명조",
-    "나눔손글씨 손편지체",
-  ];
+  const TEAM = '9-3';
+  const relationshipOptions = ['친구', '지인', '동료', '가족'];
+  const fontOptions = ['Noto Sans', 'Pretendard', '나눔명조', '나눔손글씨 손편지체'];
 
   useEffect(() => {
     // 폼 유효성 검사
-    setIsFormValid(from.trim() !== "" && content.trim() !== "");
+    setIsFormValid(from.trim() !== '' && content.trim() !== '');
   }, [from, content]);
 
   const handleFromChange = (e) => {
     setFrom(e.target.value);
-    if (e.target.value.trim() === "") {
+    if (e.target.value.trim() === '') {
       setFromError(true);
     } else {
       setFromError(false);
@@ -147,7 +142,7 @@ const PostMessagePage = () => {
   };
 
   const handleFromBlur = () => {
-    if (from.trim() === "") {
+    if (from.trim() === '') {
       setFromError(true);
     }
   };
@@ -180,8 +175,8 @@ const PostMessagePage = () => {
         // 롤링페이퍼 페이지로 이동
         navigate(`/post/${recipientId}`);
       } catch (error) {
-        console.error("Error creating post:", error);
-        alert("메세지 생성에 실패했습니다.");
+        console.error('Error creating post:', error);
+        alert('메세지 생성에 실패했습니다.');
       }
     }
   };
@@ -190,14 +185,7 @@ const PostMessagePage = () => {
     <PostMessagePageContainer>
       <FormContainer>
         <Label htmlFor="fromInput">From.</Label>
-        <Input
-          id="fromInput"
-          placeholder="이름을 입력해 주세요."
-          value={from}
-          onChange={handleFromChange}
-          onBlur={handleFromBlur}
-          error={fromError ? "true" : undefined}
-        />
+        <Input id="fromInput" placeholder="이름을 입력해 주세요." value={from} onChange={handleFromChange} onBlur={handleFromBlur} error={fromError ? 'true' : undefined} />
         {fromError && <ErrorMessage>값을 입력해 주세요.</ErrorMessage>}
 
         <ProfileImageContainer>
@@ -222,11 +210,7 @@ const PostMessagePage = () => {
         </ProfileImageContainer>
 
         <Label htmlFor="relationshipSelect">상대와의 관계</Label>
-        <Select
-          id="relationshipSelect"
-          value={relationship}
-          onChange={(e) => setRelationship(e.target.value)}
-        >
+        <Select id="relationshipSelect" value={relationship} onChange={(e) => setRelationship(e.target.value)}>
           {relationshipOptions.map((relationship) => (
             <option key={relationship} value={relationship}>
               {relationship}
@@ -247,19 +231,14 @@ const PostMessagePage = () => {
               plugins: [], // 플러그인 사용하지 않음
               inline: false, // 인라인 모드를 사용하지 않음, 또는 true로 설정하여 인라인 모드 사용
               branding: false, // TinyMCE 마크 숨기기
-              content_style:
-                "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+              content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
             }}
             onEditorChange={handleEditorChange}
           />
         </EditorContainer>
 
         <Label htmlFor="fontSelect">폰트 선택</Label>
-        <Select
-          id="fontSelect"
-          value={font}
-          onChange={(e) => setFont(e.target.value)}
-        >
+        <Select id="fontSelect" value={font} onChange={(e) => setFont(e.target.value)}>
           {fontOptions.map((font) => (
             <option key={font} value={font}>
               {font}

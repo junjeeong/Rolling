@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 // OutlineButton에서 Pressed 타입 2가지 중, white배경 디폴트값
 // 가져다가 쓸 때, 스타일링 추가해서 사용
@@ -15,7 +15,7 @@ const Button = styled.button`
   }
 `;
 
-const OlButton = styled(Link)`
+const OutlineBtn = styled(Link)`
   padding: 6px 16px;
   border: 1px solid var(--gray-300);
   background: var(--white);
@@ -32,20 +32,13 @@ const OlButton = styled(Link)`
   }
 `;
 
-export default function OutlineButton({
-  className,
-  haveImg,
-  imgSrc,
-  children,
-  to,
-  ...props
-}) {
+export default function OutlineButton({ className, haveImg, imgSrc, children, to, ...props }) {
   if (to) {
     return (
-      <OlButton to={to} className={className}>
+      <OutlineBtn to={to} className={className}>
         {haveImg && <img src={imgSrc} alt={children} />}
         {children}
-      </OlButton>
+      </OutlineBtn>
     );
   }
   return (
