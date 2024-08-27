@@ -41,7 +41,7 @@ const MessageCount = styled.div`
 	line-height: 26px;
 	letter-spacing: -0.01em;
 	color: ${({ $hasBackgroundImage }) =>
-		$hasBackgroundImage ? 'var(--gray-200)' : 'var(--gray-700'}
+		$hasBackgroundImage ? 'var(--gray-200)' : 'var(--gray-700'};
 	flex: none;
 	flex-grow: 0;
 
