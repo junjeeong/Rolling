@@ -3,6 +3,7 @@ import { EmojiSelector } from "../Emoji/EmojiSelector";
 import { EmojiTopBadge } from "../Emoji/EmojiTopBadge";
 const Container = styled.div`
   background-color: white;
+  margin-top: 65px;
   display: flex;
   justify-content: center;
   height: 68px;

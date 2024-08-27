@@ -27,7 +27,9 @@ export const Icon = styled.img`
   width: 24px; /* 아이콘 크기 조정 */
   height: 24px;
 `;
-export function AddCard() {
+export function AddCard({ id }) {
+  console.log("id", id);
+
   const navigate = useNavigate();
 
   return (

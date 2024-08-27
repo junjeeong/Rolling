@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import OutlineButton from '../common/Button/OutlineButton';
 import plus from '../../assets/images/icons/emoji_plus.png';
 import { EmojiSelectContainer } from '../../containers/HeaderService/EmojiSelectContainer';
+import { useEmojiPicker } from '../../hooks/useEmojiPicker';
 
 const Container = styled.div`
   position: relative;
@@ -29,24 +30,18 @@ const EmojiWrap = styled.div`
 `;
 
 export const EmojiSelector = () => {
-  const [selectedEmoji, setSelectedEmoji] = useState('');
-  const [showPicker, setShowPicker] = useState(false);
-
-  const handleSelectEmoji = (emoji) => {
-    setSelectedEmoji(emoji);
-    setShowPicker(false); // 선택 후 picker 숨기기
-  };
+  const { selectedEmoji, showPicker, setShowPicker, handleEmojiSelect, pickerRef } = useEmojiPicker(); // 커스텀 훅 사용
 
   return (
     <Container>
       <OutlineButton onClick={() => setShowPicker(!showPicker)}>
         <EmojiBtnWrap>
           <img src={plus} alt="emoji_plus" width="24px" />
-          <p>추가</p>
+          <p>{selectedEmoji || '추가'}</p>
         </EmojiBtnWrap>
       </OutlineButton>
       <EmojiWrap>
-        <EmojiSelectContainer showPicker={showPicker} setShowPicker={setShowPicker} onSelectEmoji={handleSelectEmoji} />
+        <EmojiSelectContainer showPicker={showPicker} onSelectEmoji={handleEmojiSelect} pickerRef={pickerRef} />
       </EmojiWrap>
     </Container>
   );

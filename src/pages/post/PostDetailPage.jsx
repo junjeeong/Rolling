@@ -7,61 +7,44 @@ import {
 import { HeaderService } from "../../components/Header/HeaderService.jsx";
 import { AddCard } from "../../components/common/Card/AddCard.jsx";
 import { PaperCard } from "../../components/common/Card/PaperCard.jsx";
-import { ModalCard } from "../../components/common/Card/ModalCard.jsx";
+
+import HeaderContainer from "../../containers/Header/HeaderContainer.jsx";
+import styled from "styled-components";
 
 // getRecipientById api 테스트 페이지 /9-3/recipients/${id}/
+const Container = styled.div`
+  background-color: red;
+`;
+
 function PostDetailPage() {
   const { id, recipient_id } = useParams();
   const [error, setError] = useState(null);
-  const [recipient, setRecipient] = useState(null);
-  const [sender, setSender] = useState([]);
-  const [messages, setMessages] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getRecipientById(id);
-        console.log(data);
-
-        setRecipient(data);
-        // 새로운 API 호출
-        const response = await getMessagesByRecipientId(id);
-        console.log(response);
-        setSender(response);
-        setMessages(response.results);
-      } catch (err) {
-        setError(err.message);
-      }
-    };
-
-    fetchData();
-  }, [id, recipient_id]);
-
-  return (
-    <div>
-      <HeaderService recipient={recipient} messages={messages} />
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          padding: "113px 0",
-        }}
-      >
-        <AddCard />
-        {/* messages 배열의 길이만큼 PaperCard  */}
-        {messages.map((item) => (
-          <PaperCard
-            key={item.id}
-            sender={item}
-            onClick={() => setModalOpen(true)}
-          />
-        ))}
-        {error && <p style={{ color: "red" }}>Error: {error}</p>}
+  function PostDetailPage() {
+    return (
+      <div>
+        <HeaderContainer />
+        <HeaderService recipient={recipient} />
+        <Container>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(3, 1fr)",
+              padding: "113px 0",
+              margin: "0 auto",
+              maxWidth: "1200px",
+            }}
+          >
+            <AddCard id={id} />
+            {/* message 배열의 길이만큼 PaperCard  */}
+            {message.map((item) => (
+              <PaperCard key={item.id} sender={item} />
+            ))}
+            {error && <p style={{ color: "red" }}>Error: {error}</p>}
+          </div>
+        </Container>
       </div>
-      {modalOpen && <ModalCard info={response.results} />}
-    </div>
-  );
+    );
+  }
 }
 
 export default PostDetailPage;
