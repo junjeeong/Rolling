@@ -13,6 +13,15 @@ const Container = styled.div`
   overflow-y: hidden;
 `;
 
+const GridWrap = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  padding: 113px 0;
+  margin: 0 auto;
+  max-width: 1200px;
+`;
+
 function PostDetailPage() {
   const { id } = useParams();
 
@@ -38,13 +47,13 @@ function PostDetailPage() {
       <HeaderContainer />
       <HeaderService recipient={recipient} />
       <Container $backgroundColor={recipient?.backgroundColor}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', padding: '113px 0', margin: '0 auto', maxWidth: '1200px' }}>
+        <GridWrap>
           <AddCard id={id} />
           {/* message 배열의 길이만큼 PaperCard 생성 */}
           {messages.results.map((message) => (
             <PaperCard key={message.id} message={message} />
           ))}
-        </div>
+        </GridWrap>
       </Container>
     </div>
   );
