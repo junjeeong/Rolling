@@ -34,7 +34,7 @@ function PostDetailPage() {
     <div>
       <HeaderService recipient={recipient} />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', padding: '113px 0' }}>
-        <AddCard />
+        <AddCard id={id} />
         {/* message 배열의 길이만큼 PaperCard  */}
         {message.map((item) => (
           <PaperCard key={item.id} sender={item} />
