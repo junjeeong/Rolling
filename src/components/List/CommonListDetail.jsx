@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { getAllUser } from '../../api/recipients';
 import { useNavigate } from 'react-router-dom';
 import ListSection from './ListSection';
