@@ -1,19 +1,49 @@
 import styled from 'styled-components';
-const EmojiBadge = styled.div`
+import { EmojiBadge } from './EmojiBadge';
+import arrowDown from '../../assets/images/icons/arrow_down.png';
+import { useState } from 'react';
+import { EmojiAllBadge } from './EmojiAllBadge';
+import { useGetReactionsByRecipientId } from '../../hooks/useGetRecipients';
+const Container = styled.div`
+  position: relative;
   display: flex;
-  gap: 4px;
-  background-color: #0000008a;
-  border-radius: 32px;
-  padding: 8px 24px;
-  color: white;
-  font-size: 16px;
-  font-weight: var(--font-regular);
+  gap: 14px;
+  justify-content: center;
+  align-items: center;
 `;
-export const EmojiTopBadge = () => {
+
+const EmojiBadgeWrap = styled.div`
+  display: flex;
+  gap: 8px;
+`;
+const ArrowDown = styled.img`
+  width: 12px;
+  height: 7px;
+`;
+const ArrowDownBtn = styled.button`
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
+  }
+`;
+export const EmojiTopBadge = ({ recipient }) => {
+  const [showAllBadge, setShowAllBadge] = useState(false);
+  const { reactions } = useGetReactionsByRecipientId(recipient.id);
+
   return (
-    <EmojiBadge>
-      <p>👍</p>
-      <p>3</p>
-    </EmojiBadge>
+    <Container>
+      <EmojiBadgeWrap>
+        {recipient.topReactions.map((reaction) => (
+          <EmojiBadge key={reaction.id} emoji={reaction.emoji} count={reaction.count} />
+        ))}
+      </EmojiBadgeWrap>
+      <ArrowDownBtn onClick={() => setShowAllBadge(!showAllBadge)}>
+        <ArrowDown src={arrowDown} />
+      </ArrowDownBtn>
+
+      {showAllBadge && <EmojiAllBadge reactions={reactions.results} />}
+    </Container>
   );
 };
