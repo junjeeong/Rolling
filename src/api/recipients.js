@@ -35,6 +35,7 @@ const addMessageToRecipient = async (recipientId, messageData) => {
 // 롤링 페이퍼 대상의 메세지 목록 가져오기
 const getMessagesByRecipientId = async (recipientId) => {
   const response = await axios.get(`/${TEAM}/recipients/${recipientId}/messages/`);
+
   return response.data;
 };
 

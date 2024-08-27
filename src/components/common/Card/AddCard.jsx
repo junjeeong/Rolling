@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import plusIcon from '../../../assets/images/icons/plus.png';
+import { useNavigate } from 'react-router-dom';
 export const Container = styled.div`
-  display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   width: 384px;
@@ -27,9 +28,11 @@ export const Icon = styled.img`
   height: 24px;
 `;
 export function AddCard() {
+  const navigate = useNavigate();
+
   return (
     <Container>
-      <AddButton>
+      <AddButton onClick={() => navigate('/post')}>
         <Icon src={plusIcon} alt="Add Icon" />
       </AddButton>
     </Container>
