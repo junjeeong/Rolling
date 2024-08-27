@@ -7,7 +7,7 @@ export const Layout = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-// 기존 스타일 정의
+// 이건 랜딩,리스트 페이지에서 다시 따로 정의해주기
 `
 const FullLayout = styled.div`
   display: flex;
