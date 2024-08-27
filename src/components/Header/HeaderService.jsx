@@ -3,6 +3,7 @@ import { EmojiSelector } from '../Emoji/EmojiSelector';
 import { EmojiTopBadge } from '../Emoji/EmojiTopBadge';
 const Container = styled.div`
   background-color: white;
+  margin-top: 65px;
   display: flex;
   justify-content: center;
   height: 68px;
@@ -27,7 +28,6 @@ const RecipientInfo = styled.div`
   align-items: center;
 `;
 //getReactionsByRecipientId 함수를 사용하여 수신자의 이모지 정보를 가져올 예정
-
 export const HeaderService = ({ recipient }) => {
   return (
     <Container>
