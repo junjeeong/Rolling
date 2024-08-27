@@ -1,17 +1,16 @@
-import { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import BackgroundOption from "../../components/Option/BackgroundOption";
-import usePostOptionSize from "../../hooks/usePostOptionSize";
-import { useAddRecipient } from "../../hooks/useAddRecipients";
-import useBackgroundImages from "../../hooks/useBackgroundImages";
+import { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import BackgroundOption from '../../components/Option/BackgroundOption';
+import usePostOptionSize from '../../hooks/usePostOptionSize';
+import { useAddRecipient } from '../../hooks/useAddRecipients';
+import useBackgroundImages from '../../hooks/useBackgroundImages';
 
 const PageContainer = styled.div`
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 70px;
 `;
 
 const Header = styled.div`
@@ -41,12 +40,12 @@ const Input = styled.input.attrs((props) => ({
   width: 100%;
   padding: 12px;
   border-radius: 8px;
-  border: 1px solid ${({ hasError }) => (hasError ? "red" : "#ccc")};
+  border: 1px solid ${({ hasError }) => (hasError ? 'red' : '#ccc')};
   font-size: 16px;
-  outline: ${({ hasError }) => (hasError ? "red" : "none")};
+  outline: ${({ hasError }) => (hasError ? 'red' : 'none')};
 
   &:focus {
-    border-color: ${({ hasError }) => (hasError ? "red" : "#8E44AD")};
+    border-color: ${({ hasError }) => (hasError ? 'red' : '#8E44AD')};
   }
 `;
 
@@ -90,7 +89,7 @@ const Tabs = styled.div`
 `;
 
 const Tab = styled.div.withConfig({
-  shouldForwardProp: (prop) => prop !== "isActive",
+  shouldForwardProp: (prop) => prop !== 'isActive',
 })`
   flex: 1;
   max-width: 200px;
@@ -98,9 +97,9 @@ const Tab = styled.div.withConfig({
   padding: 12px;
   font-size: 16px;
   cursor: pointer;
-  border: 2px solid ${({ isActive }) => (isActive ? "#8E44AD" : "transparent")};
+  border: 2px solid ${({ isActive }) => (isActive ? '#8E44AD' : 'transparent')};
   border-radius: 6px;
-  color: ${({ isActive }) => (isActive ? "#8E44AD" : "#000")};
+  color: ${({ isActive }) => (isActive ? '#8E44AD' : '#000')};
 `;
 
 const OptionsContainer = styled.div`
@@ -123,12 +122,12 @@ const GenerateButton = styled.button`
   margin-top: 24px;
   width: 100%;
   padding: 16px;
-  background-color: ${({ disabled }) => (disabled ? "#CCCCCC" : "#9935ff")};
-  color: ${({ disabled }) => (disabled ? "#FFFFFF" : "white")};
+  background-color: ${({ disabled }) => (disabled ? '#CCCCCC' : '#9935ff')};
+  color: ${({ disabled }) => (disabled ? '#FFFFFF' : 'white')};
   font-size: 18px;
   border: none;
   border-radius: 8px;
-  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 
   @media (min-width: 768px) {
     width: 720px;
@@ -137,10 +136,10 @@ const GenerateButton = styled.button`
 `;
 
 const PostOptionPage = () => {
-  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedColor, setSelectedColor] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
-  const [activeTab, setActiveTab] = useState("color");
-  const [recipientName, setRecipientName] = useState("");
+  const [activeTab, setActiveTab] = useState('color');
+  const [recipientName, setRecipientName] = useState('');
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   const [hasError, setHasError] = useState(false);
   const inputRef = useRef(null);
@@ -153,8 +152,8 @@ const PostOptionPage = () => {
   // 롤링페이퍼 생성 성공 후에 이동할 navigate 훅
   const navigate = useNavigate();
 
-  const TEAM = "9-3";
-  const colors = ["beige", "purple", "blue", "green"];
+  const TEAM = '9-3';
+  const colors = ['beige', 'purple', 'blue', 'green'];
 
   const handleColorSelect = (color) => {
     setSelectedColor(color);
@@ -185,8 +184,8 @@ const PostOptionPage = () => {
         const id = result.id;
         navigate(`/post/${id}`);
       } catch (error) {
-        console.error("Error creating post:", error);
-        alert("롤링 페이퍼 생성에 실패했습니다.");
+        console.error('Error creating post:', error);
+        alert('롤링 페이퍼 생성에 실패했습니다.');
       }
     }
   };
@@ -216,61 +215,32 @@ const PostOptionPage = () => {
       <Header>
         <Label>To.</Label>
         <InputContainer>
-          <Input
-            placeholder="받는 사람 이름을 입력해 주세요"
-            ref={inputRef}
-            onChange={handleInputChange}
-            onBlur={handleInputBlur}
-            hasError={hasError}
-          />
+          <Input placeholder="받는 사람 이름을 입력해 주세요" ref={inputRef} onChange={handleInputChange} onBlur={handleInputBlur} hasError={hasError} />
           {hasError && <ErrorMessage>값을 입력해 주세요.</ErrorMessage>}
         </InputContainer>
       </Header>
       <Content>
         <Instruction>배경화면을 선택해 주세요.</Instruction>
-        <SubInstruction>
-          컬러를 선택하거나, 이미지를 선택할 수 있습니다.
-        </SubInstruction>
+        <SubInstruction>컬러를 선택하거나, 이미지를 선택할 수 있습니다.</SubInstruction>
         <Tabs>
-          <Tab
-            isActive={activeTab === "color"}
-            onClick={() => setActiveTab("color")}
-          >
+          <Tab isActive={activeTab === 'color'} onClick={() => setActiveTab('color')}>
             컬러
           </Tab>
-          <Tab
-            isActive={activeTab === "image"}
-            onClick={() => setActiveTab("image")}
-          >
+          <Tab isActive={activeTab === 'image'} onClick={() => setActiveTab('image')}>
             이미지
           </Tab>
         </Tabs>
         <OptionsContainer>
-          {activeTab === "color" &&
+          {activeTab === 'color' &&
             colors.map((color) => (
-              <OptionWrapper
-                key={color}
-                onClick={() => handleColorSelect(color)}
-              >
-                <BackgroundOption
-                  color={color}
-                  size={postOptionSize}
-                  isSelected={color === selectedColor}
-                />
+              <OptionWrapper key={color} onClick={() => handleColorSelect(color)}>
+                <BackgroundOption color={color} size={postOptionSize} isSelected={color === selectedColor} />
               </OptionWrapper>
             ))}
-          {activeTab === "image" &&
+          {activeTab === 'image' &&
             backgroundImages.map((image, index) => (
-              <OptionWrapper
-                key={index}
-                onClick={() => handleImageSelect(image)}
-              >
-                <BackgroundOption
-                  color="#fff"
-                  size={postOptionSize}
-                  imgUrl={image}
-                  isSelected={image === selectedImage}
-                />
+              <OptionWrapper key={index} onClick={() => handleImageSelect(image)}>
+                <BackgroundOption color="#fff" size={postOptionSize} imgUrl={image} isSelected={image === selectedImage} />
               </OptionWrapper>
             ))}
         </OptionsContainer>
