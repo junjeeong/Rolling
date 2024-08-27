@@ -28,6 +28,7 @@ const ArrowDownBtn = styled.button`
     opacity: 0.5;
   }
 `;
+// reaction 받은 상위 이모티콘을 시각적으로 표시합니다.
 export const EmojiTopBadge = ({ recipient }) => {
   const [showAllBadge, setShowAllBadge] = useState(false);
   const { reactions } = useGetReactionsByRecipientId(recipient.id);

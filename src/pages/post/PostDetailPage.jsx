@@ -16,7 +16,7 @@ const Container = styled.div`
 function PostDetailPage() {
   const { id } = useParams();
 
-  // 데이터 fetching
+  // 커스텀 Hook을 활용하여 데이터 fetching을 보다 효율적으로 처리합니다.
   const { recipient } = useGetRecipientById(id);
   const { messages, error: messagesError } = useGetMessagesByRecipientId(id);
 

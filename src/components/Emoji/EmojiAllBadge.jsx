@@ -18,7 +18,7 @@ const EmojiBadgeWrap = styled.div`
   gap: 8px;
   align-items: center;
 `;
-
+// reaction 받은 전체 이모팀콘을 시각적으로 표시합니다.
 export const EmojiAllBadge = ({ reactions }) => {
   return (
     <Container>
