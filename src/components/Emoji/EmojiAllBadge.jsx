@@ -1,4 +1,3 @@
-import { Emoji } from 'emoji-picker-react';
 import styled from 'styled-components';
 import { EmojiBadge } from './EmojiBadge';
 const Container = styled.div`
