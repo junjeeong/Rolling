@@ -1,18 +1,14 @@
-import styled from "styled-components";
-import { useParams } from "react-router-dom";
-import { HeaderService } from "../../components/Header/HeaderService.jsx";
-import { AddCard } from "../../components/common/Card/AddCard.jsx";
-import { PaperCard } from "../../components/common/Card/PaperCard.jsx";
-import {
-  useGetRecipientById,
-  useGetMessagesByRecipientId,
-} from "../../hooks/useGetRecipients.jsx";
-import HeaderContainer from "../../containers/Header/HeaderContainer.jsx";
+import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
+import { HeaderService } from '../../components/Header/HeaderService.jsx';
+import { AddCard } from '../../components/common/Card/AddCard.jsx';
+import { PaperCard } from '../../components/common/Card/PaperCard.jsx';
+import { useGetRecipientById, useGetMessagesByRecipientId } from '../../hooks/useGetRecipients.jsx';
+import HeaderContainer from '../../containers/Header/HeaderContainer.jsx';
 
 const Container = styled.div`
   height: calc(100vh - 133px); // 헤더 제외 높이
-  background-color: ${({ $backgroundColor }) =>
-    $backgroundColor || "white"}; // 기본 색상 지정
+  background-color: ${({ $backgroundColor }) => $backgroundColor || 'white'}; // 기본 색상 지정
   overflow-y: hidden;
 `;
 
@@ -31,11 +27,11 @@ function PostDetailPage() {
   // 커스텀 Hook을 활용하여 데이터 fetching을 보다 효율적으로 처리합니다.
   const { recipient } = useGetRecipientById(id);
   const { messages, error: messagesError } = useGetMessagesByRecipientId(id);
-  console.log(messages);
+  console.log(recipient, messages);
 
   // 오류 및 로딩 처리
   if (messagesError) {
-    return <p style={{ color: "red" }}>Error: {messagesError}</p>;
+    return <p style={{ color: 'red' }}>Error: {messagesError}</p>;
   }
 
   if (!recipient) {

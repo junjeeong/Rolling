@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import { EmojiTopBadge } from "../Emoji/EmojiTopBadge";
-import { AddEmoji } from "../Emoji/AddEmoji";
-import { AuthorNotice } from "./AuthorNotice";
+import styled from 'styled-components';
+import { EmojiTopBadge } from '../Emoji/EmojiTopBadge';
+import { AddEmoji } from '../Emoji/AddEmoji';
+import { AuthorNotice } from './AuthorNotice';
 const Container = styled.div`
   background-color: white;
   margin-top: 65px;
@@ -43,17 +43,15 @@ export const HeaderService = ({ recipient, messages }) => {
   return (
     <Container>
       {recipient && (
-        <>
-          <ServiceWrap>
-            <p>To: {recipient.name}</p>
-            <AuthorNotice paperInfo={recipient} authors={messages} />
-            <Divider />
-            <RecipientInfo>
-              <EmojiTopBadge recipient={recipient} />
-              <AddEmoji />
-            </RecipientInfo>
-          </ServiceWrap>
-        </>
+        <ServiceWrap>
+          <p>To: {recipient.name}</p>
+          <AuthorNotice paperInfo={recipient} authors={messages} />
+          <Divider />
+          <RecipientInfo>
+            <EmojiTopBadge recipient={recipient} />
+            <AddEmoji />
+          </RecipientInfo>
+        </ServiceWrap>
       )}
     </Container>
   );

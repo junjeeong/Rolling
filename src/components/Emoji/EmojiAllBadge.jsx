@@ -20,6 +20,8 @@ const EmojiBadgeWrap = styled.div`
 `;
 // reaction 받은 전체 이모팀콘을 시각적으로 표시합니다.
 export const EmojiAllBadge = ({ reactions }) => {
+  console.log(reactions);
+
   return (
     <Container>
       <EmojiBadgeWrap>
