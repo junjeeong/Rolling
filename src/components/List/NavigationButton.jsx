@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+//로직 컴포넌트
+
 const Arrow = styled.svg`
 	width: 16px;
 	height: 16px;

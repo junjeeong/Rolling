@@ -3,12 +3,6 @@ import styled from 'styled-components';
 import { Outlet } from 'react-router-dom';
 import HeaderContainer from '../containers/Header/HeaderContainer';
 
-export const Layout = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-// 이건 랜딩,리스트 페이지에서 다시 따로 정의해주기
-`
 const FullLayout = styled.div`
   display: flex;
   justify-content: center;

@@ -1,11 +1,107 @@
 import React, { useEffect, useState } from 'react';
 import { getAllUser } from '../../api/recipients';
 import { useNavigate } from 'react-router-dom';
-import ListSection from './ListSection';
-import Container from './Container';
-import Title from './Title';
 import CardListSection from './CardListSection';
-import GoToMakeButton from './GoToMakeButton';
+import styled from 'styled-components';
+import PrimaryButton from '../common/Button/PrimaryButton';
+
+//로직 컴포넌트
+
+//리스트 레이아웃
+const Layout = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+`
+
+//ListSection
+const ListSection = styled(Layout)`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 64px;
+	padding-bottom: 100px;
+
+	@media (max-width: 1248px) {
+		overflow-x: hidden;
+		height: calc(100svh);
+	}
+
+	@media (max-width: 768px) {
+		overflow-x: hidden;
+		padding-bottom: 0;
+	}
+`;
+
+//Container
+const Container = styled.div`
+	margin-bottom: 6.4rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
+	@media (max-width: 1248px) {
+		width: 100%;
+		margin-bottom: 15.6rem;
+	}
+
+	@media (max-width: 768px) {
+		margin-bottom: 6.6rem;
+	}
+`;
+
+//Title
+const Title = styled.h2`
+	margin-top: 50px;
+	margin-bottom: 16px;
+	font-size: 24px;
+	line-height: 36px;
+	letter-spacing: -0.01em;
+	font-weight: var(--font-bold);
+	color: var(--black);
+
+	@media (max-width: 1248px) {
+		margin-top: 50px;
+		margin-left: 24px;
+		margin-bottom: 16px;
+	}
+
+	@media (max-width: 768px) {
+		font-size: 20px;
+		line-height: 30px;
+		font-weight: var(--font-medium);
+		margin-top: 40px;
+		margin-left: 20px;
+		margin-bottom: 12px;
+		letter-spacing: normal;
+	}
+`;
+
+//GoToMakeButton
+const GoToMakeButton = styled(PrimaryButton)`
+	padding: 14px 60px;
+	line-height: 2.8rem;
+	font-size: 1.8rem;
+	white-space: nowrap;
+
+	span {
+		display: flex;
+		justify-content: center;
+		width: 160px;
+	}
+
+	@media (max-width: 1248px) {
+		min-width: calc(100% - 48px);
+		display: flex;
+		justify-content: center;
+	}
+
+	@media (max-width: 768px) {
+		min-width: calc(100% - 40px);
+		display: flex;
+		justify-content: center;
+	}
+`;
 
 export default function CommonListDetail() {
   const [loading, setLoading] = useState(false);
