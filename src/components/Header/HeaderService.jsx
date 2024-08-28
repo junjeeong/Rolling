@@ -1,21 +1,21 @@
 import styled from "styled-components";
-import { EmojiSelector } from "../Emoji/EmojiSelector";
 import { EmojiTopBadge } from "../Emoji/EmojiTopBadge";
+import { AddEmoji } from "../Emoji/AddEmoji";
 import { AuthorNotice } from "./AuthorNotice";
-
 const Container = styled.div`
   background-color: white;
   margin-top: 65px;
   display: flex;
+  height: 68px;
   justify-content: center;
   height: 68px;
-  padding: 13px 0;
 `;
 
 const ServiceWrap = styled.div`
   display: flex;
   max-width: 1200px;
   width: 100%;
+  height: 100%;
   justify-content: space-between;
   align-items: center;
   font-size: 28px;
@@ -45,13 +45,12 @@ export const HeaderService = ({ recipient, messages }) => {
       {recipient && (
         <>
           <ServiceWrap>
-            <p style={{ flexGrow: "1" }}>To: {recipient.name}</p>
+            <p>To: {recipient.name}</p>
             <AuthorNotice paperInfo={recipient} authors={messages} />
             <Divider />
             <RecipientInfo>
-              <p>이모지 총 개수: {recipient.reactionCount}</p>
-              <EmojiTopBadge />
-              <EmojiSelector />
+              <EmojiTopBadge recipient={recipient} />
+              <AddEmoji />
             </RecipientInfo>
           </ServiceWrap>
         </>
