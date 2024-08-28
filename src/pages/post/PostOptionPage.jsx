@@ -120,37 +120,41 @@ const GenerateButton = styled.button`
 `;
 
 const PostOptionPage = () => {
-  const [selectedColor, setSelectedColor] = useState("");
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [selectedIndex, setSelectedIdex] = useState(0);
-  const [activeTab, setActiveTab] = useState("color");
-  const [recipientName, setRecipientName] = useState("");
-  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
-  const [hasError, setHasError] = useState(false);
-  const inputRef = useRef(null);
-  // 배경화면 이미지 커스텀 훅
+  // State 선언
+  const [selectedColor, setSelectedColor] = useState(null); // 사용자가 선택한 컬러
+  const [selectedImage, setSelectedImage] = useState(null); // 사용자가 선택한 이미지
+  const [selectedIndex, setSelectedIdex] = useState(0); // 선택한 이미지의 인덱스
+  const [activeTab, setActiveTab] = useState("color"); // 현재 활성화된 탭 (color 또는 image)
+  const [recipientName, setRecipientName] = useState(""); // 입력된 받는 사람의 이름
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false); // 생성 버튼 활성화 여부
+  const [hasError, setHasError] = useState(false); // 입력값 오류 상태
+  const inputRef = useRef(null); // 받는 사람 입력 필드에 대한 ref
+
+  // 커스텀 훅을 사용하여 배경 이미지와 추가 로직 가져오기
   const backgroundImages = useBackgroundImages();
-  // 롤링페이퍼 생성 커스텀 훅
   const { addRecipient } = useAddRecipient();
   const navigate = useNavigate();
 
-  const TEAM = "9-3";
+  const TEAM = "9-3"; // 팀 이름 상수
 
+  // 컬러 선택 핸들러
   const handleColorSelect = (color) => {
     setSelectedColor(color);
     if (activeTab === "color") {
-      setSelectedImage(null);
+      setSelectedImage(null); // 컬러 탭이 활성화된 상태에서 컬러를 선택하면 이미지는 초기화
     }
   };
 
+  // 이미지 선택 핸들러
   const handleImageSelect = (image, index) => {
     setSelectedImage(image);
     setSelectedIdex(index);
     if (activeTab === "image") {
-      setSelectedColor("");
+      setSelectedColor(null); // 이미지 탭이 활성화된 상태에서 이미지를 선택하면 컬러는 초기화
     }
   };
 
+  // 생성 버튼 클릭 핸들러
   const handleGenerateClick = async (e) => {
     e.preventDefault();
 
@@ -158,18 +162,18 @@ const PostOptionPage = () => {
       const payload = {
         team: TEAM,
         name: recipientName,
-        backgroundColor: selectedColor ? selectedColor : COLORS[0], // 필수항목 처리
+        backgroundColor: selectedColor || COLORS[0], // 컬러가 선택되지 않았을 경우 기본 컬러를 설정
         backgroundImageURL: selectedImage
           ? backgroundImages[selectedIndex]
-          : null,
+          : null, // 이미지가 선택되지 않으면 null
       };
 
-      console.log(payload);
+      console.log(payload); // payload 확인
 
       try {
-        const result = await addRecipient(payload);
-        const id = result.id;
-        navigate(`/post/${id}`);
+        const result = await addRecipient(payload); // 서버에 payload 전송
+        const id = result.id; // 생성된 롤링페이퍼의 ID
+        navigate(`/post/${id}`); // 생성된 롤링페이퍼 페이지로 이동
       } catch (error) {
         console.error("Error creating post:", error);
         alert("롤링 페이퍼 생성에 실패했습니다.");
@@ -177,12 +181,14 @@ const PostOptionPage = () => {
     }
   };
 
+  // 받는 사람 입력 필드 변경 핸들러
   const handleInputChange = () => {
     const value = inputRef.current.value;
     setRecipientName(value);
     setHasError(false);
   };
 
+  // 입력 필드 포커스 해제 시 처리
   const handleInputBlur = () => {
     if (!recipientName.trim()) {
       setHasError(true);
@@ -190,18 +196,13 @@ const PostOptionPage = () => {
   };
 
   useEffect(() => {
-    let isValid = false;
+    // 받는 사람과 현재 활성화된 탭에 따라 컬러 또는 이미지가 선택되었는지 확인
+    const isValid =
+      recipientName.trim() &&
+      (activeTab === "color" ? selectedColor !== null : selectedImage !== null);
 
-    if (activeTab === "color" && selectedColor) {
-      isValid = recipientName.trim() && selectedColor !== "";
-    } else if (activeTab === "image" && selectedImage) {
-      isValid = recipientName.trim() && selectedImage !== null;
-    }
-
-    if (isButtonEnabled !== isValid) {
-      setIsButtonEnabled(isValid);
-    }
-  }, [recipientName, selectedColor, selectedImage, activeTab, isButtonEnabled]);
+    setIsButtonEnabled(isValid); // 조건에 따라 버튼 활성화
+  }, [recipientName, selectedColor, selectedImage, activeTab]);
 
   return (
     <PageContainer>
@@ -225,22 +226,22 @@ const PostOptionPage = () => {
         </SubInstruction>
         <Tabs>
           <Tab
-            isActive={activeTab === "color"}
-            onClick={() => setActiveTab("color")}
+            isActive={activeTab === "color"} // 컬러 탭 활성화 여부
+            onClick={() => setActiveTab("color")} // 컬러 탭 클릭 시 활성화
           >
             컬러
           </Tab>
           <Tab
-            isActive={activeTab === "image"}
-            onClick={() => setActiveTab("image")}
+            isActive={activeTab === "image"} // 이미지 탭 활성화 여부
+            onClick={() => setActiveTab("image")} // 이미지 탭 클릭 시 활성화
           >
             이미지
           </Tab>
         </Tabs>
         <OptionsContainer
-          activeTab={activeTab}
-          onColorSelect={handleColorSelect}
-          onImageSelect={handleImageSelect}
+          activeTab={activeTab} // 현재 활성화된 탭에 따라 옵션 표시
+          onColorSelect={handleColorSelect} // 컬러 선택 핸들러
+          onImageSelect={handleImageSelect} // 이미지 선택 핸들러
         />
       </Content>
       <GenerateButton onClick={handleGenerateClick} disabled={!isButtonEnabled}>
