@@ -31,6 +31,7 @@ function PostDetailPage() {
   // 커스텀 Hook을 활용하여 데이터 fetching을 보다 효율적으로 처리합니다.
   const { recipient } = useGetRecipientById(id);
   const { messages, error: messagesError } = useGetMessagesByRecipientId(id);
+  console.log(messages);
 
   // 오류 및 로딩 처리
   if (messagesError) {
@@ -48,7 +49,7 @@ function PostDetailPage() {
   return (
     <div>
       <HeaderContainer />
-      <HeaderService recipient={recipient} messages={message} />
+      <HeaderService recipient={recipient} messages={messages.results} />
       <Container $backgroundColor={recipient?.backgroundColor}>
         <GridWrap>
           <AddCard id={id} />
