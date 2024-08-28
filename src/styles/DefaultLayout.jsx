@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom';
 import HeaderContainer from '../containers/Header/HeaderContainer';
 
 // 기존 스타일 정의
+
 const FullLayout = styled.div`
   display: flex;
   justify-content: center;
