@@ -61,9 +61,8 @@ const KakaoShareButton = ({ onCloseDropdown }) => {
       objectType: "feed",
       content: {
         title: "롤링 페이퍼",
-        description: "#친구 #지인 #동료 #가족",
-        imageUrl:
-          "http://k.kakaocdn.net/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png",
+        description: "Rolling에서 롤링 페이퍼를 작성해보세요!",
+        imageUrl: "https://fe93.netlify.app/logo.png",
         link: {
           mobileWebUrl: window.location.href,
           webUrl: window.location.href,
@@ -89,14 +88,21 @@ const KakaoShareButton = ({ onCloseDropdown }) => {
   }, []);
 
   useEffect(() => {
+    // 현재 window.open 함수를 originalWindowOpen 변수에 저장
+    // 나중에 원래의 window.open 동작을 복원하기 위해 필요
     const originalWindowOpen = window.open;
+
+    // window.open 함수를 재정의
     window.open = (...args) => {
-      onCloseDropdown(); // 팝업이 열리기 직전에 드롭다운을 닫습니다.
+      // 팝업이 열리기 직전에 onCloseDropdown 함수를 호출하여 드롭다운을 닫음
+      onCloseDropdown();
+      // 원래의 window.open 함수 호출
       return originalWindowOpen(...args);
     };
 
+    // 컴포넌트가 언마운트될 때 실행, window.open을 원래의 함수로 복원
     return () => {
-      window.open = originalWindowOpen; // 컴포넌트 언마운트 시 원래 상태로 복원
+      window.open = originalWindowOpen;
     };
   }, [onCloseDropdown]);
 
