@@ -14,7 +14,6 @@ const HeaderContainer = () => {
 
   const listPaths = ['/', '/list'];
   const existingPath = listPaths.includes(location.pathname);
-  console.log('Existing Path:', existingPath);
   // 모바일 디바이스에서 특정 경로가 아닐 경우 헤더를 숨김
   if (isMobile && !existingPath) {
     return null;
