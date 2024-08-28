@@ -40,11 +40,9 @@ export const EmojiTopBadge = ({ recipient }) => {
           <EmojiBadge key={reaction.id} emoji={reaction.emoji} count={reaction.count} />
         ))}
       </EmojiBadgeWrap>
-      {recipient?.topReactions > 0 && (
-        <ArrowDownBtn onClick={() => setShowAllBadge(!showAllBadge)}>
-          <ArrowDown src={arrowDown} />
-        </ArrowDownBtn>
-      )}
+      <ArrowDownBtn onClick={() => setShowAllBadge(!showAllBadge)}>
+        <ArrowDown src={arrowDown} />
+      </ArrowDownBtn>
       {showAllBadge && <EmojiAllBadge reactions={reactions.results} />}
     </Container>
   );
