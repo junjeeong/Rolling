@@ -1,19 +1,14 @@
+import styled from "styled-components";
 import { useParams } from "react-router-dom";
+import { HeaderService } from "../../components/Header/HeaderService.jsx";
+import { AddCard } from "../../components/common/Card/AddCard.jsx";
+import { PaperCard } from "../../components/common/Card/PaperCard.jsx";
 import {
   useGetRecipientById,
   useGetMessagesByRecipientId,
 } from "../../hooks/useGetRecipients.jsx";
-import { useEffect, useState } from "react";
-import {
-  getRecipientById,
-  getMessagesByRecipientId,
-} from "../../api/recipients.js";
-import { HeaderService } from "../../components/Header/HeaderService.jsx";
-import { AddCard } from "../../components/common/Card/AddCard.jsx";
-import { PaperCard } from "../../components/common/Card/PaperCard.jsx";
 import HeaderContainer from "../../containers/Header/HeaderContainer.jsx";
-import styled from "styled-components";
-// getRecipientById api 테스트 페이지 /9-3/recipients/${id}/
+
 const Container = styled.div`
   height: calc(100vh - 133px); // 헤더 제외 높이
   background-color: ${({ $backgroundColor }) =>
