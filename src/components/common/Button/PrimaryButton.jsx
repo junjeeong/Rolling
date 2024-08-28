@@ -19,7 +19,7 @@ const Button = styled.button`
   }
 `;
 
-const PrimaryButton = styled(Link)`
+const PrimaryLink = styled(Link)`
   padding: 14px 24px;
   background: var(--purple-600);
   border-radius: 6px;
@@ -40,9 +40,9 @@ const PrimaryButton = styled(Link)`
 export default function PrimaryButton({ className, to, children, ...props }) {
   if (to) {
     return (
-      <PrimaryButton to={to} className={className}>
+      <PrimaryLink to={to} className={className}>
         <span>{children}</span>
-      </PrimaryButton>
+      </PrimaryLink>
     );
   }
   return (
