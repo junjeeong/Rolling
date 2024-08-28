@@ -28,8 +28,6 @@ export const Icon = styled.img`
   height: 24px;
 `;
 export function AddCard({ id }) {
-  console.log('id', id);
-
   const navigate = useNavigate();
 
   return (

@@ -83,10 +83,10 @@ export const RelationShip = styled.div`
   background-color: ${({ rel }) => (rel === '가족' ? 'var(--green-100)' : rel === '동료' ? 'var(--purple-100)' : rel === '지인' ? 'var(--beige-100)' : 'var(--blue-100)')};
 `;
 
-export function PaperCard({ sender }) {
-  if (!sender) return null;
+export function PaperCard({ message }) {
+  if (!message) return null;
 
-  const { content, createdAt, font, profileImageURL, relationship, name } = sender;
+  const { content, createdAt, font, profileImageURL, relationship, name } = message;
 
   const formattedDate = new Date(createdAt).toLocaleDateString();
   return (
