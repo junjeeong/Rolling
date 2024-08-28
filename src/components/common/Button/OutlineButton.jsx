@@ -15,7 +15,7 @@ const Button = styled.button`
   }
 `;
 
-const OutlineBtn = styled(Link)`
+const OutlineLink = styled(Link)`
   padding: 6px 16px;
   border: 1px solid var(--gray-300);
   background: var(--white);
@@ -35,10 +35,10 @@ const OutlineBtn = styled(Link)`
 export default function OutlineButton({ className, haveImg, imgSrc, children, to, ...props }) {
   if (to) {
     return (
-      <OutlineBtn to={to} className={className}>
+      <OutlineLink to={to} className={className}>
         {haveImg && <img src={imgSrc} alt={children} />}
         {children}
-      </OutlineBtn>
+      </OutlineLink>
     );
   }
   return (

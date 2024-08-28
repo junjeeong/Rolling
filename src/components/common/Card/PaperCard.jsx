@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import parse from 'html-react-parser';
 
 export const Container = styled.div`
   position: relative;
@@ -101,7 +102,7 @@ export function PaperCard({ message }) {
         </Info>
       </ProfileWrap>
       <Divider />
-      <ContentBox font={font}>{content}</ContentBox>
+      <ContentBox font={font}>{parse(content)}</ContentBox>
       <CreatedTime>{formattedDate}</CreatedTime>
     </Container>
   );
