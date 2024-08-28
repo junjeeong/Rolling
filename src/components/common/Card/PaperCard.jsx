@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import parse from 'html-react-parser';
+import parse from 'html-react-parser';
 
 export const Container = styled.div`
   position: relative;
