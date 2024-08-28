@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import parse from 'html-react-parser';
 
 export const Container = styled.div`
   position: relative;
@@ -83,10 +84,10 @@ export const RelationShip = styled.div`
   background-color: ${({ rel }) => (rel === '가족' ? 'var(--green-100)' : rel === '동료' ? 'var(--purple-100)' : rel === '지인' ? 'var(--beige-100)' : 'var(--blue-100)')};
 `;
 
-export function PaperCard({ sender }) {
-  if (!sender) return null;
+export function PaperCard({ message }) {
+  if (!message) return null;
 
-  const { content, createdAt, font, profileImageURL, relationship, name } = sender;
+  const { content, createdAt, font, profileImageURL, relationship, name } = message;
 
   const formattedDate = new Date(createdAt).toLocaleDateString();
   return (
@@ -101,7 +102,7 @@ export function PaperCard({ sender }) {
         </Info>
       </ProfileWrap>
       <Divider />
-      <ContentBox font={font}>{content}</ContentBox>
+      <ContentBox font={font}>{parse(content)}</ContentBox>
       <CreatedTime>{formattedDate}</CreatedTime>
     </Container>
   );
