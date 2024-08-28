@@ -4,7 +4,8 @@ import PostDetailPage from './pages/post/PostDetailPage';
 import PostOptionPage from './pages/post/PostOptionPage';
 import { DefaultLayout } from './styles/DefaultLayout';
 import PostMessagePage from './pages/post/PostMessagePage';
-import { Home } from './pages/Home';
+import LandingPage from './pages/LandingPage';
+import ListPage from './pages/ListPage';
 
 function App() {
   return (
