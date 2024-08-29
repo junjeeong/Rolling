@@ -5,6 +5,7 @@ import CardContent from './CardContent';
 import { PrevButton, NextButton } from './NavigationButton';
 import AnimatedCardList from './AnimatedCardList';
 import EllipsisLoading from '../Loading/EllipsisLoading';
+import CardReactions from './CardReactions';
 
 const CardListWrapper = styled.div`
 	position: relative;
@@ -55,18 +56,19 @@ const CardListSection = ({ messages, loading }) => {
 						</h2>
 					)}
 					{messages.map((recipient) => (
-						<CardContent
-							id={recipient.id}
-							key={`post-${recipient.id}`}
-							recipientName={recipient.name}
-							backgroundColor={recipient.backgroundColor}
-							backgroundImageURL={recipient.backgroundImageURL}
-							messageCount={recipient.messageCount}
-							profileImage={recipient.recentMessages}
-							topReaction={recipient.topReactions}
-							handleCardClick={() => handleCardClick(recipient.id)}
-						/>
-					))}
+							<div key={`post-${recipient.id}`}>
+								<CardContent
+									id={recipient.id}
+									recipientName={recipient.name}
+									backgroundColor={recipient.backgroundColor}
+									backgroundImageURL={recipient.backgroundImageURL}
+									messageCount={recipient.messageCount}
+									profileImage={recipient.recentMessages}
+									handleCardClick={() => handleCardClick(recipient.id)}
+								/>
+								<CardReactions reactions={recipient.topReactions} />
+							</div>
+						))}
 				</AnimatedCardList> 
 				)}
 				<NextButton
