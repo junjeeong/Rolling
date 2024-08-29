@@ -1,5 +1,6 @@
 import { EmojiTopBadge } from '../Emoji/EmojiTopBadge';
 import { Card } from './Cards';
+import Overlay from './Overlay';
 import styled from 'styled-components';
 
 const CardContentContainer = styled.div`
@@ -146,6 +147,8 @@ const CardContent = ({
 			backgroundColor={backgroundColor}
 			backgroundImageURL={backgroundImageURL}
 		>
+			{backgroundImageURL && <Overlay />}
+
 			<CardContentContainer>
 				<RecipientName $hasBackgroundImage={!!backgroundImageURL}>
 					To. {recipientName}

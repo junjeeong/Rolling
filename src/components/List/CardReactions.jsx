@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { EmojiSelector } from '../Emoji/EmojiSelector';
+import { EmojiTopBadge } from '../Emoji/EmojiTopBadge';
 
 const ReactionsContainer = styled.div`
 	display: flex;
@@ -15,7 +15,7 @@ const ReactionsContainer = styled.div`
 	}
 `;
 
-const CustomEmojiSelector = styled(EmojiSelector)`
+const CustomEmojiSelector = styled(EmojiTopBadge)`
 	justify-content: center;
 	gap: 4px;
 
