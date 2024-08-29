@@ -17,7 +17,7 @@ export const Container = styled.div`
 export const ProfileWrap = styled.div`
   display: flex;
   width: 100%;
-  height: 100px;
+  height: 80px;
   gap: 14px;
 `;
 
@@ -35,9 +35,11 @@ export const Profile = styled.img`
 `;
 
 export const Info = styled.div`
+  margin-top: 3px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
+  flex-grow: 1;
 `;
 
 export const Name = styled.div`
@@ -55,11 +57,11 @@ export const ContentBox = styled.div`
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3; /* 최대 3줄 표시 */
   overflow: hidden;
+  overflow-wrap: break-word; /* 긴 단어도 줄바꿈 */
   text-overflow: ellipsis; /* 넘치는 부분을 ...으로 표시 */
-  height: 4.5em; /* 대략 3줄 높이 */
   line-height: 1.5em; /* 줄 높이 설정 */
+  white-space: normal; /* 텍스트 줄바꿈 허용 */
 `;
-
 export const CreatedTime = styled.div`
   position: absolute;
   left: 24px;

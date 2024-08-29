@@ -35,19 +35,6 @@ function PostDetailPage() {
   const { recipient } = useGetRecipientById(id);
   const { messages, error: messagesError } = useGetMessagesByRecipientId(id);
 
-  const openModal = (cardInfo) => {
-    setIsModalOpen(true);
-    setSelectedCardInfo(cardInfo);
-  };
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedCardInfo({});
-  };
-
-  useEffect(() => {
-    console.log("Modal Open State: ", isModalOpen);
-  }, [isModalOpen]);
-
   // 오류 및 로딩 처리
   if (messagesError) {
     return <p style={{ color: "red" }}>Error: {messagesError}</p>;
@@ -60,6 +47,15 @@ function PostDetailPage() {
   if (!messages) {
     return <p>Loading messages...</p>;
   }
+
+  const openModal = (cardInfo) => {
+    setIsModalOpen(true);
+    setSelectedCardInfo(cardInfo);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedCardInfo({});
+  };
 
   return (
     <div>

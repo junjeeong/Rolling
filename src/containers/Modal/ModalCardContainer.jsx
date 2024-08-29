@@ -1,26 +1,32 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import ModalCard from "../../components/common/Card/ModalCard.jsx";
 
 function ModalCardContainer({ onClose, selectedCardInfo }) {
-  const cardRef = useRef();
+  const modalRef = useRef();
+
   useEffect(() => {
     function handleClickOutside(event) {
-      // modalRef가 정의된 요소 외부에서 클릭이 발생했는지 확인
+      // modalRef가 정의된 요소 외부에서 클릭이 발생할 경우 모달 닫기 기능.
       if (modalRef.current && !modalRef.current.contains(event.target)) {
         onClose();
       }
     }
-    // 마우스 버튼이 눌렸을 때 이벤트 감지
+    // 모달이 mount되면 전체 영역에 mousedown 이벤트리스너 달기.
     document.addEventListener("mousedown", handleClickOutside);
-    document.body.style.backgroundColor = "rgba(0, 0, 0, 0.2)";
 
+    // 모달이 unmount 되면 달아둔 mousedown 이벤트리스너 삭제
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
-      document.body.style.backgroundColor = "";
     };
-  }, [onClose]);
+  }, []);
 
-  return <ModalCard ref={cardRef} selectedCardInfo={selectedCardInfo} />;
+  return (
+    <ModalCard
+      ref={modalRef}
+      onClose={onClose}
+      selectedCardInfo={selectedCardInfo}
+    />
+  );
 }
 
 export default ModalCardContainer;
