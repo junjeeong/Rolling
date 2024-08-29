@@ -1,4 +1,4 @@
-import { EmojiSelector } from '../Emoji/EmojiSelector';
+import { EmojiTopBadge } from '../Emoji/EmojiTopBadge';
 import { Card } from './Cards';
 import styled from 'styled-components';
 
@@ -120,7 +120,7 @@ const ReactionContainer = styled.ul`
 	}
 `;
 
-const MainEmoji = styled(EmojiSelector)`
+const MainEmoji = styled(EmojiTopBadge)`
 	flex: 0 0;
 
 	@media (max-width: 768px) {
