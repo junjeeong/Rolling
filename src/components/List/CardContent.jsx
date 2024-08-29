@@ -139,6 +139,7 @@ const CardContent = ({
 	topReaction = [],
 	handleCardClick,
 }) => {
+
 	return (
 		<Card
 			onClick={handleCardClick}
@@ -149,16 +150,16 @@ const CardContent = ({
 				<RecipientName $hasBackgroundImage={!!backgroundImageURL}>
 					To. {recipientName}
 				</RecipientName>
-				<ProfileImagesContainer>
-					{profileImage.map((profile, index) => (
-						<div key={index}>
-							<img src={profile.profileImageURL} alt='Profile' />
-						</div>
-					))}
-					{messageCount > 3 && (
-						<ExtraProfiles>+{messageCount - 3}</ExtraProfiles>
-					)}
-				</ProfileImagesContainer>
+        <ProfileImagesContainer>
+          {profileImage.map((profile, index) => (
+            <div key={index}>
+              <img src={profile.profileImageURL} alt='Profile' />
+            </div>
+          ))}
+          {messageCount > 3 && (
+            <ExtraProfiles>+{messageCount - 3}</ExtraProfiles>
+          )}
+        </ProfileImagesContainer>
 				<MessageCount $hasBackgroundImage={!!backgroundImageURL}>
 					<span>{messageCount}</span>명이 작성했어요!
 				</MessageCount>

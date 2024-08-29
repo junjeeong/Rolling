@@ -32,8 +32,8 @@ const CardListSection = ({ messages, loading }) => {
 		}
 	};
 
-	const handleCardClick = (recipientId) => {
-		navigate(`/post/${recipientId}`);
+	const handleCardClick = (id) => {
+		navigate(`/post/${id}`);
 	};
 
 
@@ -62,7 +62,7 @@ const CardListSection = ({ messages, loading }) => {
 							backgroundColor={recipient.backgroundColor}
 							backgroundImageURL={recipient.backgroundImageURL}
 							messageCount={recipient.messageCount}
-							profileImage={recipient.recentMassages}
+							profileImage={recipient.recentMessages}
 							topReaction={recipient.topReactions}
 							handleCardClick={() => handleCardClick(recipient.id)}
 						/>
