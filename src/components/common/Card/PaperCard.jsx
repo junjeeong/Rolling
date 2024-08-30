@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import parse from 'html-react-parser';
+import styled from "styled-components";
+import parse from "html-react-parser";
 
 export const Container = styled.div`
   position: relative;
@@ -11,17 +11,17 @@ export const Container = styled.div`
   padding: 28px 24px;
   border-radius: 16px;
   background-color: var(--white);
+  cursor: pointer;
 `;
 
 export const ProfileWrap = styled.div`
   display: flex;
   width: 100%;
-  height: 100px;
+  height: 80px;
   gap: 14px;
 `;
 
 export const Divider = styled.div`
-  float: left;
   width: 336px;
   height: 1px;
   margin-top: -16px;
@@ -35,9 +35,11 @@ export const Profile = styled.img`
 `;
 
 export const Info = styled.div`
+  margin-top: 3px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
+  flex-grow: 1;
 `;
 
 export const Name = styled.div`
@@ -55,11 +57,11 @@ export const ContentBox = styled.div`
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3; /* 최대 3줄 표시 */
   overflow: hidden;
+  overflow-wrap: break-word; /* 긴 단어도 줄바꿈 */
   text-overflow: ellipsis; /* 넘치는 부분을 ...으로 표시 */
-  height: 4.5em; /* 대략 3줄 높이 */
   line-height: 1.5em; /* 줄 높이 설정 */
+  white-space: normal; /* 텍스트 줄바꿈 허용 */
 `;
-
 export const CreatedTime = styled.div`
   position: absolute;
   left: 24px;
@@ -80,23 +82,38 @@ export const RelationShip = styled.div`
   font-size: 14px;
   border-radius: 4px;
   padding: 0 8px;
-  color: ${({ rel }) => (rel === '가족' ? 'var(--green-500)' : rel === '동료' ? 'var(--purple-600)' : rel === '지인' ? 'var(--beige-500)' : 'var(--blue-500)')};
-  background-color: ${({ rel }) => (rel === '가족' ? 'var(--green-100)' : rel === '동료' ? 'var(--purple-100)' : rel === '지인' ? 'var(--beige-100)' : 'var(--blue-100)')};
+  color: ${({ rel }) =>
+    rel === "가족"
+      ? "var(--green-500)"
+      : rel === "동료"
+        ? "var(--purple-600)"
+        : rel === "지인"
+          ? "var(--beige-500)"
+          : "var(--blue-500)"};
+  background-color: ${({ rel }) =>
+    rel === "가족"
+      ? "var(--green-100)"
+      : rel === "동료"
+        ? "var(--purple-100)"
+        : rel === "지인"
+          ? "var(--beige-100)"
+          : "var(--blue-100)"};
 `;
 
-export function PaperCard({ message }) {
+export function PaperCard({ message, onClick }) {
   if (!message) return null;
 
-  const { content, createdAt, font, profileImageURL, relationship, name } = message;
+  const { sender, profileImageURL, relationship, content, font, createdAt } =
+    message;
 
   const formattedDate = new Date(createdAt).toLocaleDateString();
   return (
-    <Container>
+    <Container onClick={onClick}>
       <ProfileWrap>
         <Profile src={profileImageURL} alt="profile image" />
         <Info>
           <Name>
-            From.<strong>{name}</strong>
+            From.<strong>{sender}</strong>
           </Name>
           <RelationShip rel={relationship}>{relationship}</RelationShip>
         </Info>
