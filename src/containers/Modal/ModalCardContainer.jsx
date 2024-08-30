@@ -20,13 +20,7 @@ function ModalCardContainer({ onClose, selectedCardInfo }) {
     };
   }, []);
 
-  return (
-    <ModalCard
-      ref={modalRef}
-      onClose={onClose}
-      selectedCardInfo={selectedCardInfo}
-    />
-  );
+  return <ModalCard ref={modalRef} onClose={onClose} selectedCardInfo={selectedCardInfo} />;
 }
 
 export default ModalCardContainer;

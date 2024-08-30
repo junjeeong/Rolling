@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { EmojiBadge } from './EmojiBadge';
+import styled from "styled-components";
+import { EmojiBadge } from "./EmojiBadge";
 const Container = styled.div`
   position: absolute;
   z-index: 2;

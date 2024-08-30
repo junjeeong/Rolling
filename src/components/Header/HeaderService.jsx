@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import { EmojiTopBadge } from '../Emoji/EmojiTopBadge';
-import { AddEmoji } from '../Emoji/AddEmoji';
-import { AuthorNotice } from './AuthorNotice';
+import styled from "styled-components";
+import { EmojiTopBadge } from "../Emoji/EmojiTopBadge";
+import { AddEmoji } from "../Emoji/AddEmoji";
+import { AuthorNotice } from "./AuthorNotice";
 const Container = styled.div`
   background-color: white;
   margin-top: 65px;
@@ -9,6 +9,9 @@ const Container = styled.div`
   height: 68px;
   justify-content: center;
   height: 68px;
+`;
+const Wrap = styled.div`
+  display: flex;
 `;
 
 const ServiceWrap = styled.div`
@@ -40,17 +43,26 @@ const Divider = styled.div`
 //getReactionsByRecipientId 함수를 사용하여 수신자의 이모지 정보를 가져올 예정
 
 export const HeaderService = ({ recipient, messages }) => {
+  console.log("HeaderService", recipient.topReactions.length);
+
   return (
     <Container>
       {recipient && (
         <ServiceWrap>
           <p>To: {recipient.name}</p>
-          <AuthorNotice paperInfo={recipient} authors={messages} />
-          <Divider />
-          <RecipientInfo>
-            <EmojiTopBadge recipient={recipient} />
-            <AddEmoji />
-          </RecipientInfo>
+          <Wrap style={{ justifyContent: "center", alignItems: "center" }}>
+            <Wrap>
+              <AuthorNotice paperInfo={recipient} authors={messages} />
+              <Divider />
+            </Wrap>
+            <Wrap>
+              <RecipientInfo>
+                {recipient.topReactions.length > 0 && <EmojiTopBadge recipient={recipient} />}
+                <AddEmoji />
+              </RecipientInfo>
+              <Divider />
+            </Wrap>
+          </Wrap>
         </ServiceWrap>
       )}
     </Container>

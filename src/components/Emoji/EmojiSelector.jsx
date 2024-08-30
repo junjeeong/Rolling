@@ -1,5 +1,5 @@
-import React from 'react';
-import EmojiPicker from 'emoji-picker-react';
+import React from "react";
+import EmojiPicker from "emoji-picker-react";
 
 export const EmojiSelector = ({ showPicker, onSelectEmoji, pickerRef }) => {
   return (

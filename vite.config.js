@@ -6,9 +6,7 @@ import macrosPlugin from "vite-plugin-babel-macros";
 export default defineConfig({
   plugins: [react(), macrosPlugin()],
   define: {
-    "process.env.VITE_TINYMCE_API_KEY": JSON.stringify(
-      process.env.VITE_TINYMCE_API_KEY
-    ),
+    "process.env.VITE_TINYMCE_API_KEY": JSON.stringify(process.env.VITE_TINYMCE_API_KEY),
   },
   resolve: {
     alias: {

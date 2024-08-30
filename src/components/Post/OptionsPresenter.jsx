@@ -18,16 +18,7 @@ const OptionWrapper = styled.div`
   cursor: pointer;
 `;
 
-const OptionsPresenter = ({
-  activeTab,
-  colors,
-  selectedColor,
-  onColorSelect,
-  backgroundThumbnails,
-  selectedImage,
-  onImageSelect,
-  postOptionSize,
-}) => {
+const OptionsPresenter = ({ activeTab, colors, selectedColor, onColorSelect, backgroundThumbnails, selectedImage, onImageSelect, postOptionSize }) => {
   const handleColorClick = (color) => {
     if (color !== selectedColor) {
       onColorSelect(color);

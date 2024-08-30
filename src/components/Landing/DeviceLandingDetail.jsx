@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import CommonLandingDetail from './CommonLandingDetail';
+import styled from "styled-components";
+import CommonLandingDetail from "./CommonLandingDetail";
 
 const MobileLandingDetail = styled(CommonLandingDetail)`
   padding: 0;
@@ -14,7 +14,7 @@ const TabletLandingDetail = styled(CommonLandingDetail)`
   max-width: 640px;
   margin: 0 auto;
   gap: 57px;
-	height: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;

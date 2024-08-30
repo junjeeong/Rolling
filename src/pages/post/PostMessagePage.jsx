@@ -184,14 +184,7 @@ const PostMessagePage = () => {
     <PostMessagePageContainer>
       <FormContainer>
         <Label htmlFor="fromInput">From.</Label>
-        <Input
-          id="fromInput"
-          placeholder="이름을 입력해 주세요."
-          value={from}
-          onChange={handleFromChange}
-          onBlur={handleFromBlur}
-          error={fromError ? "true" : undefined}
-        />
+        <Input id="fromInput" placeholder="이름을 입력해 주세요." value={from} onChange={handleFromChange} onBlur={handleFromBlur} error={fromError ? "true" : undefined} />
         {fromError && <ErrorMessage>값을 입력해 주세요.</ErrorMessage>}
 
         <ProfileImageContainer>
@@ -216,11 +209,7 @@ const PostMessagePage = () => {
         </ProfileImageContainer>
 
         <Label htmlFor="relationshipSelect">상대와의 관계</Label>
-        <Select
-          id="relationshipSelect"
-          value={relationship}
-          onChange={(e) => setRelationship(e.target.value)}
-        >
+        <Select id="relationshipSelect" value={relationship} onChange={(e) => setRelationship(e.target.value)}>
           {relationshipOptions.map((relationship) => (
             <option key={relationship} value={relationship}>
               {relationship}
@@ -245,11 +234,7 @@ const PostMessagePage = () => {
         </EditorContainer>
 
         <Label htmlFor="fontSelect">폰트 선택</Label>
-        <Select
-          id="fontSelect"
-          value={font}
-          onChange={(e) => setFont(e.target.value)}
-        >
+        <Select id="fontSelect" value={font} onChange={(e) => setFont(e.target.value)}>
           {fontOptions.map((font) => (
             <option key={font} value={font}>
               {font}

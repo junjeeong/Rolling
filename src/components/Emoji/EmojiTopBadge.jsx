@@ -1,9 +1,9 @@
-import styled from 'styled-components';
-import { EmojiBadge } from './EmojiBadge';
-import arrowDown from '../../assets/images/icons/arrow_down.png';
-import { useState } from 'react';
-import { EmojiAllBadge } from './EmojiAllBadge';
-import { useGetReactionsByRecipientId } from '../../hooks/useGetRecipients';
+import styled from "styled-components";
+import { EmojiBadge } from "./EmojiBadge";
+import arrowDown from "../../assets/images/icons/arrow_down.png";
+import { useState } from "react";
+import { EmojiAllBadge } from "./EmojiAllBadge";
+import { useGetReactionsByRecipientId } from "../../hooks/useGetRecipients";
 const Container = styled.div`
   position: relative;
   display: flex;
