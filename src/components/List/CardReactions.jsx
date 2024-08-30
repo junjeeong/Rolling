@@ -26,6 +26,7 @@ const CustomEmojiBadge = styled(EmojiBadge)`
 `;
 
 const CardReactions = ({ reactions }) => {
+	console.log(reactions);
 	return (
 		<>
 			<Container>

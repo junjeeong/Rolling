@@ -1,7 +1,9 @@
-import { EmojiTopBadge } from '../Emoji/EmojiTopBadge';
+import React from 'react';
+import styled from 'styled-components';
 import { Card } from './CardStyled';
 import Overlay from './Overlay';
-import styled from 'styled-components';
+import { EmojiTopBadge } from "../Emoji/EmojiTopBadge";
+
 
 const Container = styled.div`
 	position: relative;
@@ -115,18 +117,10 @@ const ReactionWrap = styled.ul`
 	margin-top: 20px;
 	gap: 10px;
 	z-index: 10;
+	width: fit-content;
 
 	@media (max-width: 768px) {
 		gap: 4px;
-	}
-`;
-
-const MainEmoji = styled(EmojiTopBadge)`
-	flex: 0 0;
-
-	@media (max-width: 768px) {
-		gap: 6px;
-		padding: 6px 8px;
 	}
 `;
 
@@ -137,9 +131,11 @@ const CardContent = ({
 	backgroundImageURL,
 	backgroundColor,
 	profileImage = [],
-	topReaction = [],
 	handleCardClick,
+	recipient,
 }) => {
+
+	console.log('Recipient in CardContent:', recipient);
 
 	return (
 		<Card
@@ -167,17 +163,13 @@ const CardContent = ({
 					<span>{messageCount}</span>명이 작성했어요!
 				</MessageCount>
 			</Container>
-			<ReactionWrap>
-				{topReaction.map((list) => (
-					<MainEmoji
-					key={list.id}
-					emojiCode={list.emoji}
-					emojiCount={list.count}
-					/>
-				))}
-			</ReactionWrap>
+			{recipient && recipient.topReactions && recipient.topReactions.length > 0 && (
+				<ReactionWrap key={`post-${id}`}>
+					<EmojiTopBadge recipient={recipient} />
+				</ReactionWrap>
+			)}
 		</Card>
-	)
+	);
 }
 
 export default CardContent;

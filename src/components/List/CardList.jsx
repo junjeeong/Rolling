@@ -5,7 +5,6 @@ import CardContent from './CardContent';
 import { PrevButton, NextButton } from './NavigationButton';
 import AnimatedCardList from './AnimatedCardList';
 import EllipsisLoading from '../Loading/EllipsisLoading';
-import CardReactions from './CardReactions';
 
 const CardListWrapper = styled.div`
 	position: relative;
@@ -17,7 +16,7 @@ const CardListWrapper = styled.div`
 	}
 `;
 
-const CardListSection = ({ messages, loading }) => {
+const CardList = ({ messages, loading }) => {
 	const [currentOffset, setCurrentOffset] = useState(0);
 	const navigate = useNavigate();
 
@@ -65,8 +64,8 @@ const CardListSection = ({ messages, loading }) => {
 									messageCount={recipient.messageCount}
 									profileImage={recipient.recentMessages}
 									handleCardClick={() => handleCardClick(recipient.id)}
+									recipient={recipient}
 								/>
-								<CardReactions reactions={recipient.topReactions} />
 							</div>
 						))}
 				</AnimatedCardList> 
@@ -81,4 +80,4 @@ const CardListSection = ({ messages, loading }) => {
 	);
 };
 
-export default CardListSection;
+export default CardList;
