@@ -1,5 +1,5 @@
 import { EmojiTopBadge } from '../Emoji/EmojiTopBadge';
-import { Card } from './Cards';
+import { Card } from './CardStyled';
 import Overlay from './Overlay';
 import styled from 'styled-components';
 
