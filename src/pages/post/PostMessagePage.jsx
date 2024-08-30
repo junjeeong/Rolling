@@ -233,16 +233,12 @@ const PostMessagePage = () => {
           <Editor
             id="editor"
             apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
-            initialValue=""
             init={{
               height: 200,
-              menubar: false, // 상단 메뉴바 활성화
-              toolbar:
-                "undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat", // 툴바 기본 설정
-              plugins: "lists link",
-              branding: false, // TinyMCE 마크 숨기기
-              content_style:
-                "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+              menubar: false,
+              toolbar: true,
+              branding: false,
+              statusbar: false,
             }}
             onEditorChange={handleEditorChange}
           />

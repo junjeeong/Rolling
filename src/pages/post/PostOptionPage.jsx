@@ -168,8 +168,6 @@ const PostOptionPage = () => {
           : null, // 이미지가 선택되지 않으면 null
       };
 
-      console.log(payload); // payload 확인
-
       try {
         const result = await addRecipient(payload); // 서버에 payload 전송
         const id = result.id; // 생성된 롤링페이퍼의 ID
