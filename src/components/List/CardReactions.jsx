@@ -2,13 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { EmojiBadge } from '../Emoji/EmojiBadge';
 
-const Line = styled.div`
-  height: 1px;
-  background-color: var(--gray-300);
-  margin: 10px 0;
-`;
-
-const ReactionsContainer = styled.div`
+const Container = styled.div`
 	display: flex;
 	width: fit-content;
 	gap: 8px;
@@ -34,8 +28,7 @@ const CustomEmojiBadge = styled(EmojiBadge)`
 const CardReactions = ({ reactions }) => {
 	return (
 		<>
-			<Line />
-			<ReactionsContainer>
+			<Container>
 				{reactions &&
 					reactions.map((reaction) => (
 						<CustomEmojiBadge
@@ -44,7 +37,7 @@ const CardReactions = ({ reactions }) => {
 							count={reaction.count}
 						/>
 					))}
-			</ReactionsContainer>
+			</Container>
 		</>
 	);
 };

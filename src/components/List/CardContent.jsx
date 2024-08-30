@@ -109,7 +109,7 @@ const ExtraProfiles = styled.div`
 	color: var(--gray-500);
 `;
 
-const ReactionContainer = styled.ul`
+const Container = styled.ul`
 	position: relative;
 	display: flex;
 	margin-top: 20px;
@@ -167,7 +167,7 @@ const CardContent = ({
 					<span>{messageCount}</span>명이 작성했어요!
 				</MessageCount>
 			</CardContentContainer>
-			<ReactionContainer>
+			<Container>
 				{topReaction.map((list) => (
 					<MainEmoji
 					key={list.id}
@@ -175,7 +175,7 @@ const CardContent = ({
 					emojiCount={list.count}
 					/>
 				))}
-			</ReactionContainer>
+			</Container>
 		</Card>
 	)
 }
