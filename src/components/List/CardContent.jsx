@@ -135,8 +135,6 @@ const CardContent = ({
 	recipient,
 }) => {
 
-	console.log('Recipient in CardContent:', recipient);
-
 	return (
 		<Card
 			onClick={handleCardClick}
