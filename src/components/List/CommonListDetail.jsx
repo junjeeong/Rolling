@@ -19,7 +19,6 @@ const ListSection = styled(Layout)`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding-top: 64px;
 	padding-bottom: 100px;
 
 	@media (max-width: 1248px) {
