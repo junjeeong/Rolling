@@ -3,7 +3,7 @@ import { Card } from './Cards';
 import Overlay from './Overlay';
 import styled from 'styled-components';
 
-const CardContentContainer = styled.div`
+const Container = styled.div`
 	position: relative;
 	display: flex;
 	flex: 1 0;
@@ -67,7 +67,7 @@ const MessageCount = styled.div`
 	}
 `;
 
-const ProfileImagesContainer = styled.div`
+const ProfileImagesWrap = styled.div`
 	display: flex;
 	height: 28px;
 	div {
@@ -109,7 +109,7 @@ const ExtraProfiles = styled.div`
 	color: var(--gray-500);
 `;
 
-const Container = styled.ul`
+const ReactionWrap = styled.ul`
 	position: relative;
 	display: flex;
 	margin-top: 20px;
@@ -149,11 +149,11 @@ const CardContent = ({
 		>
 			{backgroundImageURL && <Overlay />}
 
-			<CardContentContainer>
+			<Container>
 				<RecipientName $hasBackgroundImage={!!backgroundImageURL}>
 					To. {recipientName}
 				</RecipientName>
-        <ProfileImagesContainer>
+        <ProfileImagesWrap>
           {profileImage.map((profile, index) => (
             <div key={index}>
               <img src={profile.profileImageURL} alt='Profile' />
@@ -162,12 +162,12 @@ const CardContent = ({
           {messageCount > 3 && (
             <ExtraProfiles>+{messageCount - 3}</ExtraProfiles>
           )}
-        </ProfileImagesContainer>
+        </ProfileImagesWrap>
 				<MessageCount $hasBackgroundImage={!!backgroundImageURL}>
 					<span>{messageCount}</span>명이 작성했어요!
 				</MessageCount>
-			</CardContentContainer>
-			<Container>
+			</Container>
+			<ReactionWrap>
 				{topReaction.map((list) => (
 					<MainEmoji
 					key={list.id}
@@ -175,7 +175,7 @@ const CardContent = ({
 					emojiCount={list.count}
 					/>
 				))}
-			</Container>
+			</ReactionWrap>
 		</Card>
 	)
 }
