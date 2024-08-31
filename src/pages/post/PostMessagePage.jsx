@@ -14,14 +14,20 @@ const PostMessagePageContainer = styled.div`
 `;
 
 const FormContainer = styled.div`
-  width: 400px;
+  width: 320px;
   display: flex;
   flex-direction: column;
+
+  @media (min-width: 768px) {
+    width: 720px; /* 태블릿 사이즈 이상일 때 너비를 720px로 설정 */
+  }
 `;
 
 const Label = styled.label`
-  font-size: 14px;
-  font-weight: bold;
+  color: var(--gray-900);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 36px;
   margin-bottom: 10px;
 `;
 
@@ -31,6 +37,11 @@ const Input = styled.input`
   border: 1px solid ${(props) => (props.error ? "#ff0000" : "#ccc")};
   border-radius: 5px;
   font-size: 14px;
+  width: 100%; /* 부모 컨테이너의 너비에 맞게 설정 */
+
+  @media (min-width: 768px) {
+    width: 720px; /* 태블릿 사이즈 이상일 때 너비를 720px로 설정 */
+  }
 `;
 
 const ErrorMessage = styled.div`
@@ -41,42 +52,53 @@ const ErrorMessage = styled.div`
 
 const Select = styled.select`
   padding: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 50px; /* 아래에 50px 간격 */
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 14px;
+  width: 320px; /* 항상 320px 너비로 설정 */
 `;
 
 const ProfileImageContainer = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+  margin: 50px 0; /* 위아래로 50px 간격 */
 `;
 
-const DefaultProfileImage = styled.img`
+const SelectedProfileImage = styled.img`
   width: 80px;
   height: 80px;
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid ${(props) => (props.selected ? "#007bff" : "transparent")};
+  border: 2px solid
+    ${(props) => (props.selected ? "var(--purple-600)" : "transparent")};
   margin-right: 20px;
 
   &:hover {
-    border-color: #007bff;
+    border-color: var(--purple-700);
   }
 `;
 
 const InstructionText = styled.div`
+  color: var(--gray-500);
   font-size: 16px;
   font-weight: var(--font-regular);
-  color: var(--gray-500);
+  line-height: 26px;
 `;
 
 const ProfileImageOptions = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
   justify-items: center;
+
+  @media (min-width: 768px) {
+    gap: 10px;
+    grid-template-columns: repeat(
+      10,
+      1fr
+    ); /* 768px 이상일 때 한 줄에 모든 이미지 표시 */
+  }
 `;
 
 const ProfileImageOption = styled.img`
@@ -84,28 +106,37 @@ const ProfileImageOption = styled.img`
   height: 50px;
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid ${(props) => (props.selected ? "#007bff" : "transparent")};
+  border: 2px solid
+    ${(props) => (props.selected ? "var(--purple-600)" : "transparent")};
 
   &:hover {
-    border-color: #007bff;
+    border-color: var(--purple-700);
   }
 `;
 
 const EditorContainer = styled.div`
   margin-bottom: 20px;
+  width: 100%; /* 기본적으로 부모 컨테이너의 너비를 사용 */
+  margin-bottom: 50px; /* 아래에 50px 간격 */
+
+  @media (min-width: 768px) {
+    width: 720px; /* 태블릿 사이즈 이상일 때 너비를 720px로 설정 */
+  }
 `;
 
 const Button = styled.button`
-  padding: 10px 20px;
-  background-color: ${(props) => (props.disabled ? "#ccc" : "#a063f0")};
+  padding: 14px 24px;
+  background-color: ${(props) =>
+    props.disabled ? "#ccc" : "var(--purple-600)"};
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 12px;
   cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
   font-size: 16px;
 
   &:hover {
-    background-color: ${(props) => (props.disabled ? "#ccc" : "#8b5dde")};
+    background-color: ${(props) =>
+      props.disabled ? "#ccc" : "var(--purple-700)"};
   }
 `;
 
@@ -118,6 +149,7 @@ const PostMessagePage = () => {
   const [relationship, setRelationship] = useState(relationshipOptions[1]); // 디폴트 "지인"
   const [font, setFont] = useState(fontOptions[0]); // 디폴트 "Noto Sans"
   const [isFormValid, setIsFormValid] = useState(false);
+  // 프로필 이미지 리스트 커스텀 훅
   const profileImages = useProfileImages();
   // 롤링페이퍼 대상에게 전할 메세지 생성 커스텀 훅
   const { addMessage } = useAddMessageToRecipient();
@@ -130,6 +162,12 @@ const PostMessagePage = () => {
     // 폼 유효성 검사
     setIsFormValid(from.trim() !== "" && content.trim() !== "");
   }, [from, content]);
+
+  useEffect(() => {
+    if (profileImages && profileImages.length > 0) {
+      setSelectedImage(profileImages[0]); // 디폴트 이미지로 설정
+    }
+  }, [profileImages]);
 
   const handleFromChange = (e) => {
     setFrom(e.target.value);
@@ -151,7 +189,12 @@ const PostMessagePage = () => {
   };
 
   const handleImageSelect = (image) => {
-    setSelectedImage(image);
+    // 토글 선택: 이미 선택된 이미지일 경우 선택 해제
+    if (selectedImage === image) {
+      setSelectedImage(profileImages[0]); // 기본 이미지로 되돌리기
+    } else {
+      setSelectedImage(image); // 클릭된 이미지를 선택된 이미지로 설정
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -162,15 +205,14 @@ const PostMessagePage = () => {
         team: TEAM,
         recipientId: recipientId,
         sender: from,
-        profileImageURL: selectedImage || profileImages[0], // 기본 이미지 사용
+        profileImageURL: selectedImage, // 선택된 이미지 사용
         relationship,
         content,
         font,
       };
       try {
         // 롤링페이퍼 대상에게 전할 메세지 생성
-        const result = await addMessage(recipientId, payload);
-        console.log(result);
+        await addMessage(recipientId, payload);
         // 롤링페이퍼 페이지로 이동
         navigate(`/post/${recipientId}`);
       } catch (error) {
@@ -195,9 +237,9 @@ const PostMessagePage = () => {
         {fromError && <ErrorMessage>값을 입력해 주세요.</ErrorMessage>}
 
         <ProfileImageContainer>
-          <DefaultProfileImage
-            src={profileImages[0]} // 첫 번째 이미지를 default로 사용
-            selected={selectedImage === profileImages[0]}
+          <SelectedProfileImage
+            src={selectedImage} // 선택된 이미지로 설정
+            selected={true} // 항상 선택되도록 설정
             onClick={() => handleImageSelect(profileImages[0])}
           />
           <div>
@@ -205,7 +247,7 @@ const PostMessagePage = () => {
             <ProfileImageOptions>
               {profileImages.slice(1).map((imageUrl, index) => (
                 <ProfileImageOption
-                  key={index + 1} // index 보정
+                  key={`profileImage${index + 1}`} // key 설정
                   src={imageUrl}
                   selected={selectedImage === imageUrl}
                   onClick={() => handleImageSelect(imageUrl)}
