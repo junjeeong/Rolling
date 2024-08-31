@@ -33,3 +33,4 @@ const CardReactions = ({ reactions }) => {
     </>
   );
 };
+export default CardReactions;

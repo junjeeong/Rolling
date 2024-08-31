@@ -126,7 +126,9 @@
   box-sizing: border-box;
 }
 
-html,body,div,
+html,
+body,
+div,
 span,
 applet,
 object,

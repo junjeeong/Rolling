@@ -50,6 +50,7 @@ const CardListSection = ({ messages, loading }) => {
             ))}
           </AnimatedCardList>
         )}
+
         <NextButton onClick={handleNextClick} disabled={(messages.length - 4) / currentOffset <= 4} isNext={true} />
       </CardListWrapper>
     </>

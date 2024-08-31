@@ -80,7 +80,7 @@ const GoToMakeButton = styled(PrimaryButton)`
   line-height: 2.8rem;
   font-size: 1.8rem;
   white-space: nowrap;
-
+  border-radius: 12px;
   span {
     display: flex;
     justify-content: center;
