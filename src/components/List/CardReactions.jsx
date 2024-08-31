@@ -1,6 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { EmojiSelector } from "../Emoji/EmojiSelector";
+import { EmojiBadge } from "../Emoji/EmojiBadge";
+
+const Line = styled.div`
+  height: 1px;
+  background-color: var(--gray-300);
+  margin: 10px 0;
+`;
 
 const ReactionsContainer = styled.div`
   display: flex;
@@ -15,7 +21,7 @@ const ReactionsContainer = styled.div`
   }
 `;
 
-const CustomEmojiSelector = styled(EmojiSelector)`
+const CustomEmojiBadge = styled(EmojiBadge)`
   justify-content: center;
   gap: 4px;
 
@@ -29,8 +35,9 @@ const CardReactions = ({ reactions }) => {
   return (
     <>
       <Line />
-      <ReactionsContainer>{reactions && reactions.map((reaction) => <CustomEmojiSelector key={reaction.emoji} emojiCode={reaction.emoji} emojiCount={reaction.count} />)}</ReactionsContainer>
+      <ReactionsContainer>{reactions && reactions.map((reaction) => <CustomEmojiBadge key={reaction.emoji} emoji={reaction.emoji} count={reaction.count} />)}</ReactionsContainer>
     </>
   );
 };
+
 export default CardReactions;

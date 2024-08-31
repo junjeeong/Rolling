@@ -8,6 +8,7 @@ const ellipsis1 = keyframes`
   transform: scale(1);
   }
 `;
+
 const ellipsis2 = keyframes`
   0% {
     transform: translate(0, 0);
@@ -25,6 +26,7 @@ const ellipsis3 = keyframes`
     transform: scale(0);
   }
 `;
+
 const LoaderContainer = styled.div`
   display: flex;
   align-items: center;
@@ -49,7 +51,7 @@ const Ellipsis = styled.div`
     width: 13px;
     height: 13px;
     border-radius: 50%;
-    background: var(--purple400);
+    background: var(--purple-400);
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
     &:nth-child(1) {
       left: 8px;

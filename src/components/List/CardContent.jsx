@@ -1,5 +1,6 @@
-import { EmojiSelector } from "../Emoji/EmojiSelector";
+import { EmojiTopBadge } from "../Emoji/EmojiTopBadge";
 import { Card } from "./Cards";
+import Overlay from "./Overlay";
 import styled from "styled-components";
 
 const CardContentContainer = styled.div`
@@ -118,7 +119,7 @@ const ReactionContainer = styled.ul`
   }
 `;
 
-const MainEmoji = styled(EmojiSelector)`
+const MainEmoji = styled(EmojiTopBadge)`
   flex: 0 0;
 
   @media (max-width: 768px) {
@@ -130,6 +131,8 @@ const MainEmoji = styled(EmojiSelector)`
 const CardContent = ({ id, recipientName, messageCount, backgroundImageURL, backgroundColor, profileImage = [], topReaction = [], handleCardClick }) => {
   return (
     <Card onClick={handleCardClick} backgroundColor={backgroundColor} backgroundImageURL={backgroundImageURL}>
+      {backgroundImageURL && <Overlay />}
+
       <CardContentContainer>
         <RecipientName $hasBackgroundImage={!!backgroundImageURL}>To. {recipientName}</RecipientName>
         <ProfileImagesContainer>

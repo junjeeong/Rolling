@@ -6,6 +6,8 @@ import CardReactions from "./CardReactions";
 import AnimatedCardList from "./AnimatedCardList";
 import { getRecipients } from "../../api/recipients";
 
+//삭제예정 컴포넌트
+
 const CardListWrapper = styled.div`
   position: relative;
   width: 1160px;

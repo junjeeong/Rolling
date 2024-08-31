@@ -2,11 +2,11 @@ import styled, { css } from "styled-components";
 
 const getCSSVariable = (colorName) => {
   const colorMap = {
-    purple: "--purple200",
-    beige: "--beige200",
-    blue: "--blue200",
-    green: "--green200",
-    gray: "--gray200",
+    purple: "--purple-200",
+    beige: "--beige-200",
+    blue: "--blue-200",
+    green: "--green-200",
+    gray: "--gray-200",
   };
   return colorMap[colorName] || colorName;
 };

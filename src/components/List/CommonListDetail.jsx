@@ -18,6 +18,7 @@ const ListSection = styled(Layout)`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 100px;
 
   @media (max-width: 1248px) {
     overflow-x: hidden;
