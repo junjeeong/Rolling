@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import CardContent from './CardContent';
-import { PrevButton, NextButton } from './NavigationButton';
-import AnimatedCardList from './AnimatedCardList';
-import EllipsisLoading from '../Loading/EllipsisLoading';
+import CardContent from '../../components/List/CardContent';
+import { PrevButton, NextButton } from '../../components/List/NavigationButton';
+import AnimatedCardList from '../../components/List/AnimatedCardList';
+import EllipsisLoading from '../../components/Loading/EllipsisLoading';
 
 const CardListWrapper = styled.div`
 	position: relative;

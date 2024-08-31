@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getAllUser } from '../../api/recipients';
 import { useNavigate } from 'react-router-dom';
-import CardList from '../../components/List/CardList';
+import CardList from './CardList';
 import styled from 'styled-components';
 import PrimaryButton from '../../components/common/Button/PrimaryButton';
 
@@ -112,7 +112,7 @@ export default function CommonListDetail() {
   const fetchUser = async () => {
     setLoading(true);
     try{
-      const limit = 10;
+      const limit = 100;
       const users = await getAllUser({ limit, offset });
       const { results, ...data } = users;
 
