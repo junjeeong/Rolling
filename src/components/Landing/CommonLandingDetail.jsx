@@ -12,6 +12,26 @@ const Layout = styled.div`
   padding: 20px;
 	//margin값이 css 우선순위 규칙때문에 적용이 안 되어,!important 사용 
 	margin-top: 124px !important;
+
+	@media (max-width: 360px) {
+		padding: 0;
+		max-width: 360px;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	@media (max-width: 768px) {
+		max-width: 640px;
+		margin: 0 auto;
+		gap: 57px;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: space-between;
+	}
 `
 
 //LandingSection
