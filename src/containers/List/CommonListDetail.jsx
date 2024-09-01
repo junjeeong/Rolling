@@ -78,9 +78,10 @@ const Title = styled.h2`
 
 //GoToMakeButton
 const GoToMakeButton = styled(PrimaryButton)`
+	width: 280px;
 	padding: 14px 60px;
 	line-height: 2.8rem;
-	font-size: 1.8rem;
+	font-size: 1.2rem;
 	white-space: nowrap;
 
 	span {
