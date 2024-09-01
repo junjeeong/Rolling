@@ -118,10 +118,6 @@ const ReactionWrap = styled.ul`
 	gap: 10px;
 	z-index: 10;
 	width: fit-content;
-
-	@media (max-width: 768px) {
-		gap: 4px;
-	}
 `;
 
 const CardContent = ({
