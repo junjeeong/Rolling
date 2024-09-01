@@ -1,9 +1,11 @@
-import { EmojiTopBadge } from '../Emoji/EmojiTopBadge';
-import { Card } from './Cards';
-import Overlay from './Overlay';
+import React from 'react';
 import styled from 'styled-components';
+import { Card } from './CardStyled';
+import Overlay from './Overlay';
+import { EmojiTopBadge } from "../Emoji/EmojiTopBadge";
 
-const CardContentContainer = styled.div`
+
+const Container = styled.div`
 	position: relative;
 	display: flex;
 	flex: 1 0;
@@ -67,7 +69,7 @@ const MessageCount = styled.div`
 	}
 `;
 
-const ProfileImagesContainer = styled.div`
+const ProfileImagesWrap = styled.div`
 	display: flex;
 	height: 28px;
 	div {
@@ -109,24 +111,16 @@ const ExtraProfiles = styled.div`
 	color: var(--gray-500);
 `;
 
-const ReactionContainer = styled.ul`
+const ReactionWrap = styled.ul`
 	position: relative;
 	display: flex;
 	margin-top: 20px;
 	gap: 10px;
 	z-index: 10;
+	width: fit-content;
 
 	@media (max-width: 768px) {
 		gap: 4px;
-	}
-`;
-
-const MainEmoji = styled(EmojiTopBadge)`
-	flex: 0 0;
-
-	@media (max-width: 768px) {
-		gap: 6px;
-		padding: 6px 8px;
 	}
 `;
 
@@ -137,8 +131,8 @@ const CardContent = ({
 	backgroundImageURL,
 	backgroundColor,
 	profileImage = [],
-	topReaction = [],
 	handleCardClick,
+	recipient,
 }) => {
 
 	return (
@@ -149,11 +143,11 @@ const CardContent = ({
 		>
 			{backgroundImageURL && <Overlay />}
 
-			<CardContentContainer>
+			<Container>
 				<RecipientName $hasBackgroundImage={!!backgroundImageURL}>
 					To. {recipientName}
 				</RecipientName>
-        <ProfileImagesContainer>
+        <ProfileImagesWrap>
           {profileImage.map((profile, index) => (
             <div key={index}>
               <img src={profile.profileImageURL} alt='Profile' />
@@ -162,22 +156,18 @@ const CardContent = ({
           {messageCount > 3 && (
             <ExtraProfiles>+{messageCount - 3}</ExtraProfiles>
           )}
-        </ProfileImagesContainer>
+        </ProfileImagesWrap>
 				<MessageCount $hasBackgroundImage={!!backgroundImageURL}>
 					<span>{messageCount}</span>명이 작성했어요!
 				</MessageCount>
-			</CardContentContainer>
-			<ReactionContainer>
-				{topReaction.map((list) => (
-					<MainEmoji
-					key={list.id}
-					emojiCode={list.emoji}
-					emojiCount={list.count}
-					/>
-				))}
-			</ReactionContainer>
+			</Container>
+			{recipient && recipient.topReactions && recipient.topReactions.length > 0 && (
+				<ReactionWrap key={`post-${id}`}>
+					<EmojiTopBadge recipient={recipient} />
+				</ReactionWrap>
+			)}
 		</Card>
-	)
+	);
 }
 
 export default CardContent;
