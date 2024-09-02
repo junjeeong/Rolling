@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { getAllUser } from "../../api/recipients";
 import { useNavigate } from "react-router-dom";
-import CardList from "../../components/List/CardList";
-import styled from "styled-components";
+import CardList from "./CardList";
+import styled, { createGlobalStyle } from "styled-components";
 import PrimaryButton from "../../components/common/Button/PrimaryButton";
 
-//로직 컴포넌트
+const ScrollStyle = createGlobalStyle`
+  body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  * {
+    box-sizing: inherit;
+  }
+`;
 
 //리스트 레이아웃
 const Layout = styled.div`
@@ -21,8 +32,8 @@ const ListSection = styled(Layout)`
   align-items: center;
   padding-bottom: 100px;
 
-  @media (max-width: 1248px) {
-    overflow-x: hidden;
+  @media (min-width: 769px) and (max-width: 1023px) {
+    width: 80%;
     height: calc(100svh);
   }
 
@@ -41,11 +52,13 @@ const Container = styled.div`
 
   @media (max-width: 1248px) {
     width: 100%;
-    margin-bottom: 15.6rem;
+    margin-bottom: 8rem;
+    width: 100vw;
+    padding-left: 20px;
   }
 
   @media (max-width: 768px) {
-    margin-bottom: 6.6rem;
+    margin-bottom: 6rem;
   }
 `;
 
@@ -78,10 +91,15 @@ const Title = styled.h2`
 
 //GoToMakeButton
 const GoToMakeButton = styled(PrimaryButton)`
+  width: 280px;
   padding: 14px 60px;
   line-height: 2.8rem;
-  font-size: 1.8rem;
+  font-size: 1.2rem;
   white-space: nowrap;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   span {
     display: flex;
@@ -89,16 +107,26 @@ const GoToMakeButton = styled(PrimaryButton)`
     width: 160px;
   }
 
-  @media (max-width: 1248px) {
-    min-width: calc(100% - 48px);
+  @media (min-width: 769px) and (max-width: 1023px) {
+    width: 90%;
     display: flex;
     justify-content: center;
   }
 
   @media (max-width: 768px) {
-    min-width: calc(100% - 40px);
+    width: 90%;
     display: flex;
     justify-content: center;
+  }
+`;
+
+const MarginWrap = styled.div`
+  @media (min-width: 769px) and (max-width: 1023px) {
+    height: 300px;
+  }
+
+  @media (max-width: 768px) {
+    height: 150px;
   }
 `;
 
@@ -112,7 +140,7 @@ export default function CommonListDetail() {
   const fetchUser = async () => {
     setLoading(true);
     try {
-      const limit = 10;
+      const limit = 100;
       const users = await getAllUser({ limit, offset });
       const { results, ...data } = users;
 
@@ -147,14 +175,18 @@ export default function CommonListDetail() {
   };
 
   return (
-    <ListSection>
-      <Container>
-        <Title>인기 롤링 페이퍼 🔥</Title>
-        <CardList loading={loading} messages={sortMessages} handleCardClick={handleCardClick} />
-        <Title>최근에 만든 롤링 페이퍼 ⭐️</Title>
-        <CardList loading={loading} messages={dateSortMessages} handleCardClick={handleCardClick} />
-      </Container>
-      <GoToMakeButton to="/post">나도 만들어보기</GoToMakeButton>
-    </ListSection>
+    <>
+      <ScrollStyle />
+      <ListSection>
+        <Container>
+          <Title>인기 롤링 페이퍼 🔥</Title>
+          <CardList loading={loading} messages={sortMessages} handleCardClick={handleCardClick} />
+          <Title>최근에 만든 롤링 페이퍼 ⭐️</Title>
+          <CardList loading={loading} messages={dateSortMessages} handleCardClick={handleCardClick} />
+        </Container>
+        <GoToMakeButton to="/post">나도 만들어보기</GoToMakeButton>
+      </ListSection>
+      <MarginWrap />
+    </>
   );
 }

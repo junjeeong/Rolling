@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-//로직 컴포넌트
-
 const Arrow = styled.svg`
   width: 16px;
   height: 16px;
@@ -25,7 +23,7 @@ const NavigationButton = styled.button`
   z-index: 1;
   top: 50%;
   transform: translateY(-50%);
-  ${({ $isNext }) => ($isNext ? "right: -20px;" : "left: -20px")}
+  ${({ $isNext }) => ($isNext ? "right: -20px;" : "left: -20px;")}
 
   &:hover {
     background-color: var(--gray-100);

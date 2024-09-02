@@ -4,13 +4,13 @@ import BackgroundOption from "./BackgroundOption";
 
 const OptionsGridContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 2fr);
   gap: 12px;
   justify-content: center;
   margin-top: 12px;
 
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(4, 1fr);
   }
 `;
 

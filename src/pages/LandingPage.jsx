@@ -1,5 +1,5 @@
-import LandingDetail from "../components/Landing/LandingDetail";
+import CommonLandingDetail from "../components/Landing/CommonLandingDetail";
 
 export default function LandingPage() {
-  return <LandingDetail />;
+  return <CommonLandingDetail />;
 }
