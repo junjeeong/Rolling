@@ -75,7 +75,7 @@ const ErrorButton = styled(PrimaryButton)`
   width: 40%;
   height: 70px;
   border-radius: 12px;
-  font-size: 25px;
+  font-size: 1.2rem;
 	color: var(--white);
 	background-color: var(--purple-600);
 
