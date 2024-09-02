@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import CardList from "./CardList";
 import styled, { createGlobalStyle } from "styled-components";
 import PrimaryButton from "../../components/common/Button/PrimaryButton";
+import Header from "../../components/Header/Header";
 
 const ScrollStyle = createGlobalStyle`
   body {
@@ -23,6 +24,10 @@ const Layout = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+
+	@media (max-width: 768px) {
+		padding: 0px;
+	}
 `;
 
 //ListSection
@@ -31,6 +36,7 @@ const ListSection = styled(Layout)`
   flex-direction: column;
   align-items: center;
   padding-bottom: 100px;
+	margin-top: 50px;
 
   @media (min-width: 769px) and (max-width: 1023px) {
     width: 80%;
@@ -38,9 +44,10 @@ const ListSection = styled(Layout)`
   }
 
 	@media (max-width: 768px) {
-		margin-left: 20px;
 		overflow-x: hidden;
+		width: 100%;
 		padding-bottom: 0;
+		margin-top: 60px;
 	}
 `;
 
@@ -54,7 +61,6 @@ const Container = styled.div`
   @media (max-width: 1248px) {
     margin-bottom: 8rem;
     width: 100vw;
-    padding-left: 20px;
   }
 
   @media (max-width: 768px) {
@@ -74,7 +80,7 @@ const Title = styled.h2`
 
   @media (max-width: 1248px) {
     margin-top: 50px;
-    margin-left: 24px;
+    margin-left: 44px;
     margin-bottom: 16px;
   }
 
@@ -174,8 +180,11 @@ export default function CommonListDetail() {
     navigate(`/post/${recipientId}`);
   };
 
+	const existingPath = true;
+
   return (
     <>
+			<Header existingPath={existingPath} />
       <ScrollStyle />
       <ListSection>
         <Container>

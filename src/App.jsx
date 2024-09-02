@@ -13,10 +13,10 @@ function App() {
       {/* PostDetailPage는 DefaultLayout 하위에 두지 않음 */}
       <Route path="post/:id" element={<PostDetailPage />} />
       <Route index element={<LandingPage />} />
+			<Route path="list" element={<ListPage />} />
       <Route path="post/:id/edit" element={<PostDetailPage isEdit={true} />} />
       {/* DefaultLayout 하위의 다른 페이지들 */}
       <Route path="/" element={<DefaultLayout />}>
-        <Route path="list" element={<ListPage />} />
         <Route path="post" element={<PostOptionPage />} />
         <Route path="post/:id/message" element={<PostMessagePage />} />
       </Route>

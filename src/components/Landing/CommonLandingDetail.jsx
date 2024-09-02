@@ -78,6 +78,7 @@ const CardBase = styled.div`
   }
 
   @media (max-width: 768px) {
+		width: 90%;
     height: 362px;
   }
 `;
@@ -210,7 +211,7 @@ const IntroSection = styled.div`
 
   @media (max-width: 768px) {
     margin-bottom: 50px;
-		margin-left: -90px;
+		margin-left: -50px;
 		margin-top: 15px;
   }
 `;
