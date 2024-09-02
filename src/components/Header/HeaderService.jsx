@@ -69,9 +69,11 @@ export const HeaderService = ({ recipient, messages }) => {
             <Wrap>
               {recipient.topReactions.length > 0 && <EmojiTopBadge recipient={recipient} />}
               <Wrap style={{ position: "relative" }}>
-                <ArrowDownBtn onClick={() => setShowAllBadge(!showAllBadge)}>
-                  <ArrowDown src={arrowDown} />
-                </ArrowDownBtn>
+                {recipient.topReactions.length > 0 && (
+                  <ArrowDownBtn onClick={() => setShowAllBadge(!showAllBadge)}>
+                    <ArrowDown src={arrowDown} />
+                  </ArrowDownBtn>
+                )}
                 {showAllBadge && <EmojiAllBadge reactions={reactions.results} />}
                 <AddEmoji />
                 <Divider />
