@@ -22,7 +22,7 @@ const Button = styled.button`
 const PrimaryLink = styled(Link)`
   padding: 14px 24px;
   background: var(--purple-600);
-  border-radius: 6px;
+  border-radius: 12px;
   color: var(--white);
   transition: all.3s ease;
   cursor: pointer;

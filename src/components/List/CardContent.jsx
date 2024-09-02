@@ -4,7 +4,6 @@ import { Card } from './CardStyled';
 import Overlay from './Overlay';
 import { EmojiTopBadge } from "../Emoji/EmojiTopBadge";
 
-
 const Container = styled.div`
 	position: relative;
 	display: flex;

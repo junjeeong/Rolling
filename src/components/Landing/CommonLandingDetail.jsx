@@ -1,18 +1,42 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from 'react';
+import styled, { css } from 'styled-components';
 import cardImg1 from '../../assets/images/cardImg1.png';
 import cardImg2 from '../../assets/images/cardImg2.png';
 import PrimaryButton from '../common/Button/PrimaryButton';
+import Header from '../Header/Header';
 
 //랜딩 레이아웃
 const Layout = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+	//margin값이 css 우선순위 규칙때문에 적용이 안 되어,!important 사용 
+	margin-top: 124px !important;
+
+	@media (max-width: 360px) {
+		padding: 0;
+		max-width: 360px;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	@media (max-width: 1024px) {
+		max-width: 95%;
+		margin: 0 auto;
+		gap: 57px;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: space-between;
+	}
 `
 
 //LandingSection
 const LandingSection = styled(Layout)`
+	width: 1200px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -54,9 +78,23 @@ const Card1 = styled(CardBase)`
 	margin-bottom: 30px;
 
 	@media (min-width: 769px) and (max-width: 1023px) {
+		position: relative;
 		height: 440px;
 		flex-direction: column;
 		justify-content: center;
+
+		& > :first-child {
+			position: absolute;
+			top: 60px;
+			left: 60px;
+		}
+
+		& > :nth-child(2) {
+			position: absolute;
+			top: 70%;
+			left: 52%;
+			transform: translate(-50%, -50%);
+		}
 	}
 
 	@media (max-width: 768px) {
@@ -74,7 +112,22 @@ const Card2 = styled(CardBase)`
 	margin-bottom: 48px;
 
 	@media (min-width: 769px) and (max-width: 1023px) {
+		position: relative;
+		flex-direction: column;
 		justify-content: center;
+
+		& > :first-child {
+			position: absolute;
+			top: 75%;
+			left: 55%;
+			transform: translate(-50%, -50%);
+		}
+
+		& > :nth-child(2) {
+			position: absolute;
+			top: 60px;
+			left: 60px;
+		}
 	}
 
 	@media (max-width: 768px) {
@@ -94,20 +147,26 @@ const CardImg1 = styled.div`
 	width: 664px;
 	height: 186px;
 	margin: -12px;
+	margin-right: 40px;
 
 	@media (max-width: 768px) {
 		width: 369px;
 		height: 104px;
 		margin: -7.14px -7.245px;
 	}
+
+	@media (max-width: 1024px) {
+		order: 2;
+	}
 `;
 
-const CardImg2 = styled(CardImg1)`
+const CardImg2 = styled.div`
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
-	width: 720px;
 	height: 220px;
+	width: 664px;
+	margin: -12px;
 
 	@media (max-width: 768px) {
 		display: flex;
@@ -115,6 +174,10 @@ const CardImg2 = styled(CardImg1)`
 		justify-content: center;
 		width: 100%;
 		height: 90px;
+	}
+
+	@media (max-width: 1024px) {
+		order: 2;
 	}
 `;
 
@@ -126,12 +189,11 @@ const IntroSection = styled.div`
 	position: relative;
 	margin-left: 60px;
 
-	@media (min-width: 1024px) {
-		width: 340px;
-	}
-
 	@media (min-width: 769px) and (max-width: 1023px) {
-		margin-top: 40px;
+		width: 340px;
+		order: 1;
+		margin-left: 0px;
+		margin-bottom: 36px;
 	}
 
 	@media (max-width: 768px) {
@@ -169,6 +231,15 @@ const Title = styled.h2`
 	letter-spacing: -0.01em;
 	color: var(--gray-900);
 
+	${({ isTablet }) =>
+	isTablet &&
+	css`
+		white-space: nowrap;
+		br {
+			display: none;
+		}
+	`}
+
 	@media (max-width: 768px) {
 		font-size: 18px;
 		line-height: 28px;
@@ -191,15 +262,20 @@ const SubTitle = styled.h3`
 
 //StartButton
 const StartButton = styled(PrimaryButton)`
+	width: 280px;
 	margin-bottom: 174px;
 	line-height: 2.8rem;
-	font-size: 1.8rem;
+	font-size: 1.2rem;
 	white-space: nowrap;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
 	span {
 		display: flex;
 		justify-content: center;
-		width: 160px;
+		width: 230px;
 	}
 
 	@media (min-width: 769px) and (max-width: 1023px) {
@@ -219,36 +295,58 @@ const StartButton = styled(PrimaryButton)`
 
 const CommonLandingDetail = ({ 
 	className,
- }) => (
-  <LandingSection className={className}>
-    <Card1>
-      <IntroSection>
-        <PointBox>Point. 01</PointBox>
-        <Title>
-          누구나 손쉽게, 온라인
-          <br />
-          롤링 페이퍼를 만들 수 있어요
-        </Title>
-        <SubTitle>로그인 없이 자유롭게 만들어요.</SubTitle>
-      </IntroSection>
-      <CardImg1 style={{ backgroundImage: `url(${cardImg1})` }} />
-    </Card1>
+ }) => {
+	const [isTablet, setIsTablet] = useState(false);
 
-    <Card2>
-      <CardImg2 style={{ backgroundImage: `url(${cardImg2})` }} />
-      <IntroSection>
-        <PointBox>Point. 02</PointBox>
-        <Title>
-          서로에게 이모지로 감정을
-          <br />
-          표현해보세요
-        </Title>
-        <SubTitle>롤링 페이퍼에 이모지를 추가할 수 있어요</SubTitle>
-      </IntroSection>
-    </Card2>
+	useEffect(() => {
+		const handleResize = () => {
+			setIsTablet(window.innerWidth <= 1024);
+		};
 
-    <StartButton to='/list'>구경해보기</StartButton>
-  </LandingSection>
-);
+		handleResize(); // 초기 실행을 위해 호출
+		window.addEventListener("resize", handleResize);
+
+		return () => {
+			window.removeEventListener("resize", handleResize);
+		};
+	}, []);
+
+	const existingPath = true;
+
+	return (
+		<>
+		<Header existingPath={existingPath} />
+		<LandingSection className={className}>
+			<Card1>
+				<IntroSection>
+					<PointBox>Point. 01</PointBox>
+					<Title isTablet={isTablet}>
+						누구나 손쉽게, 온라인
+						<br />
+						롤링 페이퍼를 만들 수 있어요
+					</Title>
+					<SubTitle>로그인 없이 자유롭게 만들어요.</SubTitle>
+				</IntroSection>
+				<CardImg1 style={{ backgroundImage: `url(${cardImg1})` }} />
+			</Card1>
+
+			<Card2>
+				<CardImg2 style={{ backgroundImage: `url(${cardImg2})` }} />
+				<IntroSection>
+					<PointBox>Point. 02</PointBox>
+					<Title isTablet={isTablet}>
+						서로에게 이모지로 감정을
+						<br />
+						표현해보세요
+					</Title>
+					<SubTitle>롤링 페이퍼에 이모지를 추가할 수 있어요</SubTitle>
+				</IntroSection>
+			</Card2>
+
+			<StartButton to='/list'>구경해보기</StartButton>
+		</LandingSection>
+	</>
+	)
+};
 
 export default CommonLandingDetail;
