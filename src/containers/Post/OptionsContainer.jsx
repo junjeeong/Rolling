@@ -34,18 +34,7 @@ const OptionsContainer = ({ activeTab, onColorSelect, onImageSelect }) => {
     onImageSelect(image, index); // 부모 컴포넌트의 콜백 호출, 인덱스 함께 전달
   };
 
-  return (
-    <OptionsPresenter
-      activeTab={activeTab}
-      colors={COLORS}
-      selectedColor={selectedColor}
-      onColorSelect={handleColorSelect}
-      backgroundThumbnails={backgroundThumbnails}
-      selectedImage={selectedImage}
-      onImageSelect={handleImageSelect}
-      postOptionSize={postOptionSize}
-    />
-  );
+  return <OptionsPresenter activeTab={activeTab} colors={COLORS} selectedColor={selectedColor} onColorSelect={handleColorSelect} backgroundThumbnails={backgroundThumbnails} selectedImage={selectedImage} onImageSelect={handleImageSelect} postOptionSize={postOptionSize} />;
 };
 
 export default OptionsContainer;

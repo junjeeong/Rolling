@@ -1,6 +1,6 @@
-import axios from './axios';
+import axios from "./axios";
 
-const TEAM = '9-3';
+const TEAM = "9-3";
 
 // 롤링 페이퍼 대상 목록 가져오기
 const getRecipients = async () => {
@@ -57,14 +57,4 @@ const getAllUser = async (params = { limit: 10, offset: 0 }) => {
   return response.data;
 };
 
-export { 
-	getRecipients, 
-	getRecipientById, 
-	addRecipient, 
-	deleteRecipientById, 
-	addMessageToRecipient, 
-	getMessagesByRecipientId, 
-	addReactionToRecipient, 
-	getReactionsByRecipientId,
-	getAllUser,
-};
+export { getRecipients, getRecipientById, addRecipient, deleteRecipientById, addMessageToRecipient, getMessagesByRecipientId, addReactionToRecipient, getReactionsByRecipientId, getAllUser };

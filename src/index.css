@@ -1,12 +1,27 @@
 :root {
-  font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+  font-family:
+    "Pretendard Variable",
+    Pretendard,
+    -apple-system,
+    BlinkMacSystemFont,
+    system-ui,
+    Roboto,
+    "Helvetica Neue",
+    "Segoe UI",
+    "Apple SD Gothic Neo",
+    "Noto Sans KR",
+    "Malgun Gothic",
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    sans-serif;
   /* Font families */
   --font-primary: "Pretendard", sans-serif;
-  --font-primary: 'Pretendard', sans-serif;
-  --font-handwritten1: 'KyoboHand', sans-serif;
-  --font-handwritten2: 'KyoboHandwriting2023wsa', sans-serif;
-  --font-handwritten3: 'Ssronet', sans-serif;
-  --font-handwritten4: 'KyoboHandwriting2021sjy', sans-serif;
+  --font-primary: "Pretendard", sans-serif;
+  --font-handwritten1: "KyoboHand", sans-serif;
+  --font-handwritten2: "KyoboHandwriting2023wsa", sans-serif;
+  --font-handwritten3: "Ssronet", sans-serif;
+  --font-handwritten4: "KyoboHandwriting2021sjy", sans-serif;
 
   /* Font weights */
   --font-thin: 100;
@@ -26,7 +41,6 @@
   --gray-700: #3a3a3a;
   --gray-800: #2b2b2b;
   --gray-900: #181818;
-
 
   /* primary color */
   --purple-100: #f8f0ff;
@@ -234,7 +248,7 @@ blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-  content: '';
+  content: "";
   content: none;
 }
 
@@ -242,7 +256,6 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-
 
 /* a 링크 초기화 */
 a {
