@@ -6,6 +6,7 @@ import { DefaultLayout } from "./styles/DefaultLayout";
 import PostMessagePage from "./pages/post/PostMessagePage";
 import LandingPage from "./pages/LandingPage";
 import ListPage from "./pages/ListPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Route path="/" element={<DefaultLayout />}>
         <Route path="post" element={<PostOptionPage />} />
         <Route path="post/:id/message" element={<PostMessagePage />} />
+				<Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
   );
