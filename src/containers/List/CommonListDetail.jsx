@@ -39,6 +39,7 @@ const ListSection = styled(Layout)`
 	}
 
 	@media (max-width: 768px) {
+		margin-left: 20px;
 		overflow-x: hidden;
 		padding-bottom: 0;
 	}
@@ -127,7 +128,7 @@ const MarginWrap = styled.div `
 }
 
 @media (max-width: 768px) {
-	height: 150px;
+	height: 30px;
 }
 `
 
