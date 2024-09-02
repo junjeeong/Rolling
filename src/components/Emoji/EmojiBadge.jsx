@@ -12,11 +12,22 @@ const EmojiBadgeWrap = styled.div`
   font-weight: var(--font-regular);
   align-items: center;
   justify-content: center;
+
+	//CardList 페이지에서 이모지 모바일 반응형 구현을 위한 코드
+  ${({ isCardList }) =>
+    isCardList &&
+    `
+    @media (max-width: 768px) {
+      width: 40px;
+      height: 30px;
+    }
+  `}
 `;
 
-export const EmojiBadge = ({ emoji, count }) => {
+//CardList 페이지 모바일 반응형 구현을 위해 isCardList prop 추가로 내림
+export const EmojiBadge = ({ emoji, count, isCardList }) => {
   return (
-    <EmojiBadgeWrap>
+    <EmojiBadgeWrap isCardList={isCardList}>
       <span>{emoji}</span>
       <span>{count}</span>
     </EmojiBadgeWrap>
