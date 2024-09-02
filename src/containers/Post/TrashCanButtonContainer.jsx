@@ -2,7 +2,7 @@ import { TrashCanButton } from "../../components/common/Button/TrashCanButton";
 import { useNavigate, useParams } from "react-router-dom";
 import { deleteMessageToRecipient } from "../../api/recipients";
 
-export const TrashButtonContainer = ({ seletedCardId }) => {
+export const TrashCanButtonContainer = ({ seletedCardId }) => {
   const { id } = useParams();
   const navigate = useNavigate();
 

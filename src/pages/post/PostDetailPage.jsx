@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { HeaderService } from "../../components/Header/HeaderService.jsx";
 import { AddCard } from "../../components/common/Card/AddCard.jsx";
@@ -15,9 +15,12 @@ import { DeleteButtonContainer } from "../../containers/Post/DeleteButtonContain
 const Container = styled.div`
   position: relative;
   height: calc(100vh - 133px); // 헤더 제외 높이
-  background-color: ${({ $backgroundColor }) =>
-    $backgroundColor || "white"}; // 기본 색상 지정
   overflow-y: hidden;
+  background-color: ${({ $backgroundColor }) => $backgroundColor || "beige"};
+  ${({ $backgroundImage }) =>
+    $backgroundImage &&
+    `background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${$backgroundImage}') no-repeat center/cover;
+  `}
 `;
 
 const GridWrap = styled.div`
@@ -63,7 +66,10 @@ const PostDetailPage = ({ isEdit }) => {
     <div>
       <HeaderContainer />
       <HeaderService recipient={recipient} messages={messages.results} />
-      <Container $backgroundColor={recipient?.backgroundColor}>
+      <Container
+        $backgroundColor={recipient?.backgroundColor}
+        $backgroundImage={recipient?.backgroundImageURL}
+      >
         <GridWrap>
           <AddCard id={id} />
           {/* message 배열의 길이만큼 PaperCard 생성 */}

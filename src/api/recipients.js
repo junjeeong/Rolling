@@ -35,7 +35,7 @@ const addMessageToRecipient = async (recipientId, messageData) => {
   return response.data;
 };
 
-//롤링 페이퍼 대상의 메세지 삭제하기 -> 9.1 정준영 코드작성
+//롤링 페이퍼 대상의 메세지 삭제하기
 const deleteMessageToRecipient = async (recipientId) => {
   const response = await axios.delete(`/${TEAM}/messages/${recipientId}/`);
   return response.data;
