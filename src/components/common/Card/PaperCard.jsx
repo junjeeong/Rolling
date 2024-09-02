@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import parse from "html-react-parser";
+import { TrashButton } from "../Button/TrashButton";
 
 export const Container = styled.div`
   position: relative;
@@ -8,7 +9,7 @@ export const Container = styled.div`
   gap: 16px;
   width: 384px;
   height: 280px;
-  padding: 28px 24px;
+  padding: 24px 24px;
   border-radius: 16px;
   background-color: var(--white);
   cursor: pointer;
@@ -16,6 +17,7 @@ export const Container = styled.div`
 
 export const ProfileWrap = styled.div`
   display: flex;
+  align-items: center;
   width: 100%;
   height: 80px;
   gap: 14px;
@@ -86,12 +88,13 @@ export const RelationShip = styled.div`
   background-color: ${({ rel }) => (rel === "가족" ? "var(--green-100)" : rel === "동료" ? "var(--purple-100)" : rel === "지인" ? "var(--beige-100)" : "var(--blue-100)")};
 `;
 
-export function PaperCard({ message, onClick }) {
+export function PaperCard({ message, isEdit, onClick }) {
   if (!message) return null;
 
   const { sender, profileImageURL, relationship, content, font, createdAt } = message;
 
   const formattedDate = new Date(createdAt).toLocaleDateString();
+
   return (
     <Container onClick={onClick}>
       <ProfileWrap>
@@ -102,6 +105,7 @@ export function PaperCard({ message, onClick }) {
           </Name>
           <RelationShip rel={relationship}>{relationship}</RelationShip>
         </Info>
+        {isEdit && <TrashButton />}
       </ProfileWrap>
       <Divider />
       <ContentBox font={font}>{parse(content)}</ContentBox>

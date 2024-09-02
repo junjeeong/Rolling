@@ -262,6 +262,7 @@ a {
   color: #222;
   text-decoration: none;
 }
+
 /* 폰트 스타일 초기화 */
 em,
 address {
@@ -287,6 +288,7 @@ fieldset {
 
 /* 버튼 초기화 */
 button {
+  cursor: pointer;
   border: 0;
   background: none;
 }

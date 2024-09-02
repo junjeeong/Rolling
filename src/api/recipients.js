@@ -51,16 +51,6 @@ const getReactionsByRecipientId = async (recipientId) => {
   return response.data;
 };
 
-// const getAllUser = async (limit = 10, offset = 0) => {
-//   const response = await axios.get(`/${TEAM}/recipients/`, {
-//     params: {
-//       limit,
-//       offset,
-//     },
-//   });
-//   return response.data;
-// };
-
 const getAllUser = async (params = { limit: 10, offset: 0 }) => {
   const query = new URLSearchParams(params).toString();
   const response = await axios.get(`/${TEAM}/recipients/?${query}`);

@@ -5,7 +5,6 @@ import CardContent from "./CardContent";
 import { PrevButton, NextButton } from "./NavigationButton";
 import AnimatedCardList from "./AnimatedCardList";
 import EllipsisLoading from "../Loading/EllipsisLoading";
-import CardReactions from "./CardReactions";
 
 const CardListWrapper = styled.div`
   position: relative;
@@ -17,7 +16,7 @@ const CardListWrapper = styled.div`
   }
 `;
 
-const CardListSection = ({ messages, loading }) => {
+const CardList = ({ messages, loading }) => {
   const [currentOffset, setCurrentOffset] = useState(0);
   const navigate = useNavigate();
 
@@ -48,8 +47,7 @@ const CardListSection = ({ messages, loading }) => {
             {!messages.length && <h2 style={{ fontSize: "2.4em" }}>롤링 페이퍼를 만들어 보세요</h2>}
             {messages.map((recipient) => (
               <div key={`post-${recipient.id}`}>
-                <CardContent id={recipient.id} recipientName={recipient.name} backgroundColor={recipient.backgroundColor} backgroundImageURL={recipient.backgroundImageURL} messageCount={recipient.messageCount} profileImage={recipient.recentMessages} handleCardClick={() => handleCardClick(recipient.id)} />
-                <CardReactions reactions={recipient.topReactions} />
+                <CardContent id={recipient.id} recipientName={recipient.name} backgroundColor={recipient.backgroundColor} backgroundImageURL={recipient.backgroundImageURL} messageCount={recipient.messageCount} profileImage={recipient.recentMessages} handleCardClick={() => handleCardClick(recipient.id)} recipient={recipient} />
               </div>
             ))}
           </AnimatedCardList>
@@ -60,4 +58,4 @@ const CardListSection = ({ messages, loading }) => {
   );
 };
 
-export default CardListSection;
+export default CardList;

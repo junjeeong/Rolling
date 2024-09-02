@@ -1,5 +1,6 @@
-import ListDetail from "../components/List/ListDetail";
+import React from "react";
+import CommonListDetail from "../containers/List/CommonListDetail";
 
 export default function ListPage() {
-  return <ListDetail />;
+  return <CommonListDetail />;
 }

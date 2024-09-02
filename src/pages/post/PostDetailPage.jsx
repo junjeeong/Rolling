@@ -7,8 +7,10 @@ import { PaperCard } from "../../components/common/Card/PaperCard.jsx";
 import { useGetRecipientById, useGetMessagesByRecipientId } from "../../hooks/useGetRecipients.jsx";
 import HeaderContainer from "../../containers/Header/HeaderContainer.jsx";
 import ModalCardContainer from "../../containers/Modal/ModalCardContainer.jsx";
+import { DeleteButton } from "../../components/common/Button/DeleteButton";
 
 const Container = styled.div`
+  position: relative;
   height: calc(100vh - 133px); // 헤더 제외 높이
   background-color: ${({ $backgroundColor }) => $backgroundColor || "white"}; // 기본 색상 지정
   overflow-y: hidden;
@@ -23,7 +25,7 @@ const GridWrap = styled.div`
   max-width: 1200px;
 `;
 
-function PostDetailPage() {
+const PostDetailPage = ({ isEdit }) => {
   const { id } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCardInfo, setSelectedCardInfo] = useState({});
@@ -62,13 +64,14 @@ function PostDetailPage() {
           <AddCard id={id} />
           {/* message 배열의 길이만큼 PaperCard 생성 */}
           {messages.results.map((message) => (
-            <PaperCard key={message.id} message={message} onClick={() => openModal(message)} />
+            <PaperCard key={message.id} message={message} isEdit={isEdit} onClick={() => openModal(message)} />
           ))}
         </GridWrap>
+        {isEdit && <DeleteButton />}
       </Container>
       {isModalOpen && <ModalCardContainer onClose={closeModal} selectedCardInfo={selectedCardInfo}></ModalCardContainer>}
     </div>
   );
-}
+};
 
 export default PostDetailPage;

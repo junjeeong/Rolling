@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getAllUser } from "../../api/recipients";
 import { useNavigate } from "react-router-dom";
-import CardListSection from "./CardListSection";
+import CardList from "../../components/List/CardList";
 import styled from "styled-components";
-import PrimaryButton from "../common/Button/PrimaryButton";
+import PrimaryButton from "../../components/common/Button/PrimaryButton";
 
 //로직 컴포넌트
 
@@ -11,6 +11,7 @@ import PrimaryButton from "../common/Button/PrimaryButton";
 const Layout = styled.div`
   max-width: 1200px;
   margin: 0 auto;
+  padding: 20px;
 `;
 
 //ListSection
@@ -81,7 +82,7 @@ const GoToMakeButton = styled(PrimaryButton)`
   line-height: 2.8rem;
   font-size: 1.8rem;
   white-space: nowrap;
-  border-radius: 12px;
+
   span {
     display: flex;
     justify-content: center;
@@ -149,9 +150,9 @@ export default function CommonListDetail() {
     <ListSection>
       <Container>
         <Title>인기 롤링 페이퍼 🔥</Title>
-        <CardListSection loading={loading} messages={sortMessages} handleCardClick={handleCardClick} />
+        <CardList loading={loading} messages={sortMessages} handleCardClick={handleCardClick} />
         <Title>최근에 만든 롤링 페이퍼 ⭐️</Title>
-        <CardListSection loading={loading} messages={dateSortMessages} handleCardClick={handleCardClick} />
+        <CardList loading={loading} messages={dateSortMessages} handleCardClick={handleCardClick} />
       </Container>
       <GoToMakeButton to="/post">나도 만들어보기</GoToMakeButton>
     </ListSection>
