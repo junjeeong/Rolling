@@ -4,7 +4,6 @@ import { Card } from './CardStyled';
 import Overlay from './Overlay';
 import { EmojiTopBadge } from "../Emoji/EmojiTopBadge";
 
-
 const Container = styled.div`
 	position: relative;
 	display: flex;
@@ -118,6 +117,10 @@ const ReactionWrap = styled.ul`
 	gap: 10px;
 	z-index: 10;
 	width: fit-content;
+
+	@media (max-width: 768px) {
+		gap: 4px;
+	}
 `;
 
 const CardContent = ({

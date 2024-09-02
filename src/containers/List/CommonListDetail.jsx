@@ -101,7 +101,7 @@ const GoToMakeButton = styled(PrimaryButton)`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-
+  
 	span {
 		display: flex;
 		justify-content: center;
