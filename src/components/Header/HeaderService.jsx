@@ -7,7 +7,6 @@ import { useGetReactionsByRecipientId } from "../../hooks/useGetRecipients";
 import { EmojiAllBadge } from "../Emoji/EmojiAllBadge";
 import { useState } from "react";
 import ShareDropdown from "../Share/ShareDropdown";
-import { useEmojiPicker } from "../../hooks/useEmojiPicker";
 
 const Container = styled.div`
   background-color: white;
@@ -57,7 +56,6 @@ const ArrowDownBtn = styled.button`
 export const HeaderService = ({ recipient, messages }) => {
   const [showAllBadge, setShowAllBadge] = useState(false);
   const { reactions } = useGetReactionsByRecipientId(recipient.id);
-
   return (
     <Container>
       {recipient && (
