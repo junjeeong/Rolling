@@ -1,8 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import logoImg from '../../assets/images/logo.png';
-import OutlineButton from '../common/Button/OutlineButton.jsx';
+import React from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import logoImg from "../../assets/images/logo.png";
+import OutlineButton from "../common/Button/OutlineButton.jsx";
 
 const HeaderContainer = styled.header`
   position: fixed;

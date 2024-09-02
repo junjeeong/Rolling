@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 const EmojiBadgeWrap = styled.div`
   display: flex;
   gap: 4px;
