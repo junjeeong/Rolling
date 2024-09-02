@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { getAllUser } from '../../api/recipients';
 import { useNavigate } from 'react-router-dom';
-import CardListSection from './CardListSection';
+import CardList from '../../components/List/CardList';
 import styled from 'styled-components';
-import PrimaryButton from '../common/Button/PrimaryButton';
+import PrimaryButton from '../../components/common/Button/PrimaryButton';
 
 //로직 컴포넌트
 
@@ -19,7 +19,6 @@ const ListSection = styled(Layout)`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding-top: 64px;
 	padding-bottom: 100px;
 
 	@media (max-width: 1248px) {
@@ -157,13 +156,13 @@ export default function CommonListDetail() {
     <ListSection>
       <Container>
         <Title>인기 롤링 페이퍼 🔥</Title>
-        <CardListSection
+        <CardList
           loading={loading}
           messages={sortMessages}
           handleCardClick={handleCardClick}
         />
         <Title>최근에 만든 롤링 페이퍼 ⭐️</Title>
-        <CardListSection
+        <CardList
           loading={loading}
           messages={dateSortMessages}
           handleCardClick={handleCardClick}

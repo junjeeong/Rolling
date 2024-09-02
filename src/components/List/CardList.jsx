@@ -16,7 +16,7 @@ const CardListWrapper = styled.div`
 	}
 `;
 
-const CardListSection = ({ messages, loading }) => {
+const CardList = ({ messages, loading }) => {
 	const [currentOffset, setCurrentOffset] = useState(0);
 	const navigate = useNavigate();
 
@@ -32,8 +32,8 @@ const CardListSection = ({ messages, loading }) => {
 		}
 	};
 
-	const handleCardClick = (recipientId) => {
-		navigate(`/post/${recipientId}`);
+	const handleCardClick = (id) => {
+		navigate(`/post/${id}`);
 	};
 
 
@@ -55,18 +55,19 @@ const CardListSection = ({ messages, loading }) => {
 						</h2>
 					)}
 					{messages.map((recipient) => (
-						<CardContent
-							id={recipient.id}
-							key={`post-${recipient.id}`}
-							recipientName={recipient.name}
-							backgroundColor={recipient.backgroundColor}
-							backgroundImageURL={recipient.backgroundImageURL}
-							messageCount={recipient.messageCount}
-							profileImage={recipient.recentMassages}
-							topReaction={recipient.topReactions}
-							handleCardClick={() => handleCardClick(recipient.id)}
-						/>
-					))}
+							<div key={`post-${recipient.id}`}>
+								<CardContent
+									id={recipient.id}
+									recipientName={recipient.name}
+									backgroundColor={recipient.backgroundColor}
+									backgroundImageURL={recipient.backgroundImageURL}
+									messageCount={recipient.messageCount}
+									profileImage={recipient.recentMessages}
+									handleCardClick={() => handleCardClick(recipient.id)}
+									recipient={recipient}
+								/>
+							</div>
+						))}
 				</AnimatedCardList> 
 				)}
 				<NextButton
@@ -79,4 +80,4 @@ const CardListSection = ({ messages, loading }) => {
 	);
 };
 
-export default CardListSection;
+export default CardList;

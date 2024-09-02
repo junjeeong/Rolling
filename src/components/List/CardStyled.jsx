@@ -2,11 +2,11 @@ import styled, { css } from 'styled-components';
 
 const getCSSVariable = (colorName) => {
 	const colorMap = {
-		purple: '--purple200',
-		beige: '--beige200',
-		blue: '--blue200',
-		green: '--green200',
-		gray: '--gray200',
+		purple: '--purple-200',
+		beige: '--beige-200',
+		blue: '--blue-200',
+		green: '--green-200',
+		gray: '--gray-200',
 	};
 	return colorMap[colorName] || colorName;
 };
@@ -67,6 +67,7 @@ const specialShapeStyles = css`
         clip-path: path(
           'M74.4299 16.6978C88.1712 -5.00283 119.829 -5.00284 133.57 16.6978L202.482 125.526C217.239 148.829 200.495 179.25 172.912 179.25H35.0878C7.5049 179.25 -9.23877 148.829 5.51768 125.526L74.4299 16.6978Z'
         );
+
         @media (max-width: 768px) {
           width: 107.4px;
           height: 142px;
@@ -88,6 +89,7 @@ const specialShapeStyles = css`
         top: 124px;
         background: rgba(155, 226, 130, 0.3);
         border-radius: 90.5px;
+				
         @media (max-width: 768px) {
           left: 100.6px;
         }
