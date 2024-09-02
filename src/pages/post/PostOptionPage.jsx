@@ -7,7 +7,6 @@ import useBackgroundImages from "../../hooks/useBackgroundImages";
 import { COLORS } from "../../constants/colors";
 
 const PageContainer = styled.div`
-  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -15,7 +14,8 @@ const PageContainer = styled.div`
 
 const Header = styled.div`
   width: 100%;
-  margin-bottom: 16px;
+  height: 98px;
+  margin-bottom: 40px;
 
   @media (min-width: 768px) {
     width: 720px;
@@ -24,14 +24,18 @@ const Header = styled.div`
 `;
 
 const Label = styled.div`
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 8px;
+  color: var(--gray-900);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 36px;
+  margin-bottom: 14px;
+  letter-spacing: -1px;
 `;
 
 const InputContainer = styled.div`
   width: 100%;
   position: relative;
+  letter-spacing: -1px;
 `;
 
 const Input = styled.input.attrs((props) => ({
@@ -40,12 +44,14 @@ const Input = styled.input.attrs((props) => ({
   width: 100%;
   padding: 12px;
   border-radius: 8px;
-  border: 1px solid ${({ hasError }) => (hasError ? "red" : "#ccc")};
+  border: 1px solid
+    ${({ hasError }) => (hasError ? "var(--error)" : "var(--gray-300)")};
   font-size: 16px;
-  outline: ${({ hasError }) => (hasError ? "red" : "none")};
+  outline: ${({ hasError }) => (hasError ? "var(--error)" : "none")};
 
   &:focus {
-    border-color: ${({ hasError }) => (hasError ? "red" : "#8E44AD")};
+    border-color: ${({ hasError }) =>
+      hasError ? "var(--error)" : "var(--purple-800)"};
   }
 `;
 
@@ -57,7 +63,6 @@ const ErrorMessage = styled.div`
 
 const Content = styled.div`
   width: 100%;
-  max-width: 800px;
   margin-bottom: 24px;
 
   @media (min-width: 768px) {
@@ -67,19 +72,23 @@ const Content = styled.div`
 `;
 
 const Instruction = styled.div`
-  color: #181818;
+  color: var(--gray-900);
   font-size: 24px;
   font-weight: 700;
   line-height: 36px;
   text-align: left;
+  letter-spacing: -1px;
 `;
 
 const SubInstruction = styled.div`
-  color: #555;
+  color: var(--gray-500);
   font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
   margin-top: 8px;
   margin-bottom: 16px;
   text-align: left;
+  letter-spacing: -1px;
 `;
 
 const Tabs = styled.div`
@@ -94,20 +103,26 @@ const Tab = styled.div.withConfig({
   flex: 1;
   max-width: 200px;
   text-align: center;
-  padding: 12px;
+  padding: 7px 14px;
   font-size: 16px;
   cursor: pointer;
-  border: 2px solid ${({ isActive }) => (isActive ? "#8E44AD" : "transparent")};
+  border: 2px solid
+    ${({ isActive }) => (isActive ? "var(--purple-600)" : "transparent")};
   border-radius: 6px;
-  color: ${({ isActive }) => (isActive ? "#8E44AD" : "#000")};
+  color: ${({ isActive }) =>
+    isActive ? "var(--purple-600)" : "var(--gray-900)"};
+  background-color: ${({ isActive }) =>
+    isActive ? "var(--white)" : "var(--gray-100)"};
+  font-weight: ${({ isActive }) => (isActive ? "700" : "400")};
 `;
 
 const GenerateButton = styled.button`
   margin-top: 24px;
   width: 100%;
   padding: 16px;
-  background-color: ${({ disabled }) => (disabled ? "#CCCCCC" : "#9935ff")};
-  color: ${({ disabled }) => (disabled ? "#FFFFFF" : "white")};
+  background-color: ${({ disabled }) =>
+    disabled ? "var(--gray-300)" : "var(--purple-600)"};
+  color: var(--white);
   font-size: 18px;
   border: none;
   border-radius: 8px;
