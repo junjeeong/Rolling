@@ -292,3 +292,19 @@ button {
   border: 0;
   background: none;
 }
+
+/* 스크롤 디자인 */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-track {
+	background: var(--purple-100);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--purple-300);
+  border-radius: 12px;   
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--purple-400)
+}
