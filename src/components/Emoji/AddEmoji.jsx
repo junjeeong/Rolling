@@ -29,14 +29,14 @@ const EmojiWrap = styled.div`
 `;
 // 이모티콘을 선택하고 표시하는 기능을 담당합니다.
 export const AddEmoji = () => {
-  const { selectedEmoji, showPicker, setShowPicker, handleEmojiSelect, pickerRef } = useEmojiPicker(); // 커스텀 훅 사용
+  const { showPicker, setShowPicker, handleEmojiSelect, pickerRef } = useEmojiPicker(); // 커스텀 훅 사용
 
   return (
     <Container>
       <OutlineButton onClick={() => setShowPicker(!showPicker)}>
         <EmojiBtnWrap>
           <img src={plus} alt="emoji_plus" width="24px" />
-          <p>{selectedEmoji || "추가"}</p>
+          <p>추가</p>
         </EmojiBtnWrap>
       </OutlineButton>
       <EmojiWrap>

@@ -6,6 +6,8 @@ import arrowDown from "../../assets/images/icons/arrow_down.png";
 import { useGetReactionsByRecipientId } from "../../hooks/useGetRecipients";
 import { EmojiAllBadge } from "../Emoji/EmojiAllBadge";
 import { useState } from "react";
+import ShareDropdown from "../Share/ShareDropdown";
+import { useEmojiPicker } from "../../hooks/useEmojiPicker";
 
 const Container = styled.div`
   background-color: white;
@@ -17,8 +19,10 @@ const Container = styled.div`
 `;
 const Wrap = styled.div`
   display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
 `;
-
 const ServiceWrap = styled.div`
   display: flex;
   max-width: 1200px;
@@ -31,19 +35,10 @@ const ServiceWrap = styled.div`
   font-weight: var(--font-bold);
 `;
 
-const RecipientInfo = styled.div`
-  position: relative;
-  display: flex;
-  margin-left: 28px;
-  gap: 20px;
-  align-items: center;
-`;
-
 const Divider = styled.div`
   width: 1px;
   height: 28px;
-  border: 1px solid var(--gray-100);
-  margin-left: 28px;
+  border: 1px solid var(--gray-200);
 `;
 const ArrowDown = styled.img`
   width: 12px;
@@ -62,26 +57,28 @@ const ArrowDownBtn = styled.button`
 export const HeaderService = ({ recipient, messages }) => {
   const [showAllBadge, setShowAllBadge] = useState(false);
   const { reactions } = useGetReactionsByRecipientId(recipient.id);
+
   return (
     <Container>
       {recipient && (
         <ServiceWrap>
           <p>To: {recipient.name}</p>
-          <Wrap style={{ justifyContent: "center", alignItems: "center" }}>
+          <Wrap style={{ gap: "28px" }}>
             <Wrap>
               <AuthorNotice paperInfo={recipient} authors={messages} />
               <Divider />
             </Wrap>
             <Wrap>
-              <RecipientInfo>
-                {recipient.topReactions.length > 0 && <EmojiTopBadge recipient={recipient} />}
+              {recipient.topReactions.length > 0 && <EmojiTopBadge recipient={recipient} />}
+              <Wrap style={{ position: "relative" }}>
                 <ArrowDownBtn onClick={() => setShowAllBadge(!showAllBadge)}>
                   <ArrowDown src={arrowDown} />
                 </ArrowDownBtn>
                 {showAllBadge && <EmojiAllBadge reactions={reactions.results} />}
                 <AddEmoji />
-              </RecipientInfo>
-              <Divider />
+                <Divider />
+              </Wrap>
+              <ShareDropdown />
             </Wrap>
           </Wrap>
         </ServiceWrap>
