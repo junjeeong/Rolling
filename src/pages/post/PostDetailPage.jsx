@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { HeaderService } from "../../components/Header/HeaderService.jsx";
 import { AddCard } from "../../components/common/Card/AddCard.jsx";
@@ -10,7 +10,7 @@ import {
 } from "../../hooks/useGetRecipients.jsx";
 import HeaderContainer from "../../containers/Header/HeaderContainer.jsx";
 import ModalCardContainer from "../../containers/Modal/ModalCardContainer.jsx";
-import { DeleteButton } from "../../components/common/Button/DeleteButton";
+import { DeleteButtonContainer } from "../../containers/Post/DeleteButtonContainer.jsx";
 
 const Container = styled.div`
   position: relative;
@@ -76,7 +76,7 @@ const PostDetailPage = ({ isEdit }) => {
             />
           ))}
         </GridWrap>
-        {isEdit && <DeleteButton />}
+        {isEdit && <DeleteButtonContainer selectedPaperId={recipient.id} />}
       </Container>
       {isModalOpen && (
         <ModalCardContainer
