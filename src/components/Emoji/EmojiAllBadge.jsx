@@ -4,7 +4,7 @@ const Container = styled.div`
   position: absolute;
   z-index: 2;
   top: 100%;
-  right: 0;
+  right: 100px;
   display: flex;
   padding: 24px;
   margin-top: 8px;
