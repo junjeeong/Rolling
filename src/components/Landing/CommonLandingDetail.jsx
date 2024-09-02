@@ -4,6 +4,8 @@ import cardImg1 from "../../assets/images/cardImg1.png";
 import cardImg2 from "../../assets/images/cardImg2.png";
 import PrimaryButton from "../common/Button/PrimaryButton";
 import Header from "../Header/Header";
+import mobileCardImg1 from "../../assets/images/mobileCardImg1.png";
+import mobileCardImg2 from "../../assets/images/mobileCardImg2.png";
 
 //랜딩 레이아웃
 const Layout = styled.div`
@@ -32,6 +34,12 @@ const Layout = styled.div`
     align-items: flex-start;
     justify-content: space-between;
   }
+
+	@media (max-width: 768px) {
+		gap: 0px;
+		justify-content: normal;
+		margin-top: 110px !important;
+	}
 `;
 
 //LandingSection
@@ -48,7 +56,7 @@ const LandingSection = styled(Layout)`
 
   @media (max-width: 768px) {
     padding: 0 20px;
-    margin-top: 106px;
+    margin-top: 42px;
     min-height: calc(100lvh + 65px);
   }
 `;
@@ -137,6 +145,10 @@ const Card2 = styled(CardBase)`
     height: 100%;
     margin-bottom: 37px;
     overflow: hidden;
+
+		& > :nth-child(2) {
+      left: 20px;
+    }
   }
 `;
 
@@ -173,7 +185,7 @@ const CardImg2 = styled.div`
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 90px;
+    height: 113px;
   }
 
   @media (max-width: 1024px) {
@@ -198,6 +210,8 @@ const IntroSection = styled.div`
 
   @media (max-width: 768px) {
     margin-bottom: 50px;
+		margin-left: -90px;
+		margin-top: 15px;
   }
 `;
 
@@ -243,6 +257,15 @@ const Title = styled.h2`
   @media (max-width: 768px) {
     font-size: 18px;
     line-height: 28px;
+
+		${({ isMobile }) =>
+		isMobile &&
+		css`
+			white-space: normal;
+			br {
+				display: inline;
+			}
+		`}
   }
 `;
 
@@ -295,10 +318,12 @@ const StartButton = styled(PrimaryButton)`
 
 const CommonLandingDetail = ({ className }) => {
   const [isTablet, setIsTablet] = useState(false);
+	const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
       setIsTablet(window.innerWidth <= 1024);
+			setIsMobile(window.innerWidth <= 768);
     };
 
     handleResize(); // 초기 실행을 위해 호출
@@ -318,21 +343,29 @@ const CommonLandingDetail = ({ className }) => {
         <Card1>
           <IntroSection>
             <PointBox>Point. 01</PointBox>
-            <Title isTablet={isTablet}>
+            <Title isTablet={isTablet} isMobile={isMobile}>
               누구나 손쉽게, 온라인
               <br />
               롤링 페이퍼를 만들 수 있어요
             </Title>
             <SubTitle>로그인 없이 자유롭게 만들어요.</SubTitle>
           </IntroSection>
-          <CardImg1 style={{ backgroundImage: `url(${cardImg1})` }} />
+          <CardImg1 style={{ 
+						backgroundImage: isMobile
+							? `url(${mobileCardImg1})`
+							: `url(${cardImg1})`, 
+						}} />
         </Card1>
 
         <Card2>
-          <CardImg2 style={{ backgroundImage: `url(${cardImg2})` }} />
+          <CardImg2 style={{ 
+						backgroundImage: isMobile
+							? `url(${mobileCardImg2})`
+							: `url(${cardImg2})`, 
+						}} />
           <IntroSection>
             <PointBox>Point. 02</PointBox>
-            <Title isTablet={isTablet}>
+            <Title isTablet={isTablet} isMobile={isMobile}>
               서로에게 이모지로 감정을
               <br />
               표현해보세요
