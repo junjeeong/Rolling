@@ -12,13 +12,9 @@ import { DeleteButtonContainer } from "../../containers/Post/DeleteButtonContain
 const Container = styled.div`
   display: flex;
   position: relative;
-  height: calc(100vh - 133px); // 헤더 제외 높이
-  overflow-y: hidden;
   background-color: ${({ $backgroundColor }) => $backgroundColor || "beige"};
-  ${({ $backgroundImage }) =>
-    $backgroundImage &&
-    `background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${$backgroundImage}') no-repeat center/cover;`}
-  
+  ${({ $backgroundImage }) => $backgroundImage && `background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${$backgroundImage}') no-repeat center/cover;`}
+  height: calc(100vh - 133px);
   @media (max-width: 1200px) {
     flex-direction: column;
     padding: 0 24px;
@@ -32,8 +28,8 @@ const GridWrap = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 28px;
-  padding: 113px 0;
-  margin: 0 auto;
+  // padding: 113px 0;
+  margin: 113px auto;
   max-width: 1200px;
   // 테블릿 사이즈
   @media (max-width: 1200px) {
@@ -81,10 +77,7 @@ const PostDetailPage = ({ isEdit }) => {
     <div>
       <HeaderContainer />
       <HeaderService recipient={recipient} messages={messages.results} />
-      <Container
-        $backgroundColor={recipient?.backgroundColor}
-        $backgroundImage={recipient?.backgroundImageURL}
-      >
+      <Container $backgroundColor={recipient?.backgroundColor} $backgroundImage={recipient?.backgroundImageURL}>
         <GridWrap>
           <AddCard id={id} />
           {/* message 배열의 길이만큼 PaperCard 생성 */}

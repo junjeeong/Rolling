@@ -59,6 +59,8 @@ export const ContentBox = styled.div`
   font-size: 18px;
   color: var(--gray-600);
   /* 3줄 넘어가면 ...처리 하기 */
+  overflow: hidden;
+
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3; /* 최대 3줄 표시 */
@@ -94,15 +96,7 @@ export const RelationShip = styled.div`
 export function PaperCard({ message, isEdit, onClick }) {
   if (!message) return null;
 
-  const {
-    id,
-    sender,
-    profileImageURL,
-    relationship,
-    content,
-    font,
-    createdAt,
-  } = message;
+  const { id, sender, profileImageURL, relationship, content, font, createdAt } = message;
 
   const formattedDate = new Date(createdAt).toLocaleDateString();
 
