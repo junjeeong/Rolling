@@ -5,8 +5,9 @@ import { AuthorNotice } from "./AuthorNotice";
 import arrowDown from "../../assets/images/icons/arrow_down.png";
 import { useGetReactionsByRecipientId } from "../../hooks/useGetRecipients";
 import { EmojiAllBadge } from "../Emoji/EmojiAllBadge";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ShareDropdown from "../Share/ShareDropdown";
+import { useAddReactionToRecipient } from "../../hooks/useAddRecipients";
 
 const Container = styled.div`
   background-color: white;
@@ -53,9 +54,21 @@ const ArrowDownBtn = styled.button`
 `;
 //getReactionsByRecipientId 함수를 사용하여 수신자의 이모지 정보를 가져올 예정
 
-export const HeaderService = ({ recipient, messages }) => {
+export const HeaderService = ({ recipient: initialRecipient, messages }) => {
+  const [recipient, setRecipient] = useState(initialRecipient);
   const [showAllBadge, setShowAllBadge] = useState(false);
   const { reactions } = useGetReactionsByRecipientId(recipient.id);
+  // useGetReactionsByRecipientId 훅을 사용하여 이모지 추가 기능을 구현
+  const { addReaction } = useAddReactionToRecipient();
+
+  const handleAddEmoji = async (emoji) => {
+    try {
+      await addReaction(recipient.id, { emoji: emoji, type: "increase" }); // 선택된 이모지를 서버로 전송
+    } catch (err) {
+      console.error("Error adding reaction:", err);
+    }
+  };
+
   return (
     <Container>
       {recipient && (
@@ -75,7 +88,7 @@ export const HeaderService = ({ recipient, messages }) => {
                   </ArrowDownBtn>
                 )}
                 {showAllBadge && <EmojiAllBadge reactions={reactions.results} />}
-                <AddEmoji />
+                <AddEmoji onAdd={handleAddEmoji} /> {/* AddEmoji에 onAdd 전달 */}
                 <Divider />
               </Wrap>
               <ShareDropdown />

@@ -28,7 +28,7 @@ const EmojiWrap = styled.div`
   height: 100px;
 `;
 // 이모티콘을 선택하고 표시하는 기능을 담당합니다.
-export const AddEmoji = () => {
+export const AddEmoji = ({ onAdd }) => {
   const { showPicker, setShowPicker, handleEmojiSelect, pickerRef } = useEmojiPicker(); // 커스텀 훅 사용
 
   return (
@@ -40,7 +40,14 @@ export const AddEmoji = () => {
         </EmojiBtnWrap>
       </OutlineButton>
       <EmojiWrap>
-        <EmojiSelector showPicker={showPicker} onSelectEmoji={handleEmojiSelect} pickerRef={pickerRef} />
+        <EmojiSelector
+          showPicker={showPicker}
+          onSelectEmoji={(emoji) => {
+            handleEmojiSelect(emoji); // 기존의 이모지 선택 로직
+            onAdd(emoji); // 부모 컴포넌트로 이모지 전달
+          }}
+          pickerRef={pickerRef}
+        />
       </EmojiWrap>
     </Container>
   );
