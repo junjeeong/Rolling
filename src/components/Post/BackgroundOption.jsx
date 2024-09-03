@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import checkImage from "../../assets/images/bg_option_check.png";
-import { COLORS } from "../../constants/colors";
-import { PASTEL_COLORS } from "../../constants/pastelColors";
+import usePastelColor from "../../hooks/usePastelColor";
 
 const Wrapper = styled.div`
   position: relative;
@@ -30,26 +29,7 @@ const CheckIcon = styled.img`
 `;
 
 const BackgroundOption = ({ color, size, isSelected, imgUrl }) => {
-  let pastelColor = null;
-
-  switch (color) {
-    case COLORS[1]:
-      // purple = --purple-200 (#ecd9ff)
-      pastelColor = PASTEL_COLORS[1];
-      break;
-    case COLORS[2]:
-      // blue = --blue-200 (#b1e4ff)
-      pastelColor = PASTEL_COLORS[2];
-      break;
-    case COLORS[3]:
-      // green = --green-200 (#d0f5c3)
-      pastelColor = PASTEL_COLORS[3];
-      break;
-    default:
-      // 기본 색깔 beige = --beige-200 (#ffe2ad)
-      pastelColor = PASTEL_COLORS[0];
-      break;
-  }
+  const pastelColor = usePastelColor(color);
 
   return (
     <Wrapper size={size}>
