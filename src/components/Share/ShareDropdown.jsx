@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import ShareImage from "../../assets/images/icons/share.png";
-import useShareKakao from "../../hooks/useShareKakao";
 
 const DropdownContainer = styled.div`
   position: relative;
@@ -112,7 +111,6 @@ const KakaoShareButton = ({ onCloseDropdown }) => {
 
 const ShareDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const iskakaoReady = useShareKakao();
   const handleToggleDropdown = () => {
     setIsOpen(!isOpen);
   };

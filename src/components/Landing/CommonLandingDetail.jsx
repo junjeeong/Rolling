@@ -9,7 +9,6 @@ import Header from "../Header/Header";
 const Layout = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
   //margin값이 css 우선순위 규칙때문에 적용이 안 되어,!important 사용
   margin-top: 124px !important;
 

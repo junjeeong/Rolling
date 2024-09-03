@@ -5,7 +5,7 @@ import { AuthorNotice } from "./AuthorNotice";
 import arrowDown from "../../assets/images/icons/arrow_down.png";
 import { useGetReactionsByRecipientId } from "../../hooks/useGetRecipients";
 import { EmojiAllBadge } from "../Emoji/EmojiAllBadge";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ShareDropdown from "../Share/ShareDropdown";
 import { useAddReactionToRecipient } from "../../hooks/useAddRecipients";
 
@@ -16,12 +16,31 @@ const Container = styled.div`
   height: 68px;
   justify-content: center;
   height: 68px;
+  // 태블릿 사이즈
+  @media (max-width: 1200px) {
+    padding: 0 24px;
+  }
+  // 모바일 사이즈
+  @media (max-width: 768px) {
+    margin-top: 0;
+    padding: 12px 20px;
+    height: 104px;
+  }
 `;
 const Wrap = styled.div`
   display: flex;
   gap: 20px;
   justify-content: center;
   align-items: center;
+`;
+const AuthorWrap = styled.div`
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  @media (max-width: 1200px) {
+    display: none;
+  }
 `;
 const ServiceWrap = styled.div`
   display: flex;
@@ -33,6 +52,11 @@ const ServiceWrap = styled.div`
   font-size: 28px;
   color: var(--gray-800);
   font-weight: var(--font-bold);
+  // 모바일 사이즈
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
 const Divider = styled.div`
@@ -54,8 +78,7 @@ const ArrowDownBtn = styled.button`
 `;
 //getReactionsByRecipientId 함수를 사용하여 수신자의 이모지 정보를 가져올 예정
 
-export const HeaderService = ({ recipient: initialRecipient, messages }) => {
-  const [recipient, setRecipient] = useState(initialRecipient);
+export const HeaderService = ({ recipient, messages }) => {
   const [showAllBadge, setShowAllBadge] = useState(false);
   const { reactions } = useGetReactionsByRecipientId(recipient.id);
   // useGetReactionsByRecipientId 훅을 사용하여 이모지 추가 기능을 구현
@@ -75,10 +98,10 @@ export const HeaderService = ({ recipient: initialRecipient, messages }) => {
         <ServiceWrap>
           <p>To: {recipient.name}</p>
           <Wrap style={{ gap: "28px" }}>
-            <Wrap>
+            <AuthorWrap>
               <AuthorNotice paperInfo={recipient} authors={messages} />
               <Divider />
-            </Wrap>
+            </AuthorWrap>
             <Wrap>
               {recipient.topReactions.length > 0 && <EmojiTopBadge recipient={recipient} />}
               <Wrap style={{ position: "relative" }}>

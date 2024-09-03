@@ -18,6 +18,10 @@ const EmojiBadgeWrap = styled.div`
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
   align-items: center;
+  // 모바일 사이즈
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 `;
 // reaction 받은 전체 이모팀콘을 시각적으로 표시합니다.
 export const EmojiAllBadge = ({ reactions }) => {

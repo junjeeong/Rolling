@@ -18,6 +18,12 @@ const EmojiBtnWrap = styled.div`
   color: var(--gray-900);
   font-size: 16px;
   font-weight: var(--font-medium);
+  p {
+    // 모바일 사이즈
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
 `;
 
 const EmojiWrap = styled.div`
