@@ -10,6 +10,10 @@ export const Container = styled.div`
   padding: 28px 24px;
   border-radius: 16px;
   background-color: var(--white);
+  @media (max-width: 768px) {
+    width: 320px;
+    height: 230px;
+  }
 `;
 
 export const AddButton = styled.div`

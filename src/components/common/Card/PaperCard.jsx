@@ -13,6 +13,10 @@ export const Container = styled.div`
   border-radius: 16px;
   background-color: var(--white);
   cursor: pointer;
+  @media (max-width: 768px) {
+    width: 320px;
+    height: 230px;
+  }
 `;
 
 export const ProfileWrap = styled.div`
@@ -24,7 +28,7 @@ export const ProfileWrap = styled.div`
 `;
 
 export const Divider = styled.div`
-  width: 336px;
+  width: 100%;
   height: 1px;
   margin-top: -16px;
   border: 1px solid var(--gray-100);
@@ -58,7 +62,6 @@ export const ContentBox = styled.div`
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3; /* 최대 3줄 표시 */
-  overflow: hidden;
   overflow-wrap: break-word; /* 긴 단어도 줄바꿈 */
   text-overflow: ellipsis; /* 넘치는 부분을 ...으로 표시 */
   line-height: 1.5em; /* 줄 높이 설정 */
