@@ -7,13 +7,18 @@ import { PaperCard } from "../../components/common/Card/PaperCard.jsx";
 import { useGetRecipientById, useGetMessagesByRecipientId } from "../../hooks/useGetRecipients.jsx";
 import HeaderContainer from "../../containers/Header/HeaderContainer.jsx";
 import ModalCardContainer from "../../containers/Modal/ModalCardContainer.jsx";
-import { DeleteButton } from "../../components/common/Button/DeleteButton";
+import { DeleteButtonContainer } from "../../containers/Post/DeleteButtonContainer.jsx";
 
 const Container = styled.div`
   display: flex;
   position: relative;
-  background-color: ${({ $backgroundColor }) => $backgroundColor || "white"}; // 기본 색상 지정
-  // 태블릿 사이즈
+  height: calc(100vh - 133px); // 헤더 제외 높이
+  overflow-y: hidden;
+  background-color: ${({ $backgroundColor }) => $backgroundColor || "beige"};
+  ${({ $backgroundImage }) =>
+    $backgroundImage &&
+    `background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${$backgroundImage}') no-repeat center/cover;`}
+  
   @media (max-width: 1200px) {
     flex-direction: column;
     padding: 0 24px;
@@ -76,7 +81,10 @@ const PostDetailPage = ({ isEdit }) => {
     <div>
       <HeaderContainer />
       <HeaderService recipient={recipient} messages={messages.results} />
-      <Container $backgroundColor={recipient?.backgroundColor}>
+      <Container
+        $backgroundColor={recipient?.backgroundColor}
+        $backgroundImage={recipient?.backgroundImageURL}
+      >
         <GridWrap>
           <AddCard id={id} />
           {/* message 배열의 길이만큼 PaperCard 생성 */}
@@ -84,7 +92,7 @@ const PostDetailPage = ({ isEdit }) => {
             <PaperCard key={message.id} message={message} isEdit={isEdit} onClick={() => openModal(message)} />
           ))}
         </GridWrap>
-        {isEdit && <DeleteButton />}
+        {isEdit && <DeleteButtonContainer selectedPaperId={recipient.id} />}
       </Container>
       {isModalOpen && <ModalCardContainer onClose={closeModal} selectedCardInfo={selectedCardInfo}></ModalCardContainer>}
     </div>

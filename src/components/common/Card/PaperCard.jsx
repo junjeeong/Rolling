@@ -1,6 +1,6 @@
+import { TrashCanButtonContainer } from "../../../containers/Post/TrashCanButtonContainer";
 import styled from "styled-components";
 import parse from "html-react-parser";
-import { TrashButton } from "../Button/TrashButton";
 
 export const Container = styled.div`
   position: relative;
@@ -94,7 +94,15 @@ export const RelationShip = styled.div`
 export function PaperCard({ message, isEdit, onClick }) {
   if (!message) return null;
 
-  const { sender, profileImageURL, relationship, content, font, createdAt } = message;
+  const {
+    id,
+    sender,
+    profileImageURL,
+    relationship,
+    content,
+    font,
+    createdAt,
+  } = message;
 
   const formattedDate = new Date(createdAt).toLocaleDateString();
 
@@ -108,7 +116,7 @@ export function PaperCard({ message, isEdit, onClick }) {
           </Name>
           <RelationShip rel={relationship}>{relationship}</RelationShip>
         </Info>
-        {isEdit && <TrashButton />}
+        {isEdit && <TrashCanButtonContainer seletedCardId={id} />}
       </ProfileWrap>
       <Divider />
       <ContentBox font={font}>{parse(content)}</ContentBox>

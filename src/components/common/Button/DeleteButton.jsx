@@ -29,10 +29,7 @@ const Button = styled.button`
   }
 `;
 
-export const DeleteButton = () => {
-  const handleDeleteButton = (e) => {
-    alert("버튼이 정상적으로 눌렸습니다.");
-  };
+export const DeleteButton = ({ onClick }) => {
 
-  return <Button onClick={handleDeleteButton}>삭제하기</Button>;
+  return <Button onClick={onClick}>삭제하기</Button>;
 };
