@@ -1,6 +1,6 @@
+import { TrashCanButtonContainer } from "../../../containers/Post/TrashCanButtonContainer";
 import styled from "styled-components";
 import parse from "html-react-parser";
-import { TrashButton } from "../Button/TrashButton";
 
 export const Container = styled.div`
   position: relative;
@@ -13,6 +13,10 @@ export const Container = styled.div`
   border-radius: 16px;
   background-color: var(--white);
   cursor: pointer;
+  @media (max-width: 768px) {
+    width: 320px;
+    height: 230px;
+  }
 `;
 
 export const ProfileWrap = styled.div`
@@ -24,7 +28,7 @@ export const ProfileWrap = styled.div`
 `;
 
 export const Divider = styled.div`
-  width: 336px;
+  width: 100%;
   height: 1px;
   margin-top: -16px;
   border: 1px solid var(--gray-100);
@@ -55,10 +59,10 @@ export const ContentBox = styled.div`
   font-size: 18px;
   color: var(--gray-600);
   /* 3줄 넘어가면 ...처리 하기 */
+  overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3; /* 최대 3줄 표시 */
-  overflow: hidden;
   overflow-wrap: break-word; /* 긴 단어도 줄바꿈 */
   text-overflow: ellipsis; /* 넘치는 부분을 ...으로 표시 */
   line-height: 1.5em; /* 줄 높이 설정 */
@@ -91,7 +95,7 @@ export const RelationShip = styled.div`
 export function PaperCard({ message, isEdit, onClick }) {
   if (!message) return null;
 
-  const { sender, profileImageURL, relationship, content, font, createdAt } = message;
+  const { id, sender, profileImageURL, relationship, content, font, createdAt } = message;
 
   const formattedDate = new Date(createdAt).toLocaleDateString();
 
@@ -105,7 +109,7 @@ export function PaperCard({ message, isEdit, onClick }) {
           </Name>
           <RelationShip rel={relationship}>{relationship}</RelationShip>
         </Info>
-        {isEdit && <TrashButton />}
+        {isEdit && <TrashCanButtonContainer seletedCardId={id} />}
       </ProfileWrap>
       <Divider />
       <ContentBox font={font}>{parse(content)}</ContentBox>

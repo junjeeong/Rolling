@@ -13,12 +13,12 @@ const EmojiBadgeWrap = styled.div`
   align-items: center;
   justify-content: center;
 
-	@media (max-width: 768px) {
-		width: 50px;
-		height: 32px;
-		padding: 6px 16px;
-		font-size: 14px;
-    }
+  @media (max-width: 768px) {
+    width: 50px;
+    height: 32px;
+    padding: 6px 16px;
+    font-size: 14px;
+  }
 `;
 
 //CardList 페이지 모바일 반응형 구현을 위해 isCardList prop 추가로 내림

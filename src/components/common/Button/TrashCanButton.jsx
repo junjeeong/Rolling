@@ -14,14 +14,9 @@ const Button = styled.div`
   }
 `;
 
-export const TrashButton = () => {
-  const handleDeleteButton = (e) => {
-    e.stopPropagation();
-    alert("card가 없어졌습니다!");
-  };
-
+export const TrashCanButton = ({ onClick }) => {
   return (
-    <Button onClick={handleDeleteButton}>
+    <Button onClick={onClick}>
       <img src={trashCan} alt="card delete button" />
     </Button>
   );

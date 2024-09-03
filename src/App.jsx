@@ -12,9 +12,9 @@ function App() {
   return (
     <Routes>
       {/* PostDetailPage는 DefaultLayout 하위에 두지 않음 */}
-      <Route path="post/:id" element={<PostDetailPage />} />
       <Route index element={<LandingPage />} />
 			<Route path="list" element={<ListPage />} />
+      <Route path="post/:id" element={<PostDetailPage />} />
       <Route path="post/:id/edit" element={<PostDetailPage isEdit={true} />} />
 			<Route path="*" element={<NotFoundPage />} />
       {/* DefaultLayout 하위의 다른 페이지들 */}
