@@ -12,6 +12,12 @@ const EmojiBadgeWrap = styled.div`
   font-weight: var(--font-regular);
   align-items: center;
   justify-content: center;
+  @media (max-width: 768px) {
+    width: 50px;
+    height: 32px;
+    padding: 6px 16px;
+    font-size: 14px;
+  }
 `;
 
 export const EmojiBadge = ({ emoji, count }) => {

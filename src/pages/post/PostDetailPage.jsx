@@ -11,15 +11,16 @@ import {
 import HeaderContainer from "../../containers/Header/HeaderContainer.jsx";
 import ModalCardContainer from "../../containers/Modal/ModalCardContainer.jsx";
 import { DeleteButtonContainer } from "../../containers/Post/DeleteButtonContainer.jsx";
+import useRecipients from "../../hooks/useRecipients.jsx";
 
 const Container = styled.div`
-  height: calc(100vh - 133px); // 헤더 제외 높이
-  overflow-y: auto;
+  display: flex;
+  position: relative;
+  height: 100%;
   background-color: ${({ $backgroundColor }) => $backgroundColor || "beige"};
   ${({ $backgroundImage }) =>
     $backgroundImage &&
     `background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${$backgroundImage}') no-repeat center/cover;`}
-
   @media (max-width: 1200px) {
     flex-direction: column;
     padding: 0 24px;
@@ -30,12 +31,11 @@ const Container = styled.div`
 `;
 
 const GridWrap = styled.div`
-  position: relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 28px;
-  padding: 113px 0;
-  margin: 0 auto;
+  // padding: 113px 0;
+  margin: 113px auto;
   max-width: 1200px;
   // 테블릿 사이즈
   @media (max-width: 1200px) {
@@ -88,7 +88,7 @@ const PostDetailPage = ({ isEdit }) => {
   };
 
   return (
-    <div>
+    <div style={{ height: "calc(100vh - 133px)" }}>
       <HeaderContainer />
       <HeaderService recipient={recipient} messages={messages.results} />
       <Container
