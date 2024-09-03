@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import plusIcon from "../../../assets/images/icons/plus.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 export const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -32,13 +32,20 @@ export const Icon = styled.img`
   height: 24px;
 `;
 export function AddCard({ id }) {
-  const navigate = useNavigate();
+  const { edit } = useParams();
 
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    if (edit === undefined) navigate(`message`);
+    else alert("현재 페이지는 Edit 페이지입니다.");
+  };
   return (
     <Container>
-      <AddButton onClick={() => navigate(`message`)}>
+      <AddButton onClick={handleNavigate}>
         <Icon src={plusIcon} alt="Add Icon" />
       </AddButton>
     </Container>
   );
 }
+
+//UI, 로직 컴포넌트 분리해야함. -> 9.2 정준영
