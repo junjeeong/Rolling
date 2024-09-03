@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 // OutlineButton에서 Pressed 타입 2가지 중, white배경 디폴트값
 // 가져다가 쓸 때, 스타일링 추가해서 사용

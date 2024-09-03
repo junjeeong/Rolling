@@ -1,8 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import logoImg from '../../assets/images/logo.png';
-import OutlineButton from '../common/Button/OutlineButton.jsx';
+import React from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import logoImg from "../../assets/images/logo.png";
+import OutlineButton from "../common/Button/OutlineButton.jsx";
 
 const HeaderContainer = styled.header`
   position: fixed;
@@ -30,10 +30,10 @@ const Navigation = styled.nav`
 `;
 
 const RollingButton = styled(OutlineButton)`
-  padding: 4px 12px;  // 버튼 크기 줄이기
-  font-size: 1.2rem;  // 폰트 크기 줄이기
-  line-height: 2rem;  // 줄 간격 조절
-  border-radius: 8px; // 원한다면 테두리 반경도 줄이기
+  padding: 4px 20px;
+  font-size: 1.2rem;
+  line-height: 2rem;
+  border-radius: 8px;
 
   img {
     width: 16px;
