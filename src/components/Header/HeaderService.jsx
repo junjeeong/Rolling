@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { EmojiTopBadge } from "../Emoji/EmojiTopBadge";
 import { AddEmoji } from "../Emoji/AddEmoji";
 import { AuthorNotice } from "./AuthorNotice";
+
 const Container = styled.div`
   background-color: white;
   margin-top: 65px;
@@ -45,8 +46,10 @@ export const HeaderService = ({ recipient, messages }) => {
       {recipient && (
         <>
           <ServiceWrap>
-            <p>To: {recipient.name}</p>
-            <AuthorNotice paperInfo={recipient} authors={messages} />
+            <p style={{ flexGrow: 1 }}>To: {recipient.name}</p>
+            {window.innerWidth > 768 && (
+              <AuthorNotice paperInfo={recipient} authors={messages} />
+            )}
             <Divider />
             <RecipientInfo>
               <EmojiTopBadge recipient={recipient} />

@@ -44,7 +44,7 @@ const deleteMessageToRecipient = async (recipientId) => {
 // 롤링 페이퍼 대상의 메세지 목록 가져오기
 const getMessagesByRecipientId = async (recipientId) => {
   const response = await axios.get(
-    `/${TEAM}/recipients/${recipientId}/messages/`
+    `/${TEAM}/recipients/${recipientId}/messages/?limit=9`
   );
   return response.data;
 };

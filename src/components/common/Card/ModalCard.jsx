@@ -77,7 +77,7 @@ const Button = styled.button`
 `;
 
 //ModalCard는 함수형 컴포넌트이기 때문에 ref를 전달할 수 없음. forwardRef가 이를 가능하게 해줌.(Container(DOM) -> ModarCard -> ModalCardContainer)
-const ModalCard = forwardRef(({ selectedCardInfo, onClose }, ref) => {
+const ModalCard = forwardRef(({ selectedCardInfo, handleModalOpen }, ref) => {
   const { sender, profileImageURL, relationship, content, font, createdAt } =
     selectedCardInfo;
   const formattedDate = new Date(createdAt).toLocaleDateString();
@@ -97,7 +97,7 @@ const ModalCard = forwardRef(({ selectedCardInfo, onClose }, ref) => {
         </ProfileWrap>
         <Divider />
         <ContentBox font={font}>{parse(content)}</ContentBox>
-        <Button onClick={() => onClose()}>확인</Button>
+        <Button onClick={() => handleModalOpen(false)}>확인</Button>
       </Container>
     </ModalBackground>
   );
