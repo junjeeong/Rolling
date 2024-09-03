@@ -47,7 +47,7 @@ const ListSection = styled(Layout)`
 		overflow-x: hidden;
 		width: 100%;
 		padding-bottom: 0;
-		margin-top: 60px;
+		margin-top: 70px;
 	}
 `;
 
@@ -64,7 +64,7 @@ const Container = styled.div`
   }
 
   @media (max-width: 768px) {
-    margin-bottom: 6rem;
+    margin-bottom: 3rem;
   }
 `;
 
