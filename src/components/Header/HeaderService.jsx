@@ -7,8 +7,8 @@ import { EmojiAllBadge } from "../Emoji/EmojiAllBadge";
 import { useEffect, useState } from "react";
 import ShareDropdown from "../Share/ShareDropdown";
 import useReactions from "../../hooks/useReactions";
-import useRecipients from "../../hooks/useRecipients";
 import { EMOJI_TYPES } from "../../constants/emojiTypes";
+import { recipientAtom } from "../../state/recipientAtom";
 
 const Container = styled.div`
   background-color: white;
@@ -78,7 +78,7 @@ const ArrowDownBtn = styled.button`
   }
 `;
 
-export const HeaderService = ({ recipient, messages }) => {
+export const HeaderService = ({ recipient, setRecipient, messages }) => {
   const [showAllBadge, setShowAllBadge] = useState(false);
   // useReactions 훅을 사용하여 이모지 추가 기능을 구현
   const { reactions, setReactions, addReaction } = useReactions(recipient.id);
@@ -95,7 +95,12 @@ export const HeaderService = ({ recipient, messages }) => {
         type: EMOJI_TYPES.INCREASE,
       });
       // 새로 가져온 리액션 리스트를 설정
-      setReactions([...newReactions]);
+      setReactions(newReactions);
+      // 필요에 따라 recipient 상태를 업데이트
+      setRecipient({
+        ...recipient,
+        topReactions: newReactions, // 예시: topReactions가 업데이트되었다고 가정
+      });
     } catch (err) {
       console.error("Error adding reaction:", err);
     }

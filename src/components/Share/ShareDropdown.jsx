@@ -132,7 +132,7 @@ const ShareDropdown = () => {
 
       setTimeout(() => {
         setToast(false);
-      }, 3000);
+      }, 1500);
     } catch (err) {
       console.error("URL 복사 실패:", err);
     }

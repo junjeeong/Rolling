@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import { useAtom } from "jotai";
 import { getRecipientById } from "../api/recipients";
+import { recipientAtom } from "../state/recipientAtom";
 
 const useRecipients = (recipientId) => {
-  const { recipient, setRecipient } = useState(null);
+  const [recipient, setRecipient] = useAtom(recipientAtom);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 

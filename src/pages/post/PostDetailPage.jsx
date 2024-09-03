@@ -16,13 +16,11 @@ import useRecipients from "../../hooks/useRecipients.jsx";
 const Container = styled.div`
   display: flex;
   position: relative;
-  height: calc(100vh - 133px); // 헤더 제외 높이
-  overflow-y: hidden;
+  height: 100%;
   background-color: ${({ $backgroundColor }) => $backgroundColor || "beige"};
   ${({ $backgroundImage }) =>
     $backgroundImage &&
     `background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${$backgroundImage}') no-repeat center/cover;`}
-
   @media (max-width: 1200px) {
     flex-direction: column;
     padding: 0 24px;
@@ -36,8 +34,8 @@ const GridWrap = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 28px;
-  padding: 113px 0;
-  margin: 0 auto;
+  // padding: 113px 0;
+  margin: 113px auto;
   max-width: 1200px;
   // 테블릿 사이즈
   @media (max-width: 1200px) {
@@ -56,7 +54,7 @@ const PostDetailPage = ({ isEdit }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCardInfo, setSelectedCardInfo] = useState({});
   // 커스텀 Hook을 활용하여 데이터 fetching을 보다 효율적으로 처리합니다.
-  const { recipient } = useGetRecipientById(id);
+  const { recipient, setRecipient } = useRecipients(id);
   const { messages, error: messagesError } = useGetMessagesByRecipientId(id);
 
   // 오류 및 로딩 처리
@@ -82,9 +80,13 @@ const PostDetailPage = ({ isEdit }) => {
   };
 
   return (
-    <div>
+    <div style={{ height: "calc(100vh - 133px)" }}>
       <HeaderContainer />
-      <HeaderService recipient={recipient} messages={messages.results} />
+      <HeaderService
+        recipient={recipient}
+        setRecipient={setRecipient}
+        messages={messages.results}
+      />
       <Container
         $backgroundColor={recipient?.backgroundColor}
         $backgroundImage={recipient?.backgroundImageURL}
