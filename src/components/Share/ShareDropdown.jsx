@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import ShareImage from "../../assets/images/icons/share.png";
+import { Toast } from "../common/Toast";
+import useShareKakao from "../../hooks/useShareKakao";
 
 const DropdownContainer = styled.div`
   position: relative;
@@ -21,7 +23,7 @@ const DropdownButton = styled.button`
 const DropdownMenu = styled.div`
   position: absolute;
   top: 100%;
-  left: 0;
+  right: 0;
   background-color: white;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -50,57 +52,57 @@ const DropdownItem = styled.button`
   }
 `;
 
-const KakaoShareButton = ({ onCloseDropdown }) => {
+const KakaoShareButton = ({ onCloseDropdown, iskakaoReady }) => {
   useEffect(() => {
-    if (window.Kakao && !window.Kakao.isInitialized()) {
-      window.Kakao.init(import.meta.env.VITE_KAKAO_API_KEY);
+    if (iskakaoReady) {
+      if (window.Kakao && !window.Kakao.isInitialized()) {
+        window.Kakao.init(import.meta.env.VITE_KAKAO_API_KEY);
+      }
+
+      if (window.Kakao.Share) {
+        window.Kakao.Share.createDefaultButton({
+          container: "#kakaotalk-sharing-btn",
+          objectType: "feed",
+          content: {
+            title: "롤링 페이퍼",
+            description: "Rolling에서 롤링 페이퍼를 작성해보세요!",
+            imageUrl: "https://fe93.netlify.app/logo.png",
+            link: {
+              mobileWebUrl: window.location.href,
+              webUrl: window.location.href,
+            },
+          },
+          buttons: [
+            {
+              title: "웹으로 보기",
+              link: {
+                mobileWebUrl: window.location.href,
+                webUrl: window.location.href,
+              },
+            },
+            {
+              title: "앱으로 보기",
+              link: {
+                mobileWebUrl: window.location.href,
+                webUrl: window.location.href,
+              },
+            },
+          ],
+        });
+      } else {
+        console.error("Kakao.Share is not available.");
+      }
     }
-
-    window.Kakao.Share.createDefaultButton({
-      container: "#kakaotalk-sharing-btn",
-      objectType: "feed",
-      content: {
-        title: "롤링 페이퍼",
-        description: "Rolling에서 롤링 페이퍼를 작성해보세요!",
-        imageUrl: "https://fe93.netlify.app/logo.png",
-        link: {
-          mobileWebUrl: window.location.href,
-          webUrl: window.location.href,
-        },
-      },
-      buttons: [
-        {
-          title: "웹으로 보기",
-          link: {
-            mobileWebUrl: window.location.href,
-            webUrl: window.location.href,
-          },
-        },
-        {
-          title: "앱으로 보기",
-          link: {
-            mobileWebUrl: window.location.href,
-            webUrl: window.location.href,
-          },
-        },
-      ],
-    });
-  }, []);
+  }, [iskakaoReady]);
 
   useEffect(() => {
-    // 현재 window.open 함수를 originalWindowOpen 변수에 저장
-    // 나중에 원래의 window.open 동작을 복원하기 위해 필요
     const originalWindowOpen = window.open;
 
-    // window.open 함수를 재정의
     window.open = (...args) => {
-      // 팝업이 열리기 직전에 onCloseDropdown 함수를 호출하여 드롭다운을 닫음
       onCloseDropdown();
-      // 원래의 window.open 함수 호출
       return originalWindowOpen(...args);
     };
 
-    // 컴포넌트가 언마운트될 때 실행, window.open을 원래의 함수로 복원
     return () => {
       window.open = originalWindowOpen;
     };
@@ -110,7 +112,9 @@ const KakaoShareButton = ({ onCloseDropdown }) => {
 };
 
 const ShareDropdown = () => {
+  const iskakaoReady = useShareKakao(); // Kakao SDK 로드 여부
   const [isOpen, setIsOpen] = useState(false);
+  const [toast, setToast] = useState(false);
 
   const handleToggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -123,10 +127,12 @@ const ShareDropdown = () => {
   const copyURL = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
-      // TODO Modal 로 대체 예정
-      alert("URL이 복사되었습니다!");
-      // URL 복사 후 드롭다운 메뉴 닫기
-      handleCloseDropdown();
+      setToast(true); // 토스트를 보이도록 설정
+      handleCloseDropdown(); // 드롭다운 닫기
+
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
     } catch (err) {
       console.error("URL 복사 실패:", err);
     }
@@ -137,10 +143,11 @@ const ShareDropdown = () => {
       <DropdownButton onClick={handleToggleDropdown} />
       {isOpen && (
         <DropdownMenu>
-          <KakaoShareButton onCloseDropdown={handleCloseDropdown} />
+          <KakaoShareButton onCloseDropdown={handleCloseDropdown} iskakaoReady={iskakaoReady} />
           <DropdownItem onClick={copyURL}>URL 공유</DropdownItem>
         </DropdownMenu>
       )}
+      {toast && <Toast message="URL이 복사되었습니다." />} {/* 토스트는 toast 상태에 따라 표시 */}
     </DropdownContainer>
   );
 };

@@ -1,9 +1,5 @@
 import { useState } from "react";
-import {
-  addRecipient,
-  addMessageToRecipient,
-  addReactionToRecipient,
-} from "../api/recipients";
+import { addRecipient, addMessageToRecipient, addReactionToRecipient } from "../api/recipients";
 
 const useAddData = () => {
   const [loading, setLoading] = useState(false);
@@ -40,8 +36,7 @@ const useAddRecipient = () => {
 const useAddMessageToRecipient = () => {
   const { loading, error, addData } = useAddData();
   return {
-    addMessage: (recipientId, messageData) =>
-      addData(addMessageToRecipient, recipientId, messageData),
+    addMessage: (recipientId, messageData) => addData(addMessageToRecipient, recipientId, messageData),
     loading,
     error,
   };
@@ -51,8 +46,7 @@ const useAddMessageToRecipient = () => {
 const useAddReactionToRecipient = () => {
   const { loading, error, addData } = useAddData();
   return {
-    addReaction: (recipientId, reactionData) =>
-      addData(addReactionToRecipient, recipientId, reactionData),
+    addReaction: (recipientId, reactionData) => addData(addReactionToRecipient, recipientId, reactionData),
     loading,
     error,
   };

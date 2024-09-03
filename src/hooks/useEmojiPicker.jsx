@@ -1,6 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
+import { useAddReactionToRecipient } from "./useAddRecipients";
+import instance from "../api/axios";
 
-export const useEmojiPicker = (initialEmoji = '') => {
+export const useEmojiPicker = (initialEmoji = "") => {
   const [selectedEmoji, setSelectedEmoji] = useState(initialEmoji);
   const [showPicker, setShowPicker] = useState(false);
   const pickerRef = useRef(null);
@@ -17,18 +19,18 @@ export const useEmojiPicker = (initialEmoji = '') => {
   };
 
   const handleKeyDown = (event) => {
-    if (event.key === 'Escape') {
+    if (event.key === "Escape") {
       setShowPicker(false); // Esc 키로 이모지 선택기 닫기
     }
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
 

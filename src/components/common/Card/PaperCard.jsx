@@ -13,6 +13,10 @@ export const Container = styled.div`
   border-radius: 16px;
   background-color: var(--white);
   cursor: pointer;
+  @media (max-width: 768px) {
+    width: 320px;
+    height: 230px;
+  }
 `;
 
 export const ProfileWrap = styled.div`
@@ -24,7 +28,7 @@ export const ProfileWrap = styled.div`
 `;
 
 export const Divider = styled.div`
-  width: 336px;
+  width: 100%;
   height: 1px;
   margin-top: -16px;
   border: 1px solid var(--gray-100);
@@ -58,7 +62,6 @@ export const ContentBox = styled.div`
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3; /* 최대 3줄 표시 */
-  overflow: hidden;
   overflow-wrap: break-word; /* 긴 단어도 줄바꿈 */
   text-overflow: ellipsis; /* 넘치는 부분을 ...으로 표시 */
   line-height: 1.5em; /* 줄 높이 설정 */
@@ -84,22 +87,8 @@ export const RelationShip = styled.div`
   font-size: 14px;
   border-radius: 4px;
   padding: 0 8px;
-  color: ${({ rel }) =>
-    rel === "가족"
-      ? "var(--green-500)"
-      : rel === "동료"
-        ? "var(--purple-600)"
-        : rel === "지인"
-          ? "var(--beige-500)"
-          : "var(--blue-500)"};
-  background-color: ${({ rel }) =>
-    rel === "가족"
-      ? "var(--green-100)"
-      : rel === "동료"
-        ? "var(--purple-100)"
-        : rel === "지인"
-          ? "var(--beige-100)"
-          : "var(--blue-100)"};
+  color: ${({ rel }) => (rel === "가족" ? "var(--green-500)" : rel === "동료" ? "var(--purple-600)" : rel === "지인" ? "var(--beige-500)" : "var(--blue-500)")};
+  background-color: ${({ rel }) => (rel === "가족" ? "var(--green-100)" : rel === "동료" ? "var(--purple-100)" : rel === "지인" ? "var(--beige-100)" : "var(--blue-100)")};
 `;
 
 export function PaperCard({ message, isEdit, onClick }) {

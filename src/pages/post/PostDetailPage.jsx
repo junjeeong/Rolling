@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { HeaderService } from "../../components/Header/HeaderService.jsx";
 import { AddCard } from "../../components/common/Card/AddCard.jsx";
@@ -18,8 +18,15 @@ const Container = styled.div`
   background-color: ${({ $backgroundColor }) => $backgroundColor || "beige"};
   ${({ $backgroundImage }) =>
     $backgroundImage &&
-    `background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${$backgroundImage}') no-repeat center/cover;
-  `}
+    `background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${$backgroundImage}') no-repeat center/cover;`}
+
+  @media (max-width: 1200px) {
+    flex-direction: column;
+    padding: 0 24px;
+  }
+  @media (max-width: 768px) {
+    padding: 0 20px;
+  }
 `;
 
 const GridWrap = styled.div`
@@ -30,6 +37,16 @@ const GridWrap = styled.div`
   padding: 113px 0;
   margin: 0 auto;
   max-width: 1200px;
+  // 테블릿 사이즈
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 80px 0;
+  }
+  // 모바일 사이즈
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    padding: 80px 20px;
+  }
 `;
 
 const InfiniteScrollTargetDOM = styled.div`
@@ -45,7 +62,6 @@ const PostDetailPage = ({ isEdit }) => {
   // 커스텀 Hook을 활용하여 데이터 fetching을 보다 효율적으로 처리합니다.
   const { recipient } = useGetRecipientById(id);
   const { messages, error: messagesError } = useGetMessagesByRecipientId(id);
-  const target = useRef();
 
   // 오류 및 로딩 처리
   if (messagesError) {
@@ -60,14 +76,15 @@ const PostDetailPage = ({ isEdit }) => {
     return <p>Loading messages...</p>;
   }
 
-  const handleModalOpen = (isOpen = false, cardInfo = "") => {
-    if (isOpen === true) {
-      setIsModalOpen(true);
-      setSelectedCardInfo(cardInfo);
-    } else {
-      setIsModalOpen(false);
-      setSelectedCardInfo({});
-    }
+  // Modal 관련 함수
+  const openModal = (message) => {
+    setIsModalOpen(true);
+    setSelectedCardInfo(cardInfo);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedCardInfo({});
   };
 
   return (
@@ -86,17 +103,15 @@ const PostDetailPage = ({ isEdit }) => {
               key={message.id}
               message={message}
               isEdit={isEdit}
-              onClick={() => handleModalOpen(true, message)}
+              onClick={() => openModal(message)}
             />
-            
           ))}
           {isEdit && <DeleteButtonContainer selectedPaperId={recipient.id} />}
         </GridWrap>
       </Container>
-      <InfiniteScrollTargetDOM ref={target} />
       {isModalOpen && (
         <ModalCardContainer
-          handleModalOpen={handleModalOpen}
+          onClose={closeModal}
           selectedCardInfo={selectedCardInfo}
         ></ModalCardContainer>
       )}

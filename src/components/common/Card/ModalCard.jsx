@@ -11,6 +11,8 @@ const ModalBackground = styled.div`
   left: 0;
   z-index: 99;
   background-color: rgba(0, 0, 0, 0.3);
+  @media (max-width: 1200px) {
+  }
 `;
 
 const Container = styled.div`
@@ -27,6 +29,13 @@ const Container = styled.div`
   padding: 39px 40px;
   border-radius: 16px;
   background-color: var(--white);
+  // 스크롤이 생기면 스크롤이 생김
+  overflow-y: auto;
+  // 모바일 사이즈
+  @media (max-width: 768px) {
+    width: 420px;
+    height: 384px;
+  }
 `;
 
 const ProfileWrap = styled.div`
@@ -39,7 +48,7 @@ const ProfileWrap = styled.div`
 
 const ContentBox = styled.div`
   margin-top: 16px;
-  width: 520px;
+  width: 100%;
   height: 256px;
   line-height: 28px;
   font-family: ${({ font }) => font};
@@ -50,7 +59,7 @@ const ContentBox = styled.div`
   overflow-wrap: break-word; /* 긴 단어도 줄바꿈 */
 `;
 const Divider = styled.div`
-  width: 520px;
+  width: 100%;
   height: 1px;
   margin-top: 16px;
   border: 1px solid var(--gray-100);
@@ -77,7 +86,7 @@ const Button = styled.button`
 `;
 
 //ModalCard는 함수형 컴포넌트이기 때문에 ref를 전달할 수 없음. forwardRef가 이를 가능하게 해줌.(Container(DOM) -> ModarCard -> ModalCardContainer)
-const ModalCard = forwardRef(({ selectedCardInfo, handleModalOpen }, ref) => {
+const ModalCard = forwardRef(({ selectedCardInfo, onClose }, ref) => {
   const { sender, profileImageURL, relationship, content, font, createdAt } =
     selectedCardInfo;
   const formattedDate = new Date(createdAt).toLocaleDateString();
