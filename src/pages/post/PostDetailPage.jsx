@@ -77,7 +77,7 @@ const PostDetailPage = ({ isEdit }) => {
   }
 
   // Modal 관련 함수
-  const openModal = (message) => {
+  const openModal = (cardInfo) => {
     setIsModalOpen(true);
     setSelectedCardInfo(cardInfo);
   };

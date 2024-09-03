@@ -106,7 +106,7 @@ const ModalCard = forwardRef(({ selectedCardInfo, onClose }, ref) => {
         </ProfileWrap>
         <Divider />
         <ContentBox font={font}>{parse(content)}</ContentBox>
-        <Button onClick={() => handleModalOpen(false)}>확인</Button>
+        <Button onClick={() => onClose()}>확인</Button>
       </Container>
     </ModalBackground>
   );
