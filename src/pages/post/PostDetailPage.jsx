@@ -4,10 +4,7 @@ import { useParams } from "react-router-dom";
 import { HeaderService } from "../../components/Header/HeaderService.jsx";
 import { AddCard } from "../../components/common/Card/AddCard.jsx";
 import { PaperCard } from "../../components/common/Card/PaperCard.jsx";
-import {
-  useGetRecipientById,
-  useGetMessagesByRecipientId,
-} from "../../hooks/useGetRecipients.jsx";
+import { useGetRecipientById, useGetMessagesByRecipientId } from "../../hooks/useGetRecipients.jsx";
 import HeaderContainer from "../../containers/Header/HeaderContainer.jsx";
 import ModalCardContainer from "../../containers/Modal/ModalCardContainer.jsx";
 import { DeleteButtonContainer } from "../../containers/Post/DeleteButtonContainer.jsx";
@@ -74,22 +71,12 @@ const PostDetailPage = ({ isEdit }) => {
           <AddCard id={id} />
           {/* message 배열의 길이만큼 PaperCard 생성 */}
           {messages.results.map((message) => (
-            <PaperCard
-              key={message.id}
-              message={message}
-              isEdit={isEdit}
-              onClick={() => openModal(message)}
-            />
+            <PaperCard key={message.id} message={message} isEdit={isEdit} onClick={() => openModal(message)} />
           ))}
         </GridWrap>
         {isEdit && <DeleteButtonContainer selectedPaperId={recipient.id} />}
       </Container>
-      {isModalOpen && (
-        <ModalCardContainer
-          onClose={closeModal}
-          selectedCardInfo={selectedCardInfo}
-        ></ModalCardContainer>
-      )}
+      {isModalOpen && <ModalCardContainer onClose={closeModal} selectedCardInfo={selectedCardInfo}></ModalCardContainer>}
     </div>
   );
 };

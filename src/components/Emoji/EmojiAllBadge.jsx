@@ -1,10 +1,10 @@
-import styled from 'styled-components';
-import { EmojiBadge } from './EmojiBadge';
+import styled from "styled-components";
+import { EmojiBadge } from "./EmojiBadge";
 const Container = styled.div`
   position: absolute;
   z-index: 2;
   top: 100%;
-  right: 0;
+  right: 100px;
   display: flex;
   padding: 24px;
   margin-top: 8px;
@@ -20,6 +20,8 @@ const EmojiBadgeWrap = styled.div`
 `;
 // reaction 받은 전체 이모팀콘을 시각적으로 표시합니다.
 export const EmojiAllBadge = ({ reactions }) => {
+  console.log(reactions);
+
   return (
     <Container>
       <EmojiBadgeWrap>

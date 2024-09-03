@@ -34,7 +34,8 @@ export default [
       ...reactHooks.configs.recommended.rules,
       "react/jsx-no-target-blank": "off",
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
-      "prettier/prettier": ["error", { singleQuote: false }],
+      "prettier/prettier": ["error", { singleQuote: false, trailingComma: "none" }],
+      "max-len": "off",
     },
   },
 ];
