@@ -14,7 +14,6 @@ const Container = styled.div`
   position: relative;
   height: calc(100vh - 133px);
   background-color: ${({ $backgroundColor }) => $backgroundColor || "white"}; // 기본 색상 지정
-  overflow-y: hidden;
   // 태블릿 사이즈
   @media (max-width: 1200px) {
     flex-direction: column;
@@ -22,7 +21,6 @@ const Container = styled.div`
   }
   @media (max-width: 768px) {
     padding: 0 20px;
-    height: calc(100vh - 104px);
   }
 `;
 
