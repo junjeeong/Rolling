@@ -60,7 +60,6 @@ export const ContentBox = styled.div`
   color: var(--gray-600);
   /* 3줄 넘어가면 ...처리 하기 */
   overflow: hidden;
-
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3; /* 최대 3줄 표시 */
