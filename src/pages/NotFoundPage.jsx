@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import LogoIcon from '../assets/images/icons/LogoIcon.svg';
 import QuestionMark from '../assets/images/icons/QuestionMark.svg';
 import EllipsisLoading from '../components/Loading/EllipsisLoading';
+import Header from '../components/Header/Header';
 
 const Container = styled.form`
   display: flex;
@@ -12,10 +13,10 @@ const Container = styled.form`
   align-items: center;
   gap: 30px;
   max-width: 720px;
-  margin: 60px auto;
+  margin: 180px auto;
 
   @media (max-width: 1248px) {
-    margin: 150px auto;
+    margin: 180px auto;
     padding: 0 20px;
   }
 
@@ -41,7 +42,7 @@ const ErrorTitle = styled.h1`
 	text-align: center;
 
   @media (max-width: 1248px) {
-    font-size: 110px;
+    font-size: 100px;
   }
 
   @media (max-width: 640px) {
@@ -95,7 +96,9 @@ function NotFoundPage() {
   };
 
   return (
-    <Container>
+		<>
+			<Header />
+			<Container>
       <ErrorTitle>
 				404
 				<br/>
@@ -114,6 +117,7 @@ function NotFoundPage() {
       </MessageContainer>
       <ErrorButton onClick={handleHomePage}>홈으로 가기</ErrorButton>
     </Container>
+		</>
   );
 }
 

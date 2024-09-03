@@ -142,7 +142,7 @@ const CardContent = ({ id, recipientName, messageCount, backgroundImageURL, back
       </Container>
       {recipient && recipient.topReactions && recipient.topReactions.length > 0 && (
         <ReactionWrap key={`post-${id}`}>
-          <EmojiTopBadge recipient={recipient} isCardList={true}/>
+          <EmojiTopBadge recipient={recipient} />
         </ReactionWrap>
       )}
     </Card>

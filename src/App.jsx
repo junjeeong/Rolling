@@ -16,11 +16,11 @@ function App() {
       <Route index element={<LandingPage />} />
 			<Route path="list" element={<ListPage />} />
       <Route path="post/:id/edit" element={<PostDetailPage isEdit={true} />} />
+			<Route path="*" element={<NotFoundPage />} />
       {/* DefaultLayout 하위의 다른 페이지들 */}
       <Route path="/" element={<DefaultLayout />}>
         <Route path="post" element={<PostOptionPage />} />
         <Route path="post/:id/message" element={<PostMessagePage />} />
-				<Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
   );
