@@ -96,10 +96,16 @@ export const HeaderService = ({ recipient, setRecipient, messages }) => {
       });
       // 새로 가져온 리액션 리스트를 설정
       setReactions(newReactions);
-      // 필요에 따라 recipient 상태를 업데이트
+      // count 기준으로 상위 3개의 반응을 선택하여 topReactions에 설정
+      const topReactions = newReactions
+        .slice() // 원본 배열을 변경하지 않기 위해 복사
+        .sort((a, b) => b.count - a.count) // count 기준으로 내림차순 정렬
+        .slice(0, 3); // 상위 3개의 요소만 선택
+
+      // recipient 상태 업데이트
       setRecipient({
         ...recipient,
-        topReactions: newReactions, // 예시: topReactions가 업데이트되었다고 가정
+        topReactions: topReactions, // 상위 3개의 반응으로 topReactions 설정
       });
     } catch (err) {
       console.error("Error adding reaction:", err);
