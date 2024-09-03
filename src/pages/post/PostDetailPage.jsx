@@ -4,14 +4,13 @@ import { useParams } from "react-router-dom";
 import { HeaderService } from "../../components/Header/HeaderService.jsx";
 import { AddCard } from "../../components/common/Card/AddCard.jsx";
 import { PaperCard } from "../../components/common/Card/PaperCard.jsx";
-import {
-  useGetRecipientById,
-  useGetMessagesByRecipientId,
-} from "../../hooks/useGetRecipients.jsx";
+import { useGetMessagesByRecipientId } from "../../hooks/useGetRecipients.jsx";
 import HeaderContainer from "../../containers/Header/HeaderContainer.jsx";
 import ModalCardContainer from "../../containers/Modal/ModalCardContainer.jsx";
 import { DeleteButtonContainer } from "../../containers/Post/DeleteButtonContainer.jsx";
 import useRecipients from "../../hooks/useRecipients.jsx";
+import { COLORS } from "../../constants/colors.js";
+import { PASTEL_COLORS } from "../../constants/pastelColors.js";
 
 const Container = styled.div`
   display: flex;
@@ -57,6 +56,27 @@ const PostDetailPage = ({ isEdit }) => {
   const { recipient, setRecipient } = useRecipients(id);
   const { messages, error: messagesError } = useGetMessagesByRecipientId(id);
 
+  // 백그라운드 컬러 파스텔 컬러로 변경
+  let pastelColor = null;
+  switch (recipient?.backgroundColor) {
+    case COLORS[1]:
+      // purple = --purple-200 (#ecd9ff)
+      pastelColor = PASTEL_COLORS[1];
+      break;
+    case COLORS[2]:
+      // blue = --blue-200 (#b1e4ff)
+      pastelColor = PASTEL_COLORS[2];
+      break;
+    case COLORS[3]:
+      // green = --green-200 (#d0f5c3)
+      pastelColor = PASTEL_COLORS[3];
+      break;
+    default:
+      // 기본 색깔 beige = --beige-200 (#ffe2ad)
+      pastelColor = PASTEL_COLORS[0];
+      break;
+  }
+
   // 오류 및 로딩 처리
   if (messagesError) {
     return <p style={{ color: "red" }}>Error: {messagesError}</p>;
@@ -88,7 +108,7 @@ const PostDetailPage = ({ isEdit }) => {
         messages={messages.results}
       />
       <Container
-        $backgroundColor={recipient?.backgroundColor}
+        $backgroundColor={pastelColor}
         $backgroundImage={recipient?.backgroundImageURL}
       >
         <GridWrap>
