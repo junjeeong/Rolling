@@ -71,7 +71,8 @@ const ArrowDown = styled.img`
   width: 12px;
   height: 7px;
   transition: transform 0.3s ease-in-out; /* 회전 애니메이션 설정 */
-  transform: ${({ showAllBadge }) => (showAllBadge ? "rotate(180deg)" : "rotate(0deg)")};
+  transform: ${({ showAllBadge }) =>
+    showAllBadge ? "rotate(180deg)" : "rotate(0deg)"};
 `;
 const ArrowDownBtn = styled.button`
   background-color: transparent;
@@ -98,7 +99,6 @@ export const HeaderService = ({ recipient, setRecipient, messages }) => {
         emoji: emoji,
         type: EMOJI_TYPES.INCREASE,
       });
-      // 새로 가져온 리액션 리스트를 설정
       // 새로 가져온 리액션 리스트를 설정
       setReactions(newReactions);
       // count 기준으로 상위 3개의 반응을 선택하여 topReactions에 설정
@@ -128,7 +128,9 @@ export const HeaderService = ({ recipient, setRecipient, messages }) => {
               <Divider />
             </AuthorWrap>
             <Wrap>
-              {recipient.topReactions.length > 0 && <EmojiTopBadge recipient={recipient} />}
+              {recipient.topReactions.length > 0 && (
+                <EmojiTopBadge recipient={recipient} />
+              )}
               <Wrap style={{ position: "relative" }}>
                 {recipient.topReactions.length > 0 && (
                   <ArrowDownBtn onClick={() => setShowAllBadge(!showAllBadge)}>
@@ -136,7 +138,8 @@ export const HeaderService = ({ recipient, setRecipient, messages }) => {
                   </ArrowDownBtn>
                 )}
                 {showAllBadge && <EmojiAllBadge reactions={reactions} />}
-                <AddEmoji onAdd={handleAddEmoji} /> {/* AddEmoji에 onAdd 전달 */}
+                <AddEmoji onAdd={handleAddEmoji} />{" "}
+                {/* AddEmoji에 onAdd 전달 */}
                 <Divider />
               </Wrap>
               <ShareDropdown />
