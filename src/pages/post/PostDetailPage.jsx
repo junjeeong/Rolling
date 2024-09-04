@@ -8,9 +8,9 @@ import {
   useGetRecipientById,
   useGetMessagesByRecipientId,
 } from "../../hooks/useGetRecipients.jsx";
+import { DeleteButtonContainer } from "../../containers/Post/DeleteButtonContainer.jsx";
 import HeaderContainer from "../../containers/Header/HeaderContainer.jsx";
 import ModalCardContainer from "../../containers/Modal/ModalCardContainer.jsx";
-import { DeleteButtonContainer } from "../../containers/Post/DeleteButtonContainer.jsx";
 import EllipsisLoading from "../../components/Loading/EllipsisLoading";
 
 const Container = styled.div`

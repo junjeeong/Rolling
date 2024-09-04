@@ -46,11 +46,11 @@ const useGetRecipientById = (recipientId) => {
 };
 
 // 특정 롤링 페이퍼 대상의 메시지 목록 가져오기
-const useGetMessagesByRecipientId = (recipientId) => {
+const useGetMessagesByRecipientId = (recipientId, limit) => {
   const { data, loading, error, fetchData } = useGetData();
   useEffect(() => {
-    fetchData(getMessagesByRecipientId, recipientId);
-  }, [recipientId]);
+    fetchData(getMessagesByRecipientId, recipientId, limit);
+  }, [recipientId, limit]);
   return { messages: data, loading, error };
 };
 

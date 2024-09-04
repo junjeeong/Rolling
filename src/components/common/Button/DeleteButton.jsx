@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 const Button = styled.button`
-  line-height: 0;
   position: absolute;
+  line-height: 0;
   right: 5px;
   top: 63px;
   width: 92px;
@@ -16,6 +16,7 @@ const Button = styled.button`
   &:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
+
   @media (max-width: 1200px) {
     position: static;
     width: 100%;
