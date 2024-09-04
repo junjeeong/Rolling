@@ -14,13 +14,18 @@ const Container = styled.div`
   position: relative;
   background-color: ${({ $backgroundColor }) => $backgroundColor || "beige"};
   ${({ $backgroundImage }) => $backgroundImage && `background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${$backgroundImage}') no-repeat center/cover;`}
-  height: 100%;
+  background-size: cover;
+  min-height: calc(100vh - 133px);
   @media (max-width: 1200px) {
     flex-direction: column;
     padding: 0 24px;
   }
   @media (max-width: 768px) {
     padding: 0 20px;
+    overflow-x: hidden;
+    min-height: calc(100vh - 104px);
+    // backgroundImage 크기
+    background-size: cover;
   }
 `;
 
@@ -28,18 +33,17 @@ const GridWrap = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 28px;
-  // padding: 113px 0;
   margin: 113px auto;
   max-width: 1200px;
   // 테블릿 사이즈
   @media (max-width: 1200px) {
     grid-template-columns: repeat(2, 1fr);
-    padding: 80px 0;
+    margin: 93px auto;
   }
   // 모바일 사이즈
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
-    padding: 80px 20px;
+    margin: 24px auto;
   }
 `;
 

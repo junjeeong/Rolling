@@ -17,6 +17,7 @@ const EmojiBadgeWrap = styled.div`
     height: 32px;
     padding: 6px 16px;
     font-size: 14px;
+    gap: 3px;
   }
 `;
 

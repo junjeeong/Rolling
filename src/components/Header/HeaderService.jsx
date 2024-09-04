@@ -32,6 +32,9 @@ const Wrap = styled.div`
   gap: 20px;
   justify-content: center;
   align-items: center;
+  @media (max-width: 768px) {
+    gap: 10px;
+  }
 `;
 const AuthorWrap = styled.div`
   display: flex;

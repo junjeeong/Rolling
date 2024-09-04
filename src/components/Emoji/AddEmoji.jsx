@@ -25,6 +25,7 @@ const EmojiBtnWrap = styled.div`
     }
   }
 `;
+``;
 
 const EmojiWrap = styled.div`
   position: absolute;

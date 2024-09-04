@@ -28,10 +28,7 @@ const deleteRecipientById = async (recipientId) => {
 
 // 롤링 페이퍼 대상에게 메세지 생성하기
 const addMessageToRecipient = async (recipientId, messageData) => {
-  const response = await axios.post(
-    `/${TEAM}/recipients/${recipientId}/messages/`,
-    messageData
-  );
+  const response = await axios.post(`/${TEAM}/recipients/${recipientId}/messages/`, messageData);
   return response.data;
 };
 
@@ -43,26 +40,19 @@ const deleteMessageToRecipient = async (recipientId) => {
 
 // 롤링 페이퍼 대상의 메세지 목록 가져오기
 const getMessagesByRecipientId = async (recipientId) => {
-  const response = await axios.get(
-    `/${TEAM}/recipients/${recipientId}/messages/`
-  );
+  const response = await axios.get(`/${TEAM}/recipients/${recipientId}/messages/`);
   return response.data;
 };
 
 // 롤링 페이퍼 대상에게 리액션 달기
 const addReactionToRecipient = async (recipientId, reactionData) => {
-  const response = await axios.post(
-    `/${TEAM}/recipients/${recipientId}/reactions/`,
-    reactionData
-  );
+  const response = await axios.post(`/${TEAM}/recipients/${recipientId}/reactions/`, reactionData);
   return response.data;
 };
 
-// 롤링 페이퍼 대상에게 리액션 목록 가져오기
-const getReactionsByRecipientId = async (recipientId) => {
-  const response = await axios.get(
-    `/${TEAM}/recipients/${recipientId}/reactions/`
-  );
+// 롤링 페이퍼 대상에게 리액션 목록 가져오기 ( limit, offset 추가)
+const getReactionsByRecipientId = async (recipientId, limit = 10, offset = 0) => {
+  const response = await axios.get(`/${TEAM}/recipients/${recipientId}/reactions/?limit=${limit}&offset=${offset}`);
   return response.data;
 };
 
@@ -72,15 +62,4 @@ const getAllUser = async (params = { limit: 10, offset: 0 }) => {
   return response.data;
 };
 
-export {
-  getRecipients,
-  getRecipientById,
-  addRecipient,
-  deleteRecipientById,
-  deleteMessageToRecipient,
-  addMessageToRecipient,
-  getMessagesByRecipientId,
-  addReactionToRecipient,
-  getReactionsByRecipientId,
-  getAllUser,
-};
+export { getRecipients, getRecipientById, addRecipient, deleteRecipientById, deleteMessageToRecipient, addMessageToRecipient, getMessagesByRecipientId, addReactionToRecipient, getReactionsByRecipientId, getAllUser };
