@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import ShareDropdown from "../Share/ShareDropdown";
 import useReactions from "../../hooks/useReactions";
 import { EMOJI_TYPES } from "../../constants/emojiTypes";
+import { recipientAtom } from "../../state/recipientAtom";
 
 const Container = styled.div`
   background-color: white;
@@ -98,7 +99,6 @@ export const HeaderService = ({ recipient, setRecipient, messages }) => {
         emoji: emoji,
         type: EMOJI_TYPES.INCREASE,
       });
-      // 새로 가져온 리액션 리스트를 설정
       // 새로 가져온 리액션 리스트를 설정
       setReactions(newReactions);
       // count 기준으로 상위 3개의 반응을 선택하여 topReactions에 설정

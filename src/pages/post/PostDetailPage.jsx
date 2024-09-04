@@ -81,8 +81,15 @@ const PostDetailPage = ({ isEdit }) => {
   return (
     <div style={{ height: "calc(100vh - 133px)" }}>
       <HeaderContainer />
-      <HeaderService recipient={recipient} setRecipient={setRecipient} messages={messages.results} />
-      <Container $backgroundColor={recipient?.backgroundColor} $backgroundImage={recipient?.backgroundImageURL}>
+      <HeaderService
+        recipient={recipient}
+        setRecipient={setRecipient}
+        messages={messages.results}
+      />
+      <Container
+        $backgroundColor={recipient?.backgroundColor}
+        $backgroundImage={recipient?.backgroundImageURL}
+      >
         <GridWrap>
           <AddCard id={id} />
           {/* message 배열의 길이만큼 PaperCard 생성 */}
