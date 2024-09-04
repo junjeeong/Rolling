@@ -137,97 +137,71 @@ const MarginWrap = styled.div`
 `
 
 export default function CommonListDetail() {
-	const [loading, setLoading] = useState(false);
-  const [popularMessages, setPopularMessages] = useState([]);
-  const [recentMessages, setRecentMessages] = useState([]);
-  const [hasMorePopular, setHasMorePopular] = useState(true);
-  const [hasMoreRecent, setHasMoreRecent] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [allMessages, setAllMessages] = useState([]); // 모든 메시지를 저장할 상태
   const navigate = useNavigate();
 
-	const fetchPopularUsers = async () => {
+  // 데이터를 한번만 불러오는 함수
+  const fetchAllUsers = async () => {
     setLoading(true);
     try {
-      const limit = 20;
-      const users = await getAllUser({ limit, offset: 0 }); // 인기 리스트의 경우 offset을 0으로 고정
-      const { results, ...data } = users;
+      const limit = 20; // limit을 20으로 설정 (인기와 최근 데이터)
+      const users = await getAllUser({ limit, offset: 0 });
+      const { results } = users;
 
-			const filteredResults = results.filter(
-				(message) => new Date(message.createdAt) > new Date('2024-08-24') // 특정 날짜 이후의 데이터만 가져옴
-			);
-
-      setPopularMessages((prev) => {
-        const newMessages = filteredResults.filter(
-					(newMessage) => !prev.some((prevMessage) => prevMessage.id === newMessage.id)
-				);
-        return [...prev, ...newMessages];
-      });
-
-      setHasMorePopular(data !== null);
-    } catch (error) {
-      console.error("Failed to fetch popular users:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-	const fetchRecentUsers = async () => {
-    setLoading(true);
-    try {
-      const limit = 20;
-      const users = await getAllUser({ limit, offset: 0 }); // 최근 리스트는 limit을 20으로 설정
-      const { results, ...data } = users;
-
-			const filteredResults = results.filter(
+      // 특정 날짜 이후의 데이터만 필터링
+      const filteredResults = results.filter(
         (message) => new Date(message.createdAt) > new Date('2024-08-24')
       );
 
-      setRecentMessages((prev) => {
-        const newMessages = filteredResults.filter(
-					(newMessage) => !prev.some((prevMessage) => prevMessage.id === newMessage.id)
-				);
-        return [...prev, ...newMessages];
-      });
-
-      setHasMoreRecent(data !== null);
+      setAllMessages(filteredResults); // 필터링된 데이터를 저장
     } catch (error) {
-      console.error("Failed to fetch recent users:", error);
+      console.error("Failed to fetch users:", error);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (hasMorePopular) {
-      fetchPopularUsers();
-    }
-    if (hasMoreRecent) {
-      fetchRecentUsers();
-    }
+    fetchAllUsers(); // 컴포넌트가 마운트될 때 데이터 로드
   }, []);
 
-	const handleCardClick = (recipientId) => {
+  const handleCardClick = (recipientId) => {
     navigate(`/post/${recipientId}`);
   };
 
-	// 인기 롤링 페이퍼는 messageCount에 따라 정렬
-	const sortedPopularMessages = [...popularMessages].sort((a, b) => Number(b.messageCount) - Number(a.messageCount));
-	// **8개의 데이터만 화면에 표시**
-	const popularMessagesToDisplay = sortedPopularMessages.slice(0, 8);
-  // 최근에 만든 롤링 페이퍼는 createdAt에 따라 정렬
-  const sortedRecentMessages = [...recentMessages].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  // 메시지 카운트에 따라 인기 메시지 정렬
+  const sortedPopularMessages = [...allMessages].sort(
+    (a, b) => Number(b.messageCount) - Number(a.messageCount)
+  );
+  // 인기 메시지 중 상위 8개만 화면에 표시
+  const popularMessagesToDisplay = sortedPopularMessages.slice(0, 8);
+
+  // 생성 날짜에 따라 최근 메시지 정렬
+  const sortedRecentMessages = [...allMessages].sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
 
   const existingPath = true;
 
   return (
     <>
-			<Header existingPath={existingPath} />
+      <Header existingPath={existingPath} />
       <ScrollStyle />
       <ListSection>
         <Container>
           <Title>인기 롤링 페이퍼 🔥</Title>
-          <CardList loading={loading} messages={popularMessagesToDisplay} handleCardClick={handleCardClick} />
+          <CardList
+            loading={loading}
+            messages={popularMessagesToDisplay}
+            handleCardClick={handleCardClick}
+          />
           <Title>최근에 만든 롤링 페이퍼 ⭐️</Title>
-          <CardList loading={loading} messages={sortedRecentMessages} handleCardClick={handleCardClick} />
+          <CardList
+            loading={loading}
+            messages={sortedRecentMessages}
+            handleCardClick={handleCardClick}
+          />
         </Container>
         <GoToMakeButton to="/post">나도 만들어보기</GoToMakeButton>
       </ListSection>
