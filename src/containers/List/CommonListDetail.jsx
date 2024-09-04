@@ -225,7 +225,7 @@ export default function CommonListDetail() {
       <ListSection>
         <Container>
           <Title>인기 롤링 페이퍼 🔥</Title>
-          <CardList loading={loading} messages={sortedPopularMessages} handleCardClick={handleCardClick} />
+          <CardList loading={loading} messages={popularMessagesToDisplay} handleCardClick={handleCardClick} />
           <Title>최근에 만든 롤링 페이퍼 ⭐️</Title>
           <CardList loading={loading} messages={sortedRecentMessages} handleCardClick={handleCardClick} />
         </Container>
