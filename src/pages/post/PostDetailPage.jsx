@@ -15,7 +15,6 @@ import EllipsisLoading from "../../components/Loading/EllipsisLoading.jsx";
 const Container = styled.div`
   display: flex;
   position: relative;
-  height: 100%;
   overflow: auto;
   background-color: ${({ $backgroundColor }) => $backgroundColor || "white"};
   ${({ $backgroundImage }) =>
