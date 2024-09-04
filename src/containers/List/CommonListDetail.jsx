@@ -138,28 +138,23 @@ const MarginWrap = styled.div`
 
 export default function CommonListDetail() {
   const [loading, setLoading] = useState(false);
-  const [messages, setMessages] = useState([]);
-  const [offset, setOffset] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
+  const [allMessages, setAllMessages] = useState([]); // 모든 메시지를 저장할 상태
   const navigate = useNavigate();
 
-  const fetchUser = async () => {
+  // 데이터를 한번만 불러오는 함수
+  const fetchAllUsers = async () => {
     setLoading(true);
     try {
-      const limit = 100;
-      const users = await getAllUser({ limit, offset });
-      const { results, ...data } = users;
+      const limit = 20; // limit을 20으로 설정 (인기와 최근 데이터)
+      const users = await getAllUser({ limit, offset: 0 });
+      const { results } = users;
 
-      setMessages((prev) => {
-        const newMessages = results.filter((newMessage) => !prev.some((prevMessage) => prevMessage.id === newMessage.id));
-        return [...prev, ...newMessages];
-      });
+      // 특정 날짜 이후의 데이터만 필터링
+      const filteredResults = results.filter(
+        (message) => new Date(message.createdAt) > new Date('2024-08-24')
+      );
 
-      if (data !== null) {
-        setHasMore(true);
-      } else {
-        setHasMore(false);
-      }
+      setAllMessages(filteredResults); // 필터링된 데이터를 저장
     } catch (error) {
       console.error("Failed to fetch users:", error);
     } finally {
@@ -168,30 +163,45 @@ export default function CommonListDetail() {
   };
 
   useEffect(() => {
-    if (hasMore) {
-      fetchUser();
-    }
-  }, [offset]);
-
-  const sortMessages = [...messages].sort((a, b) => b.messageCount - a.messageCount);
-  const dateSortMessages = [...messages].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    fetchAllUsers(); // 컴포넌트가 마운트될 때 데이터 로드
+  }, []);
 
   const handleCardClick = (recipientId) => {
     navigate(`/post/${recipientId}`);
   };
 
-	const existingPath = true;
+  // 메시지 카운트에 따라 인기 메시지 정렬
+  const sortedPopularMessages = [...allMessages].sort(
+    (a, b) => Number(b.messageCount) - Number(a.messageCount)
+  );
+  // 인기 메시지 중 상위 8개만 화면에 표시
+  const popularMessagesToDisplay = sortedPopularMessages.slice(0, 8);
+
+  // 생성 날짜에 따라 최근 메시지 정렬
+  const sortedRecentMessages = [...allMessages].sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+
+  const existingPath = true;
 
   return (
     <>
-			<Header existingPath={existingPath} />
+      <Header existingPath={existingPath} />
       <ScrollStyle />
       <ListSection>
         <Container>
           <Title>인기 롤링 페이퍼 🔥</Title>
-          <CardList loading={loading} messages={sortMessages} handleCardClick={handleCardClick} />
+          <CardList
+            loading={loading}
+            messages={popularMessagesToDisplay}
+            handleCardClick={handleCardClick}
+          />
           <Title>최근에 만든 롤링 페이퍼 ⭐️</Title>
-          <CardList loading={loading} messages={dateSortMessages} handleCardClick={handleCardClick} />
+          <CardList
+            loading={loading}
+            messages={sortedRecentMessages}
+            handleCardClick={handleCardClick}
+          />
         </Container>
         <GoToMakeButton to="/post">나도 만들어보기</GoToMakeButton>
       </ListSection>
