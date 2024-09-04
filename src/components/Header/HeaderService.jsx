@@ -7,8 +7,8 @@ import { EmojiAllBadge } from "../Emoji/EmojiAllBadge";
 import { useEffect, useState } from "react";
 import ShareDropdown from "../Share/ShareDropdown";
 import useReactions from "../../hooks/useReactions";
-import useRecipients from "../../hooks/useRecipients";
 import { EMOJI_TYPES } from "../../constants/emojiTypes";
+import { recipientAtom } from "../../state/recipientAtom";
 
 const Container = styled.div`
   background-color: white;
@@ -78,7 +78,7 @@ const ArrowDownBtn = styled.button`
   }
 `;
 
-export const HeaderService = ({ recipient, messages }) => {
+export const HeaderService = ({ recipient, setRecipient, messages }) => {
   const [showAllBadge, setShowAllBadge] = useState(false);
   // useReactions 훅을 사용하여 이모지 추가 기능을 구현
   const { reactions, setReactions, addReaction } = useReactions(recipient.id);
@@ -95,7 +95,18 @@ export const HeaderService = ({ recipient, messages }) => {
         type: EMOJI_TYPES.INCREASE,
       });
       // 새로 가져온 리액션 리스트를 설정
-      setReactions([...newReactions]);
+      setReactions(newReactions);
+      // count 기준으로 상위 3개의 반응을 선택하여 topReactions에 설정
+      const topReactions = newReactions
+        .slice() // 원본 배열을 변경하지 않기 위해 복사
+        .sort((a, b) => b.count - a.count) // count 기준으로 내림차순 정렬
+        .slice(0, 3); // 상위 3개의 요소만 선택
+
+      // recipient 상태 업데이트
+      setRecipient({
+        ...recipient,
+        topReactions: topReactions, // 상위 3개의 반응으로 topReactions 설정
+      });
     } catch (err) {
       console.error("Error adding reaction:", err);
     }

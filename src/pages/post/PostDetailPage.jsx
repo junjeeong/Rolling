@@ -4,10 +4,7 @@ import { useParams } from "react-router-dom";
 import { HeaderService } from "../../components/Header/HeaderService.jsx";
 import { AddCard } from "../../components/common/Card/AddCard.jsx";
 import { PaperCard } from "../../components/common/Card/PaperCard.jsx";
-import {
-  useGetRecipientById,
-  useGetMessagesByRecipientId,
-} from "../../hooks/useGetRecipients.jsx";
+import { useGetMessagesByRecipientId } from "../../hooks/useGetRecipients.jsx";
 import { DeleteButtonContainer } from "../../containers/Post/DeleteButtonContainer.jsx";
 import HeaderContainer from "../../containers/Header/HeaderContainer.jsx";
 import ModalCardContainer from "../../containers/Modal/ModalCardContainer.jsx";
@@ -65,7 +62,7 @@ const PostDetailPage = ({ isEdit }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCardInfo, setSelectedCardInfo] = useState({});
   // 커스텀 Hook을 활용하여 데이터 fetching을 보다 효율적으로 처리합니다.
-  const { recipient } = useGetRecipientById(id);
+  const { recipient, setRecipient } = useRecipients(id);
   const { messages, error: messagesError } = useGetMessagesByRecipientId(
     id,
     limit
@@ -123,7 +120,11 @@ const PostDetailPage = ({ isEdit }) => {
     <div style={{ height: "calc(100vh - 133px)" }}>
       <HeaderContainer />
       {recipient && messages?.results ? (
-        <HeaderService recipient={recipient} messages={messages.results} />
+        <HeaderService
+          recipient={recipient}
+          setRecipient={setRecipient}
+          messages={messages.results}
+        />
       ) : (
         <p>Loading information...</p> // 로딩 중이거나 데이터가 없을 때 표시할 메시지
       )}

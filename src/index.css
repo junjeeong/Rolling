@@ -292,3 +292,22 @@ button {
   border: 0;
   background: none;
 }
+
+/* 스크롤 디자인 */
+/* 스크롤바 두께 */
+::-webkit-scrollbar {
+  width: 9px;
+}
+/* 스크롤바 배경색 */
+::-webkit-scrollbar-track {
+	background: var(--purple-100);
+}
+/* 스크롤바 색 */
+::-webkit-scrollbar-thumb {
+  background: var(--purple-300);
+  border-radius: 12px;   
+}
+/* 호버됐을때 색 */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--purple-400)
+}
