@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import ShareDropdown from "../Share/ShareDropdown";
 import useReactions from "../../hooks/useReactions";
 import { EMOJI_TYPES } from "../../constants/emojiTypes";
-import { recipientAtom } from "../../state/recipientAtom";
 
 const Container = styled.div`
   background-color: white;
@@ -33,6 +32,9 @@ const Wrap = styled.div`
   gap: 20px;
   justify-content: center;
   align-items: center;
+  @media (max-width: 768px) {
+    gap: 10px;
+  }
 `;
 const AuthorWrap = styled.div`
   display: flex;
@@ -68,6 +70,9 @@ const Divider = styled.div`
 const ArrowDown = styled.img`
   width: 12px;
   height: 7px;
+  transition: transform 0.3s ease-in-out; /* 회전 애니메이션 설정 */
+  transform: ${({ showAllBadge }) =>
+    showAllBadge ? "rotate(180deg)" : "rotate(0deg)"};
 `;
 const ArrowDownBtn = styled.button`
   background-color: transparent;
@@ -84,7 +89,7 @@ export const HeaderService = ({ recipient, setRecipient, messages }) => {
   const { reactions, setReactions, addReaction } = useReactions(recipient.id);
 
   useEffect(() => {
-    console.log("Updated reactions:", reactions);
+    //console.log("Updated reactions:", reactions);
   }, [reactions]);
 
   const handleAddEmoji = async (emoji) => {
@@ -129,7 +134,7 @@ export const HeaderService = ({ recipient, setRecipient, messages }) => {
               <Wrap style={{ position: "relative" }}>
                 {recipient.topReactions.length > 0 && (
                   <ArrowDownBtn onClick={() => setShowAllBadge(!showAllBadge)}>
-                    <ArrowDown src={arrowDown} />
+                    <ArrowDown src={arrowDown} showAllBadge={showAllBadge} />
                   </ArrowDownBtn>
                 )}
                 {showAllBadge && <EmojiAllBadge reactions={reactions} />}

@@ -13,6 +13,14 @@ const Button = styled.button`
   &:hover {
     background: var(--gray-100);
   }
+  @media (max-width: 640px) {
+    padding: 6px;
+    width: 40px;
+    height: 40px;
+    img {
+      width: 20px;
+    }
+  }
 `;
 
 const OutlineLink = styled(Link)`
