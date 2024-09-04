@@ -1,6 +1,6 @@
-import styled from "styled-components";
 import { useRef, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import styled from "styled-components";
 import { HeaderService } from "../../components/Header/HeaderService.jsx";
 import { AddCard } from "../../components/common/Card/AddCard.jsx";
 import { PaperCard } from "../../components/common/Card/PaperCard.jsx";
@@ -9,6 +9,7 @@ import { DeleteButtonContainer } from "../../containers/Post/DeleteButtonContain
 import HeaderContainer from "../../containers/Header/HeaderContainer.jsx";
 import ModalCardContainer from "../../containers/Modal/ModalCardContainer.jsx";
 import EllipsisLoading from "../../components/Loading/EllipsisLoading";
+import useRecipients from "../../hooks/useRecipients";
 
 const Container = styled.div`
   display: flex;
@@ -46,15 +47,6 @@ const GridWrap = styled.div`
   }
 `;
 
-const LoaderWrap = styled.div`
-  width: 100%;
-  height: 80%;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-`;
-
 const PostDetailPage = ({ isEdit }) => {
   const { id } = useParams();
   const targetDOM = useRef();
@@ -72,6 +64,7 @@ const PostDetailPage = ({ isEdit }) => {
   useEffect(() => {
     if (!targetDOM.current || !id) return;
     // IntersectionObserver가 작동하는 방식을 정의
+
     const options = {
       root: null, // null이면 기본값인 뷰포트를 기준으로 요소의 교차 상태를 관찰 -> 화면에 targetDOM이 보일 경우 callback 실행
       rootMargin: "0px",
@@ -147,11 +140,11 @@ const PostDetailPage = ({ isEdit }) => {
           ) : (
             <p>Loading messages...</p> // 데이터가 없거나 로딩 중일 때 표시할 메시지
           )}
-          {isEdit && <DeleteButtonContainer selectedPaperId={recipient.id} />}
+          {isEdit && <DeleteButtonContainer selectedPaperId={recipient?.id} />}
         </GridWrap>
       </Container>
       {messages?.results?.length >= limit && (
-        <div style={{ height: "30px" }} ref={targetDOM}>
+        <div style={{ height: "15px" }} ref={targetDOM}>
           <EllipsisLoading />
         </div>
       )}
