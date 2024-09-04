@@ -41,11 +41,15 @@ const deleteMessageToRecipient = async (recipientId) => {
   return response.data;
 };
 
-// 롤링 페이퍼 대상의 메세지 목록 가져오기
-const getMessagesByRecipientId = async (recipientId) => {
-  const response = await axios.get(
-    `/${TEAM}/recipients/${recipientId}/messages/`
-  );
+// 롤링 페이퍼 대상의 메세지 목록 가져오기 -> 9.4 정준영 수정
+const getMessagesByRecipientId = async (recipientId, limit) => {
+  // 초기 렌더링 시에는 limit이 없기에 모든 메시지를 가져옴
+  let url = `/${TEAM}/recipients/${recipientId}/messages/`;
+  // limit이 정의된 경우 쿼리 파라미터에 추가
+  if (limit) {
+    url += `?limit=${limit}`;
+  }
+  const response = await axios.get(url);
   return response.data;
 };
 
