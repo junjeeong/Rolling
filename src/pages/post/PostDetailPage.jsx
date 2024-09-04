@@ -11,13 +11,14 @@ import {
 import HeaderContainer from "../../containers/Header/HeaderContainer.jsx";
 import ModalCardContainer from "../../containers/Modal/ModalCardContainer.jsx";
 import { DeleteButtonContainer } from "../../containers/Post/DeleteButtonContainer.jsx";
+import EllipsisLoading from "../../components/Loading/EllipsisLoading";
 
 const Container = styled.div`
   display: flex;
   position: relative;
   height: 100%;
   overflow: auto;
-  background-color: ${({ $backgroundColor }) => $backgroundColor || "beige"};
+  background-color: ${({ $backgroundColor }) => $backgroundColor || "white"};
   ${({ $backgroundImage }) =>
     $backgroundImage &&
     `background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${$backgroundImage}') no-repeat center/cover;`}
@@ -48,10 +49,13 @@ const GridWrap = styled.div`
   }
 `;
 
-const InfiniteScrollTargetDOM = styled.div`
+const LoaderWrap = styled.div`
   width: 100%;
-  height: 10px;
-  background-color: ${({ $backgroundColor }) => $backgroundColor || "beige"};
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
 `;
 
 const PostDetailPage = ({ isEdit }) => {
@@ -102,20 +106,7 @@ const PostDetailPage = ({ isEdit }) => {
         observer.unobserve(targetDOM.current);
       }
     };
-  }, [id]);
-
-  // 오류 및 로딩 처리
-  if (messagesError) {
-    return <p style={{ color: "red" }}>Error: {messagesError}</p>;
-  }
-
-  if (!recipient) {
-    return <p>Loading recipient...</p>;
-  }
-
-  if (!messages) {
-    return <p>Loading messages...</p>;
-  }
+  }, [id, messages]);
 
   // Modal 관련 함수
   const openModal = (cardInfo) => {
@@ -131,29 +122,38 @@ const PostDetailPage = ({ isEdit }) => {
   return (
     <div style={{ height: "calc(100vh - 133px)" }}>
       <HeaderContainer />
-      <HeaderService recipient={recipient} messages={messages.results} />
+      {recipient && messages?.results ? (
+        <HeaderService recipient={recipient} messages={messages.results} />
+      ) : (
+        <p>Loading information...</p> // 로딩 중이거나 데이터가 없을 때 표시할 메시지
+      )}
       <Container
         $backgroundColor={recipient?.backgroundColor}
         $backgroundImage={recipient?.backgroundImageURL}
       >
         <GridWrap>
           <AddCard id={id} />
-          {/* message 배열의 길이만큼 PaperCard 생성 */}
-          {messages.results.map((message) => (
-            <PaperCard
-              key={message.id}
-              message={message}
-              isEdit={isEdit}
-              onClick={() => openModal(message)}
-            />
-          ))}
+          {/* messages가 존재하고, results 배열이 존재할 때만 렌더링 */}
+          {messages?.results ? (
+            messages.results.map((message) => (
+              <PaperCard
+                key={message.id}
+                message={message}
+                isEdit={isEdit}
+                onClick={() => openModal(message)}
+              />
+            ))
+          ) : (
+            <p>Loading messages...</p> // 데이터가 없거나 로딩 중일 때 표시할 메시지
+          )}
           {isEdit && <DeleteButtonContainer selectedPaperId={recipient.id} />}
         </GridWrap>
       </Container>
-      <InfiniteScrollTargetDOM
-        $backgroundColor={recipient?.backgroundColor}
-        ref={targetDOM}
-      />
+      {messages?.results?.length >= limit && (
+        <div style={{ height: "30px" }} ref={targetDOM}>
+          <EllipsisLoading />
+        </div>
+      )}
       {isModalOpen && (
         <ModalCardContainer
           onClose={closeModal}
