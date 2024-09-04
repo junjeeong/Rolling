@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { HeaderService } from "../../components/Header/HeaderService.jsx";
 import { AddCard } from "../../components/common/Card/AddCard.jsx";
 import { PaperCard } from "../../components/common/Card/PaperCard.jsx";
-import { useGetRecipientById, useGetMessagesByRecipientId } from "../../hooks/useGetRecipients.jsx";
+import { useGetMessagesByRecipientId } from "../../hooks/useGetRecipients.jsx";
 import HeaderContainer from "../../containers/Header/HeaderContainer.jsx";
 import ModalCardContainer from "../../containers/Modal/ModalCardContainer.jsx";
 import { DeleteButtonContainer } from "../../containers/Post/DeleteButtonContainer.jsx";
@@ -13,7 +13,6 @@ import useRecipients from "../../hooks/useRecipients.jsx";
 const Container = styled.div`
   display: flex;
   position: relative;
-  height: 100%;
   background-color: ${({ $backgroundColor }) => $backgroundColor || "beige"};
   ${({ $backgroundImage }) => $backgroundImage && `background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${$backgroundImage}') no-repeat center/cover;`}
   background-size: cover;
