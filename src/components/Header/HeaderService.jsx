@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import ShareDropdown from "../Share/ShareDropdown";
 import useReactions from "../../hooks/useReactions";
 import { EMOJI_TYPES } from "../../constants/emojiTypes";
-import { recipientAtom } from "../../state/recipientAtom";
 
 const Container = styled.div`
   background-color: white;
