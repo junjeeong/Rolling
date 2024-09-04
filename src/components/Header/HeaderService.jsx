@@ -84,7 +84,7 @@ export const HeaderService = ({ recipient, setRecipient, messages }) => {
   const { reactions, setReactions, addReaction } = useReactions(recipient.id);
 
   useEffect(() => {
-    console.log("Updated reactions:", reactions);
+    //console.log("Updated reactions:", reactions);
   }, [reactions]);
 
   const handleAddEmoji = async (emoji) => {
