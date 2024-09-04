@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 const Button = styled.button`
-  line-height: 0;
   position: absolute;
-  top: 60px;
-  right: 15%;
+  line-height: 0;
+  right: 5px;
+  top: 63px;
   width: 92px;
   height: 39px;
   padding: 7px 17px;
@@ -16,6 +16,7 @@ const Button = styled.button`
   &:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
+
   @media (max-width: 1200px) {
     position: static;
     width: 100%;
@@ -30,6 +31,5 @@ const Button = styled.button`
 `;
 
 export const DeleteButton = ({ onClick }) => {
-
   return <Button onClick={onClick}>삭제하기</Button>;
 };
