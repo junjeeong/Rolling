@@ -146,7 +146,7 @@ export default function CommonListDetail() {
   const fetchUser = async () => {
     setLoading(true);
     try {
-      const limit = 100;
+      const limit = 10;
       const users = await getAllUser({ limit, offset });
       const { results, ...data } = users;
 
