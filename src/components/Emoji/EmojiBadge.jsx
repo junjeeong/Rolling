@@ -1,7 +1,7 @@
 import styled from "styled-components";
 const EmojiBadgeWrap = styled.div`
   display: flex;
-  gap: 4px;
+  gap: 8px;
   width: 66px;
   height: 36px;
   background-color: #0000008a;
@@ -17,7 +17,7 @@ const EmojiBadgeWrap = styled.div`
     height: 32px;
     padding: 6px 16px;
     font-size: 14px;
-    gap: 3px;
+    gap: 4px;
   }
 `;
 

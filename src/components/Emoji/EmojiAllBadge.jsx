@@ -11,6 +11,11 @@ const Container = styled.div`
   background-color: white;
   border-radius: 8px;
   border: 1px solid #b6b6b6;
+  // 모바일 사이즈
+  @media (max-width: 768px) {
+    right: 50px;
+    padding: 16px;
+  }
 `;
 const EmojiBadgeWrap = styled.div`
   display: grid;
