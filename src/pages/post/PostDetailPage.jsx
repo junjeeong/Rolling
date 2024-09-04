@@ -9,6 +9,7 @@ import HeaderContainer from "../../containers/Header/HeaderContainer.jsx";
 import ModalCardContainer from "../../containers/Modal/ModalCardContainer.jsx";
 import { DeleteButtonContainer } from "../../containers/Post/DeleteButtonContainer.jsx";
 import useRecipients from "../../hooks/useRecipients.jsx";
+import usePastelColor from "../../hooks/usePastelColor.jsx";
 
 const Container = styled.div`
   display: flex;
@@ -62,6 +63,9 @@ const PostDetailPage = ({ isEdit }) => {
   const { recipient, setRecipient } = useRecipients(id);
   const { messages, error: messagesError } = useGetMessagesByRecipientId(id);
 
+  // 백그라운드 컬러 파스텔 컬러로 변경
+  const pastelColor = usePastelColor(recipient?.backgroundColor);
+
   // 오류 및 로딩 처리
   if (messagesError) {
     return <p style={{ color: "red" }}>Error: {messagesError}</p>;
@@ -93,7 +97,7 @@ const PostDetailPage = ({ isEdit }) => {
         messages={messages.results}
       />
       <Container
-        $backgroundColor={recipient?.backgroundColor}
+        $backgroundColor={pastelColor}
         $backgroundImage={recipient?.backgroundImageURL}
       >
         <GridWrap>
