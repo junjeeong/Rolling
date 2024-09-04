@@ -4,7 +4,7 @@ import { getRecipientById } from "../api/recipients";
 import { recipientAtom } from "../state/recipientAtom";
 
 const useRecipients = (recipientId) => {
-  const [recipient, setRecipient] = useAtom(recipientAtom);
+  const [recipient, setRecipient] = useAtom(recipientAtom); // Atom의 상태를 가져오고, 설정하는 함수
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -13,9 +13,7 @@ const useRecipients = (recipientId) => {
     setError(null);
     try {
       const responseInfo = await getRecipientById(recipientId);
-      //console.log(responseInfo);
-      setRecipient(responseInfo);
-      return responseInfo;
+      setRecipient(responseInfo); // Atom의 상태를 업데이트
     } catch (err) {
       setError(err);
     } finally {
