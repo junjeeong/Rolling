@@ -10,6 +10,7 @@ import HeaderContainer from "../../containers/Header/HeaderContainer.jsx";
 import ModalCardContainer from "../../containers/Modal/ModalCardContainer.jsx";
 import useRecipients from "../../hooks/useRecipients.jsx";
 import usePastelColor from "../../hooks/usePastelColor.jsx";
+import EllipsisLoading from "../../components/Loading/EllipsisLoading.jsx";
 
 const Container = styled.div`
   display: flex;
@@ -69,14 +70,13 @@ const PostDetailPage = ({ isEdit }) => {
     id,
     limit
   );
+  // 백그라운드 컬러 파스텔 컬러로 변경
+  const pastelColor = usePastelColor(recipient?.backgroundColor);
 
   // 무한스크롤 관련 함수
   useEffect(() => {
     if (!targetDOM.current || !id) return;
     // IntersectionObserver가 작동하는 방식을 정의
-    // 백그라운드 컬러 파스텔 컬러로 변경
-    const pastelColor = usePastelColor(recipient?.backgroundColor);
-
     const options = {
       root: null, // null이면 기본값인 뷰포트를 기준으로 요소의 교차 상태를 관찰 -> 화면에 targetDOM이 보일 경우 callback 실행
       rootMargin: "0px",
