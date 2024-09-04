@@ -1,7 +1,7 @@
-import { useAtom } from "jotai";
-import { recipientAtom } from "../state/recipientAtom";
 import { useState, useEffect } from "react";
+import { useAtom } from "jotai";
 import { getRecipientById } from "../api/recipients";
+import { recipientAtom } from "../state/recipientAtom";
 
 const useRecipients = (recipientId) => {
   const [recipient, setRecipient] = useAtom(recipientAtom); // Atom의 상태를 가져오고, 설정하는 함수

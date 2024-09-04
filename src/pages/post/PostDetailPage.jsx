@@ -54,7 +54,7 @@ const PostDetailPage = ({ isEdit }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCardInfo, setSelectedCardInfo] = useState({});
   // 커스텀 Hook을 활용하여 데이터 fetching을 보다 효율적으로 처리합니다.
-  const { recipient } = useGetRecipientById(id);
+  const { recipient, setRecipient } = useRecipients(id);
   const { messages, error: messagesError } = useGetMessagesByRecipientId(id);
 
   // 오류 및 로딩 처리
@@ -82,7 +82,7 @@ const PostDetailPage = ({ isEdit }) => {
   return (
     <div style={{ height: "calc(100vh - 133px)" }}>
       <HeaderContainer />
-      <HeaderService recipient={recipient} messages={messages.results} />
+      <HeaderService recipient={recipient} setRecipient={setRecipient} messages={messages.results} />
       <Container $backgroundColor={recipient?.backgroundColor} $backgroundImage={recipient?.backgroundImageURL}>
         <GridWrap>
           <AddCard id={id} />
