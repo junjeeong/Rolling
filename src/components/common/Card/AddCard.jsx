@@ -33,10 +33,11 @@ export const Icon = styled.img`
 `;
 export function AddCard({ id }) {
   const { edit } = useParams();
+  console.log(edit);
 
   const navigate = useNavigate();
   const handleNavigate = () => {
-    if (edit === undefined) navigate(`message`);
+    if (edit == undefined) navigate(`message`);
     else alert("현재 페이지는 Edit 페이지입니다.");
   };
   return (
