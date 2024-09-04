@@ -3,11 +3,12 @@ import { EmojiTopBadge } from "../Emoji/EmojiTopBadge";
 import { AddEmoji } from "../Emoji/AddEmoji";
 import { AuthorNotice } from "./AuthorNotice";
 import arrowDown from "../../assets/images/icons/arrow_down.png";
-import { useGetReactionsByRecipientId } from "../../hooks/useGetRecipients";
 import { EmojiAllBadge } from "../Emoji/EmojiAllBadge";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ShareDropdown from "../Share/ShareDropdown";
-import { useAddReactionToRecipient } from "../../hooks/useAddRecipients";
+import useReactions from "../../hooks/useReactions";
+import useRecipients from "../../hooks/useRecipients";
+import { EMOJI_TYPES } from "../../constants/emojiTypes";
 
 const Container = styled.div`
   background-color: white;
@@ -79,17 +80,25 @@ const ArrowDownBtn = styled.button`
     opacity: 0.5;
   }
 `;
-//getReactionsByRecipientId 함수를 사용하여 수신자의 이모지 정보를 가져올 예정
 
 export const HeaderService = ({ recipient, messages }) => {
   const [showAllBadge, setShowAllBadge] = useState(false);
-  const { reactions } = useGetReactionsByRecipientId(recipient.id);
-  // useGetReactionsByRecipientId 훅을 사용하여 이모지 추가 기능을 구현
-  const { addReaction } = useAddReactionToRecipient();
+  // useReactions 훅을 사용하여 이모지 추가 기능을 구현
+  const { reactions, setReactions, addReaction } = useReactions(recipient.id);
+
+  useEffect(() => {
+    console.log("Updated reactions:", reactions);
+  }, [reactions]);
 
   const handleAddEmoji = async (emoji) => {
     try {
-      await addReaction(recipient.id, { emoji: emoji, type: "increase" }); // 선택된 이모지를 서버로 전송
+      // 선택된 이모지를 서버로 전송
+      const newReactions = await addReaction({
+        emoji: emoji,
+        type: EMOJI_TYPES.INCREASE,
+      });
+      // 새로 가져온 리액션 리스트를 설정
+      setReactions([...newReactions]);
     } catch (err) {
       console.error("Error adding reaction:", err);
     }
@@ -106,15 +115,18 @@ export const HeaderService = ({ recipient, messages }) => {
               <Divider />
             </AuthorWrap>
             <Wrap>
-              {recipient.topReactions.length > 0 && <EmojiTopBadge recipient={recipient} />}
+              {recipient.topReactions.length > 0 && (
+                <EmojiTopBadge recipient={recipient} />
+              )}
               <Wrap style={{ position: "relative" }}>
                 {recipient.topReactions.length > 0 && (
                   <ArrowDownBtn onClick={() => setShowAllBadge(!showAllBadge)}>
                     <ArrowDown src={arrowDown} />
                   </ArrowDownBtn>
                 )}
-                {showAllBadge && <EmojiAllBadge reactions={reactions.results} />}
-                <AddEmoji onAdd={handleAddEmoji} /> {/* AddEmoji에 onAdd 전달 */}
+                {showAllBadge && <EmojiAllBadge reactions={reactions} />}
+                <AddEmoji onAdd={handleAddEmoji} />{" "}
+                {/* AddEmoji에 onAdd 전달 */}
                 <Divider />
               </Wrap>
               <ShareDropdown />
