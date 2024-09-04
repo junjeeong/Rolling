@@ -14,15 +14,21 @@ const Container = styled.div`
   display: flex;
   position: relative;
   background-color: ${({ $backgroundColor }) => $backgroundColor || "beige"};
-  ${({ $backgroundImage }) => $backgroundImage && `background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${$backgroundImage}') no-repeat center/cover;`}
+  ${({ $backgroundImage }) =>
+    $backgroundImage &&
+    `background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${$backgroundImage}') no-repeat center/cover;`}
   background-size: cover;
   min-height: calc(100vh - 133px);
   @media (max-width: 1200px) {
     flex-direction: column;
     padding: 0 24px;
   }
+  @media (max-width: 820px) {
+    // iPad Air
+    overflow-x: hidden;
+    padding: 0 10px;
+  }
   @media (max-width: 768px) {
-    padding: 0 20px;
     overflow-x: hidden;
     min-height: calc(100vh - 104px);
     // backgroundImage 크기
@@ -81,18 +87,35 @@ const PostDetailPage = ({ isEdit }) => {
   return (
     <div style={{ height: "calc(100vh - 133px)" }}>
       <HeaderContainer />
-      <HeaderService recipient={recipient} setRecipient={setRecipient} messages={messages.results} />
-      <Container $backgroundColor={recipient?.backgroundColor} $backgroundImage={recipient?.backgroundImageURL}>
+      <HeaderService
+        recipient={recipient}
+        setRecipient={setRecipient}
+        messages={messages.results}
+      />
+      <Container
+        $backgroundColor={recipient?.backgroundColor}
+        $backgroundImage={recipient?.backgroundImageURL}
+      >
         <GridWrap>
           <AddCard id={id} />
           {/* message 배열의 길이만큼 PaperCard 생성 */}
           {messages.results.map((message) => (
-            <PaperCard key={message.id} message={message} isEdit={isEdit} onClick={() => openModal(message)} />
+            <PaperCard
+              key={message.id}
+              message={message}
+              isEdit={isEdit}
+              onClick={() => openModal(message)}
+            />
           ))}
         </GridWrap>
         {isEdit && <DeleteButtonContainer selectedPaperId={recipient.id} />}
       </Container>
-      {isModalOpen && <ModalCardContainer onClose={closeModal} selectedCardInfo={selectedCardInfo}></ModalCardContainer>}
+      {isModalOpen && (
+        <ModalCardContainer
+          onClose={closeModal}
+          selectedCardInfo={selectedCardInfo}
+        ></ModalCardContainer>
+      )}
     </div>
   );
 };
