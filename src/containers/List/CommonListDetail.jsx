@@ -137,50 +137,86 @@ const MarginWrap = styled.div`
 `
 
 export default function CommonListDetail() {
-  const [loading, setLoading] = useState(false);
-  const [messages, setMessages] = useState([]);
-  const [offset, setOffset] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
+	const [loading, setLoading] = useState(false);
+  const [popularMessages, setPopularMessages] = useState([]);
+  const [recentMessages, setRecentMessages] = useState([]);
+  const [hasMorePopular, setHasMorePopular] = useState(true);
+  const [hasMoreRecent, setHasMoreRecent] = useState(true);
   const navigate = useNavigate();
 
-  const fetchUser = async () => {
+	const fetchPopularUsers = async () => {
     setLoading(true);
     try {
-      const limit = 10;
-      const users = await getAllUser({ limit, offset });
+      const limit = 20;
+      const users = await getAllUser({ limit, offset: 0 }); // 인기 리스트의 경우 offset을 0으로 고정
       const { results, ...data } = users;
 
-      setMessages((prev) => {
-        const newMessages = results.filter((newMessage) => !prev.some((prevMessage) => prevMessage.id === newMessage.id));
+			const filteredResults = results.filter(
+				(message) => new Date(message.createdAt) > new Date('2024-08-24') // 특정 날짜 이후의 데이터만 가져옴
+			);
+
+      setPopularMessages((prev) => {
+        const newMessages = filteredResults.filter(
+					(newMessage) => !prev.some((prevMessage) => prevMessage.id === newMessage.id)
+				);
         return [...prev, ...newMessages];
       });
 
-      if (data !== null) {
-        setHasMore(true);
-      } else {
-        setHasMore(false);
-      }
+      setHasMorePopular(data !== null);
     } catch (error) {
-      console.error("Failed to fetch users:", error);
+      console.error("Failed to fetch popular users:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+	const fetchRecentUsers = async () => {
+    setLoading(true);
+    try {
+      const limit = 20;
+      const users = await getAllUser({ limit, offset: 0 }); // 최근 리스트는 limit을 20으로 설정
+      const { results, ...data } = users;
+
+			const filteredResults = results.filter(
+        (message) => new Date(message.createdAt) > new Date('2024-08-24')
+      );
+
+      setRecentMessages((prev) => {
+        const newMessages = filteredResults.filter(
+					(newMessage) => !prev.some((prevMessage) => prevMessage.id === newMessage.id)
+				);
+        return [...prev, ...newMessages];
+      });
+
+      setHasMoreRecent(data !== null);
+    } catch (error) {
+      console.error("Failed to fetch recent users:", error);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (hasMore) {
-      fetchUser();
+    if (hasMorePopular) {
+      fetchPopularUsers();
     }
-  }, [offset]);
+    if (hasMoreRecent) {
+      fetchRecentUsers();
+    }
+  }, []);
 
-  const sortMessages = [...messages].sort((a, b) => b.messageCount - a.messageCount);
-  const dateSortMessages = [...messages].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-
-  const handleCardClick = (recipientId) => {
+	const handleCardClick = (recipientId) => {
     navigate(`/post/${recipientId}`);
   };
 
-	const existingPath = true;
+	// 인기 롤링 페이퍼는 messageCount에 따라 정렬
+	const sortedPopularMessages = [...popularMessages].sort((a, b) => Number(b.messageCount) - Number(a.messageCount));
+	// **8개의 데이터만 화면에 표시**
+	const popularMessagesToDisplay = sortedPopularMessages.slice(0, 8);
+  // 최근에 만든 롤링 페이퍼는 createdAt에 따라 정렬
+  const sortedRecentMessages = [...recentMessages].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+  const existingPath = true;
 
   return (
     <>
@@ -189,9 +225,9 @@ export default function CommonListDetail() {
       <ListSection>
         <Container>
           <Title>인기 롤링 페이퍼 🔥</Title>
-          <CardList loading={loading} messages={sortMessages} handleCardClick={handleCardClick} />
+          <CardList loading={loading} messages={sortedPopularMessages} handleCardClick={handleCardClick} />
           <Title>최근에 만든 롤링 페이퍼 ⭐️</Title>
-          <CardList loading={loading} messages={dateSortMessages} handleCardClick={handleCardClick} />
+          <CardList loading={loading} messages={sortedRecentMessages} handleCardClick={handleCardClick} />
         </Container>
         <GoToMakeButton to="/post">나도 만들어보기</GoToMakeButton>
       </ListSection>
