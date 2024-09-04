@@ -10,14 +10,21 @@ const DropdownContainer = styled.div`
 `;
 
 const DropdownButton = styled.button`
-  width: 56px;
-  height: 36px;
+  width: 60px;
+  height: 38px;
+  margin-top: 2px;
   background-color: transparent;
   background-image: url(${ShareImage});
   background-size: contain;
   background-repeat: no-repeat;
   border: none;
   cursor: pointer;
+
+  @media (min-width: 768px) {
+    width: 56px;
+    height: 38px;
+    margin-top: 3px;
+  }
 `;
 
 const DropdownMenu = styled.div`
@@ -150,7 +157,7 @@ const ShareDropdown = () => {
           <DropdownItem onClick={copyURL}>URL 공유</DropdownItem>
         </DropdownMenu>
       )}
-      {toast && <Toast message="URL이 복사되었습니다." />}
+      {toast && <Toast message="URL이 복사되었습니다." />}{" "}
       {/* 토스트는 toast 상태에 따라 표시 */}
     </DropdownContainer>
   );
