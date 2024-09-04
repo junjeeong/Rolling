@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import ShareDropdown from "../Share/ShareDropdown";
 import useReactions from "../../hooks/useReactions";
 import { EMOJI_TYPES } from "../../constants/emojiTypes";
-import { recipientAtom } from "../../state/recipientAtom";
 
 const Container = styled.div`
   background-color: white;
@@ -84,7 +83,7 @@ export const HeaderService = ({ recipient, setRecipient, messages }) => {
   const { reactions, setReactions, addReaction } = useReactions(recipient.id);
 
   useEffect(() => {
-    console.log("Updated reactions:", reactions);
+    //console.log("Updated reactions:", reactions);
   }, [reactions]);
 
   const handleAddEmoji = async (emoji) => {
