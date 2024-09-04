@@ -143,11 +143,15 @@ const ShareDropdown = () => {
       <DropdownButton onClick={handleToggleDropdown} />
       {isOpen && (
         <DropdownMenu>
-          <KakaoShareButton onCloseDropdown={handleCloseDropdown} iskakaoReady={iskakaoReady} />
+          <KakaoShareButton
+            onCloseDropdown={handleCloseDropdown}
+            iskakaoReady={iskakaoReady}
+          />
           <DropdownItem onClick={copyURL}>URL 공유</DropdownItem>
         </DropdownMenu>
       )}
-      {toast && <Toast message="URL이 복사되었습니다." />} {/* 토스트는 toast 상태에 따라 표시 */}
+      {toast && <Toast message="URL이 복사되었습니다." />}
+      {/* 토스트는 toast 상태에 따라 표시 */}
     </DropdownContainer>
   );
 };
