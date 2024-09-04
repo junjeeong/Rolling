@@ -29,6 +29,7 @@ const Container = styled.div`
   padding: 39px 40px;
   border-radius: 16px;
   background-color: var(--white);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   // 스크롤이 생기면 스크롤이 생김
   overflow-y: auto;
   // 모바일 사이즈
@@ -82,7 +83,10 @@ const Button = styled.button`
   border-radius: 6px;
   background-color: var(--purple-500);
   color: var(--white);
-  cursor: pointer;
+  transition: transform 0.3s ease;
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 
 //ModalCard는 함수형 컴포넌트이기 때문에 ref를 전달할 수 없음. forwardRef가 이를 가능하게 해줌.(Container(DOM) -> ModarCard -> ModalCardContainer)
