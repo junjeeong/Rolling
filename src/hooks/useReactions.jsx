@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  addReactionToRecipient,
-  getReactionsByRecipientId,
-} from "../api/recipients";
+import { addReactionToRecipient, getReactionsByRecipientId } from "../api/recipients";
 import { EMOJI_TYPES } from "../constants/emojiTypes";
 
 const useReactions = (recipientId) => {

@@ -8,8 +8,8 @@ import { useGetMessagesByRecipientId } from "../../hooks/useGetRecipients.jsx";
 import { DeleteButtonContainer } from "../../containers/Post/DeleteButtonContainer.jsx";
 import HeaderContainer from "../../containers/Header/HeaderContainer.jsx";
 import ModalCardContainer from "../../containers/Modal/ModalCardContainer.jsx";
-import EllipsisLoading from "../../components/Loading/EllipsisLoading";
-import useRecipients from "../../hooks/useRecipients";
+import useRecipients from "../../hooks/useRecipients.jsx";
+import usePastelColor from "../../hooks/usePastelColor.jsx";
 
 const Container = styled.div`
   display: flex;
@@ -20,12 +20,22 @@ const Container = styled.div`
   ${({ $backgroundImage }) =>
     $backgroundImage &&
     `background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${$backgroundImage}') no-repeat center/cover;`}
+  background-size: cover;
+  min-height: calc(100vh - 133px);
   @media (max-width: 1200px) {
     flex-direction: column;
     padding: 0 24px;
   }
+  @media (max-width: 820px) {
+    // iPad Air
+    overflow-x: hidden;
+    padding: 0 10px;
+  }
   @media (max-width: 768px) {
-    padding: 0 20px;
+    overflow-x: hidden;
+    min-height: calc(100vh - 104px);
+    // backgroundImage 크기
+    background-size: cover;
   }
 `;
 
@@ -38,12 +48,12 @@ const GridWrap = styled.div`
   // 테블릿 사이즈
   @media (max-width: 1200px) {
     grid-template-columns: repeat(2, 1fr);
-    padding: 80px 0;
+    margin: 93px auto;
   }
   // 모바일 사이즈
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
-    padding: 80px 20px;
+    margin: 24px auto;
   }
 `;
 
@@ -64,6 +74,8 @@ const PostDetailPage = ({ isEdit }) => {
   useEffect(() => {
     if (!targetDOM.current || !id) return;
     // IntersectionObserver가 작동하는 방식을 정의
+    // 백그라운드 컬러 파스텔 컬러로 변경
+    const pastelColor = usePastelColor(recipient?.backgroundColor);
 
     const options = {
       root: null, // null이면 기본값인 뷰포트를 기준으로 요소의 교차 상태를 관찰 -> 화면에 targetDOM이 보일 경우 callback 실행
@@ -122,7 +134,7 @@ const PostDetailPage = ({ isEdit }) => {
         <p>Loading information...</p> // 로딩 중이거나 데이터가 없을 때 표시할 메시지
       )}
       <Container
-        $backgroundColor={recipient?.backgroundColor}
+        $backgroundColor={pastelColor}
         $backgroundImage={recipient?.backgroundImageURL}
       >
         <GridWrap>

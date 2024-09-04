@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Editor } from "@tinymce/tinymce-react";
 import { useAddMessageToRecipient } from "../../hooks/useAddRecipients";
@@ -34,7 +34,8 @@ const Label = styled.label`
 const Input = styled.input`
   padding: 10px;
   margin-bottom: 5px;
-  border: 1px solid ${(props) => (props.error ? "#ff0000" : "#ccc")};
+  border: 1px solid
+    ${(props) => (props.$fromNameError ? "var(--error)" : "var(--gray-300)")};
   border-radius: 5px;
   font-size: 14px;
   width: 100%; /* 부모 컨테이너의 너비에 맞게 설정 */
@@ -45,15 +46,15 @@ const Input = styled.input`
 `;
 
 const ErrorMessage = styled.div`
-  color: #ff0000;
+  color: var(--error);
   font-size: 12px;
-  margin-bottom: 15px;
+  margin: 8px 4px 8px;
 `;
 
 const Select = styled.select`
   padding: 10px;
   margin-bottom: 50px; /* 아래에 50px 간격 */
-  border: 1px solid #ccc;
+  border: 1px solid var(--gray-300);
   border-radius: 5px;
   font-size: 14px;
   width: 320px; /* 항상 320px 너비로 설정 */
@@ -127,7 +128,7 @@ const EditorContainer = styled.div`
 const Button = styled.button`
   padding: 14px 24px;
   background-color: ${(props) =>
-    props.disabled ? "#ccc" : "var(--purple-600)"};
+    props.disabled ? "var(--gray-300)" : "var(--purple-600)"};
   color: white;
   border: none;
   border-radius: 12px;
@@ -136,19 +137,20 @@ const Button = styled.button`
 
   &:hover {
     background-color: ${(props) =>
-      props.disabled ? "#ccc" : "var(--purple-700)"};
+      props.disabled ? "var(--gray-300)" : "var(--purple-700)"};
   }
 `;
 
 const PostMessagePage = () => {
   const { id: recipientId } = useParams();
-  const [from, setFrom] = useState("");
-  const [fromError, setFromError] = useState(false);
+  const [fromName, setFromName] = useState("");
   const [content, setContent] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
   const [relationship, setRelationship] = useState(relationshipOptions[1]); // 디폴트 "지인"
   const [font, setFont] = useState(fontOptions[0]); // 디폴트 "Noto Sans"
   const [isFormValid, setIsFormValid] = useState(false);
+  const inputRef = useRef(null); // fromName 이름 입력 필드에 대한 ref
+  const [fromNameError, setFromNameError] = useState(false); // fromName 이름 입력값 오류 상태
   // 프로필 이미지 리스트 커스텀 훅
   const profileImages = useProfileImages();
   // 롤링페이퍼 대상에게 전할 메세지 생성 커스텀 훅
@@ -160,8 +162,8 @@ const PostMessagePage = () => {
 
   useEffect(() => {
     // 폼 유효성 검사
-    setIsFormValid(from.trim() !== "" && content.trim() !== "");
-  }, [from, content]);
+    setIsFormValid(fromName.trim() !== "" && content.trim() !== "");
+  }, [fromName, content]);
 
   useEffect(() => {
     if (profileImages && profileImages.length > 0) {
@@ -169,22 +171,23 @@ const PostMessagePage = () => {
     }
   }, [profileImages]);
 
-  const handleFromChange = (e) => {
-    setFrom(e.target.value);
-    if (e.target.value.trim() === "") {
-      setFromError(true);
-    } else {
-      setFromError(false);
+  // From 이름 입력 필드 변경 핸들러
+  const handleInputChange = () => {
+    const value = inputRef.current.value;
+    setFromName(value);
+    setFromNameError(false);
+  };
+
+  // From 이름 입력 필드 포커스 해제 시 처리
+  const handleInputBlur = () => {
+    const value = inputRef.current.value;
+    if (!value.trim()) {
+      setFromNameError(true);
     }
   };
 
-  const handleFromBlur = () => {
-    if (from.trim() === "") {
-      setFromError(true);
-    }
-  };
-
-  const handleEditorChange = (content, editor) => {
+  // Editor 내용 입력 필드 변경 핸들러
+  const handleEditorChange = (content) => {
     setContent(content);
   };
 
@@ -204,7 +207,7 @@ const PostMessagePage = () => {
       const payload = {
         team: TEAM,
         recipientId: recipientId,
-        sender: from,
+        sender: fromName,
         profileImageURL: selectedImage, // 선택된 이미지 사용
         relationship,
         content,
@@ -226,8 +229,15 @@ const PostMessagePage = () => {
     <PostMessagePageContainer>
       <FormContainer>
         <Label htmlFor="fromInput">From.</Label>
-        <Input id="fromInput" placeholder="이름을 입력해 주세요." value={from} onChange={handleFromChange} onBlur={handleFromBlur} error={fromError ? "true" : undefined} />
-        {fromError && <ErrorMessage>값을 입력해 주세요.</ErrorMessage>}
+        <Input
+          id="fromInput"
+          placeholder="이름을 입력해 주세요."
+          ref={inputRef}
+          onChange={handleInputChange}
+          onBlur={handleInputBlur}
+          $fromNameError={fromNameError}
+        />
+        {fromNameError && <ErrorMessage>이름을 입력해 주세요.</ErrorMessage>}
 
         <ProfileImageContainer>
           <SelectedProfileImage
@@ -251,7 +261,11 @@ const PostMessagePage = () => {
         </ProfileImageContainer>
 
         <Label htmlFor="relationshipSelect">상대와의 관계</Label>
-        <Select id="relationshipSelect" value={relationship} onChange={(e) => setRelationship(e.target.value)}>
+        <Select
+          id="relationshipSelect"
+          value={relationship}
+          onChange={(e) => setRelationship(e.target.value)}
+        >
           {relationshipOptions.map((relationship) => (
             <option key={relationship} value={relationship}>
               {relationship}
@@ -272,11 +286,16 @@ const PostMessagePage = () => {
               statusbar: false,
             }}
             onEditorChange={handleEditorChange}
+            value={content}
           />
         </EditorContainer>
 
         <Label htmlFor="fontSelect">폰트 선택</Label>
-        <Select id="fontSelect" value={font} onChange={(e) => setFont(e.target.value)}>
+        <Select
+          id="fontSelect"
+          value={font}
+          onChange={(e) => setFont(e.target.value)}
+        >
           {fontOptions.map((font) => (
             <option key={font} value={font}>
               {font}

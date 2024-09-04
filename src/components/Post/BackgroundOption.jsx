@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import checkImage from "../../assets/images/bg_option_check.png";
+import usePastelColor from "../../hooks/usePastelColor";
 
 const Wrapper = styled.div`
   position: relative;
@@ -28,9 +29,11 @@ const CheckIcon = styled.img`
 `;
 
 const BackgroundOption = ({ color, size, isSelected, imgUrl }) => {
+  const pastelColor = usePastelColor(color);
+
   return (
     <Wrapper size={size}>
-      <Container color={color} size={size} $imgUrl={imgUrl} />
+      <Container color={pastelColor} size={size} $imgUrl={imgUrl} />
       {isSelected && <CheckIcon src={checkImage} alt="Check" />}
     </Wrapper>
   );
