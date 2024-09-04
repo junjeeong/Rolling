@@ -18,7 +18,9 @@ const Container = styled.div`
   position: relative;
   height: 100%;
   background-color: ${({ $backgroundColor }) => $backgroundColor || "beige"};
-  ${({ $backgroundImage }) => $backgroundImage && `background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${$backgroundImage}') no-repeat center/cover;`}
+  ${({ $backgroundImage }) =>
+    $backgroundImage &&
+    `background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${$backgroundImage}') no-repeat center/cover;`}
   @media (max-width: 1200px) {
     flex-direction: column;
     padding: 0 24px;
@@ -52,7 +54,7 @@ const PostDetailPage = ({ isEdit }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCardInfo, setSelectedCardInfo] = useState({});
   // 커스텀 Hook을 활용하여 데이터 fetching을 보다 효율적으로 처리합니다.
-  const { recipient } = useGetRecipientById(id);
+  const { recipient, setRecipient } = useRecipients(id);
   const { messages, error: messagesError } = useGetMessagesByRecipientId(id);
 
   // 오류 및 로딩 처리
@@ -80,8 +82,15 @@ const PostDetailPage = ({ isEdit }) => {
   return (
     <div style={{ height: "calc(100vh - 133px)" }}>
       <HeaderContainer />
-      <HeaderService recipient={recipient} messages={messages.results} />
-      <Container $backgroundColor={recipient?.backgroundColor} $backgroundImage={recipient?.backgroundImageURL}>
+      <HeaderService
+        recipient={recipient}
+        setRecipient={setRecipient}
+        messages={messages.results}
+      />
+      <Container
+        $backgroundColor={recipient?.backgroundColor}
+        $backgroundImage={recipient?.backgroundImageURL}
+      >
         <GridWrap>
           <AddCard id={id} />
           {/* message 배열의 길이만큼 PaperCard 생성 */}
