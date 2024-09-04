@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import logoImg from "../../assets/images/logo.png";
+import Logo from "../../assets/images/logo.svg";
 import OutlineButton from "../common/Button/OutlineButton.jsx";
 
 const HeaderContainer = styled.header`
@@ -52,7 +52,7 @@ const Header = ({ existingPath }) => (
     <Navigation>
       <div>
         <Link to="/">
-          <img src={logoImg} alt="롤링 로고" />
+					<Logo alt="롤링 로고"/>
         </Link>
       </div>
       {existingPath && <RollingButton to="/post">롤링 페이퍼 만들기</RollingButton>}
