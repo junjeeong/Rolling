@@ -9,7 +9,7 @@ import { DeleteButtonContainer } from "../../containers/Post/DeleteButtonContain
 import HeaderContainer from "../../containers/Header/HeaderContainer.jsx";
 import ModalCardContainer from "../../containers/Modal/ModalCardContainer.jsx";
 import useRecipients from "../../hooks/useRecipients.jsx";
-import usePastelColor from "../../hooks/usePastelColor.jsx";
+import { getPastelColor } from "../../hooks/usePastelColor.jsx";
 import EllipsisLoading from "../../components/Loading/EllipsisLoading.jsx";
 
 const Container = styled.div`
@@ -65,13 +65,14 @@ const PostDetailPage = ({ isEdit }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCardInfo, setSelectedCardInfo] = useState({});
   // 커스텀 Hook을 활용하여 데이터 fetching을 보다 효율적으로 처리합니다.
-  const { recipient, setRecipient } = useRecipients(id);
   const { messages, error: messagesError } = useGetMessagesByRecipientId(
     id,
     limit
   );
+  // Jotai 쓴 useRecipients 훅을 사용해서 recipient 을 전역적으로 상태 관리
+  const { recipient } = useRecipients();
   // 백그라운드 컬러 파스텔 컬러로 변경
-  const pastelColor = usePastelColor(recipient?.backgroundColor);
+  const pastelColor = getPastelColor(recipient?.backgroundColor);
 
   // 무한스크롤 관련 함수
   useEffect(() => {
@@ -125,11 +126,7 @@ const PostDetailPage = ({ isEdit }) => {
     <div style={{ height: "calc(100vh - 133px)" }}>
       <HeaderContainer />
       {recipient && messages?.results ? (
-        <HeaderService
-          recipient={recipient}
-          setRecipient={setRecipient}
-          messages={messages.results}
-        />
+        <HeaderService messages={messages.results} />
       ) : (
         <p>Loading information...</p> // 로딩 중이거나 데이터가 없을 때 표시할 메시지
       )}
