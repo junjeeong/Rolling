@@ -4,6 +4,7 @@ import { useAddMessageToRecipient } from "../../hooks/useAddRecipients";
 import useProfileImages from "../../hooks/useProfileImages";
 import { fontOptions, relationshipOptions } from "../../constants/options";
 import styled from "styled-components";
+import { Toast } from "../../components/common/Toast";
 import TinyMCEEditor from "../../components/Editor/TinyMCEEditor";
 
 const PostMessagePageContainer = styled.div`
@@ -157,7 +158,7 @@ const PostMessagePage = () => {
   const { addMessage } = useAddMessageToRecipient();
   // 롤링페이퍼 대상에게 전할 메세지 생성 성공 후에 이동할 navigate 훅
   const navigate = useNavigate();
-
+  const [toastVisible, setToastVisible] = useState(false);
   const TEAM = "9-3";
 
   useEffect(() => {
@@ -224,8 +225,7 @@ const PostMessagePage = () => {
         // 롤링페이퍼 페이지로 이동
         navigate(`/post/${recipientId}`);
       } catch (error) {
-        console.error("Error creating post:", error);
-        alert("메세지 생성에 실패했습니다.");
+        setToastVisible(true);
       }
     }
   };
@@ -309,6 +309,9 @@ const PostMessagePage = () => {
           생성하기
         </Button>
       </FormContainer>
+      {toastVisible && (
+        <Toast message="메세지 생성에 실패했습니다." type="error" />
+      )}
     </PostMessagePageContainer>
   );
 };

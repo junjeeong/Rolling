@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import plusIcon from "../../../assets/images/icons/plus.png";
 import { useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
+import { Toast } from "../Toast";
+
 export const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -39,18 +42,26 @@ export const Icon = styled.img`
 `;
 export function AddCard({ id }) {
   const { edit } = useParams();
-  console.log(edit);
-
   const navigate = useNavigate();
+
+  const [toastVisible, setToastVisible] = useState(false);
   const handleNavigate = () => {
     if (edit == undefined) navigate(`message`);
-    else alert("현재 페이지는 Edit 페이지입니다.");
+    else {
+      setToastVisible(true);
+      setTimeout(() => {
+        setToastVisible(false);
+      }, 1500); // 1.5초 후에 Toast 숨김
+    }
   };
   return (
     <Container>
       <AddButton onClick={handleNavigate}>
         <Icon src={plusIcon} alt="Add Icon" />
       </AddButton>
+      {toastVisible && (
+        <Toast message="현재 페이지는 Edit 페이지입니다 !" type="error" />
+      )}
     </Container>
   );
 }
