@@ -29,7 +29,7 @@ const DropdownMenu = styled.div`
   background-color: white;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  z-index: 1000;
+  z-index: 999;
   overflow: hidden;
   width: 160px;
   padding: 8px 0;
@@ -116,7 +116,7 @@ const KakaoShareButton = ({ onCloseDropdown, iskakaoReady }) => {
 const ShareDropdown = () => {
   const iskakaoReady = useShareKakao(); // Kakao SDK 로드 여부
   const [isOpen, setIsOpen] = useState(false);
-  const [toast, setToast] = useState(false);
+  const [toastVisible, setToastVisible] = useState(false);
 
   const handleToggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -129,11 +129,11 @@ const ShareDropdown = () => {
   const copyURL = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
-      setToast(true); // 토스트를 보이도록 설정
+      setToastVisible(true); // 토스트를 보이도록 설정
       handleCloseDropdown(); // 드롭다운 닫기
 
       setTimeout(() => {
-        setToast(false);
+        setToastVisible(false);
       }, 1500);
     } catch (err) {
       console.error("URL 복사 실패:", err);
@@ -154,7 +154,7 @@ const ShareDropdown = () => {
           <DropdownItem onClick={copyURL}>URL 공유</DropdownItem>
         </DropdownMenu>
       )}
-      {toast && <Toast message="URL이 복사되었습니다." />}{" "}
+      {toastVisible && <Toast message="URL이 복사되었습니다." />}
       {/* 토스트는 toast 상태에 따라 표시 */}
     </DropdownContainer>
   );

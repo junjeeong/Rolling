@@ -1,7 +1,6 @@
 import { TrashCanButtonContainer } from "../../../containers/Post/TrashCanButtonContainer";
 import styled from "styled-components";
 import parse from "html-react-parser";
-
 export const Container = styled.div`
   position: relative;
   display: flex;
@@ -17,7 +16,6 @@ export const Container = styled.div`
     transform 0.3s ease,
     box-shadow 0.3s ease;
   cursor: pointer;
-
   &:hover {
     transform: scale(1.05) rotateY(10deg); /* 마우스를 올렸을 때 살짝 확대되고 Y축으로 회전 */
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); /* 그림자도 커짐 */
@@ -105,6 +103,7 @@ export const RelationShip = styled.div`
         : rel === "지인"
           ? "var(--beige-500)"
           : "var(--blue-500)"};
+
   background-color: ${({ rel }) =>
     rel === "가족"
       ? "var(--green-100)"

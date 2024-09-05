@@ -47,6 +47,16 @@ const Container = styled.div`
   letter-spacing: -0.5px;
   box-sizing: border-box;
   margin: 0;
+  // 태블릿
+  @media (max-width: 1200px) {
+    margin-bottom: 64px;
+  }
+  // 모바일
+  @media (max-width: 768px) {
+    max-width: 320px;
+    padding: 16px;
+    font-size: 14px;
+  }
 `;
 
 // 체크 아이콘 스타일 정의 (기본적으로 성공 아이콘)

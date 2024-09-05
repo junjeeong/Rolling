@@ -4,9 +4,8 @@ const Button = styled.button`
   position: absolute;
   top: -50px;
   right: 0;
-  width: 92px;
   height: 39px;
-  padding: 7px 17px;
+  padding: 7px 20px;
   border-radius: 6px;
   font-size: 16px;
   background-color: var(--purple-500);
@@ -21,16 +20,16 @@ const Button = styled.button`
     left: 50%;
     bottom: 24px;
     transform: translateX(-50%); /* 가로 세로 정렬 */
-    width: 90%;
+    min-width: 720px;
     height: 56px;
     font-size: 18px;
     font-weight: bold;
     border-radius: 12px;
-    /* margin-bottom 제거 */
   }
 
   @media (max-width: 768px) {
     padding: 14px 80px;
+    min-width: 320px;
     font-size: 18px;
     font-weight: bold;
   }
