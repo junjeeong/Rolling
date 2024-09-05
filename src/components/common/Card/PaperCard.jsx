@@ -88,14 +88,36 @@ export const RelationShip = styled.div`
   font-size: 14px;
   border-radius: 4px;
   padding: 0 8px;
-  color: ${({ rel }) => (rel === "가족" ? "var(--green-500)" : rel === "동료" ? "var(--purple-600)" : rel === "지인" ? "var(--beige-500)" : "var(--blue-500)")};
-  background-color: ${({ rel }) => (rel === "가족" ? "var(--green-100)" : rel === "동료" ? "var(--purple-100)" : rel === "지인" ? "var(--beige-100)" : "var(--blue-100)")};
+  color: ${({ rel }) =>
+    rel === "가족"
+      ? "var(--green-500)"
+      : rel === "동료"
+        ? "var(--purple-600)"
+        : rel === "지인"
+          ? "var(--beige-500)"
+          : "var(--blue-500)"};
+  background-color: ${({ rel }) =>
+    rel === "가족"
+      ? "var(--green-100)"
+      : rel === "동료"
+        ? "var(--purple-100)"
+        : rel === "지인"
+          ? "var(--beige-100)"
+          : "var(--blue-100)"};
 `;
 
 export function PaperCard({ message, isEdit, onClick }) {
   if (!message) return null;
 
-  const { id, sender, profileImageURL, relationship, content, font, createdAt } = message;
+  const {
+    id,
+    sender,
+    profileImageURL,
+    relationship,
+    content,
+    font,
+    createdAt,
+  } = message;
 
   const formattedDate = new Date(createdAt).toLocaleDateString();
 

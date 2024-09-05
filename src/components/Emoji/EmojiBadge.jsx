@@ -14,9 +14,9 @@ const EmojiBadgeWrap = styled.div`
   justify-content: center;
 
   @media (max-width: 768px) {
-    width: 50px;
+    width: 55px;
     height: 32px;
-    padding: 6px 16px;
+    padding: 4px;
     font-size: 14px;
     gap: 4px;
   }

@@ -3,27 +3,22 @@ import styled from "styled-components";
 import ShareImage from "../../assets/images/icons/share.png";
 import { Toast } from "../common/Toast";
 import useShareKakao from "../../hooks/useShareKakao";
+import OutlineButton from "../common/Button/OutlineButton";
 
 const DropdownContainer = styled.div`
   position: relative;
   display: inline-block;
+  @media (max-width: 768px) {
+  }
 `;
 
-const DropdownButton = styled.button`
-  width: 60px;
-  height: 38px;
-  margin-top: 2px;
-  background-color: transparent;
-  background-image: url(${ShareImage});
-  background-size: contain;
-  background-repeat: no-repeat;
-  border: none;
-  cursor: pointer;
-
-  @media (min-width: 768px) {
-    width: 56px;
-    height: 38px;
-    margin-top: 3px;
+const DropdownImg = styled.img`
+  width: 24px;
+  height: 24px;
+  // 모바일 사이즈
+  @media (max-width: 768px) {
+    width: 20px;
+    height: 20px;
   }
 `;
 
@@ -147,7 +142,9 @@ const ShareDropdown = () => {
 
   return (
     <DropdownContainer>
-      <DropdownButton onClick={handleToggleDropdown} />
+      <OutlineButton onClick={handleToggleDropdown}>
+        <DropdownImg src={ShareImage} alt="카카오 공유" />
+      </OutlineButton>
       {isOpen && (
         <DropdownMenu>
           <KakaoShareButton

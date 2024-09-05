@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import ShareDropdown from "../Share/ShareDropdown";
 import useReactions from "../../hooks/useReactions";
 import { EMOJI_TYPES } from "../../constants/emojiTypes";
+import { Divider as Horizontal } from "../common/Card/PaperCard";
 
 const Container = styled.div`
   background-color: white;
@@ -51,22 +52,41 @@ const ServiceWrap = styled.div`
   width: 100%;
   height: 100%;
   justify-content: space-between;
-  align-items: center;
   font-size: 28px;
   color: var(--gray-800);
   font-weight: var(--font-bold);
   // 모바일 사이즈
   @media (max-width: 768px) {
     flex-direction: column;
+    max-width: 320px;
+  }
+`;
+const RecipientText = styled.p`
+  //모바일
+  @media (max-width: 768px) {
+    font-size: 18px;
     align-items: flex-start;
   }
 `;
-
 const Divider = styled.div`
   width: 1px;
   height: 28px;
   border: 1px solid var(--gray-200);
 `;
+const MobileOnlyHorizontal = styled(Horizontal)`
+  display: none;
+
+  @media (max-width: 768px) {
+    position: fixed;
+    top: 45px;
+    left: 0;
+    display: block;
+    height: 1px;
+    margin-top: 0px;
+    border: 1px solid var(--gray-200);
+  }
+`;
+
 const ArrowDown = styled.img`
   width: 12px;
   height: 7px;
@@ -121,7 +141,8 @@ export const HeaderService = ({ recipient, setRecipient, messages }) => {
     <Container>
       {recipient && (
         <ServiceWrap>
-          <p>To: {recipient.name}</p>
+          <RecipientText>To. {recipient.name}</RecipientText>
+          <MobileOnlyHorizontal />
           <Wrap style={{ gap: "28px" }}>
             <AuthorWrap>
               <AuthorNotice paperInfo={recipient} authors={messages} />
