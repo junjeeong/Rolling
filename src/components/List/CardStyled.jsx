@@ -64,7 +64,9 @@ const specialShapeStyles = css`
         left: 133px;
         top: 118px;
         background: rgba(157, 221, 255, 0.7);
-        clip-path: path("M74.4299 16.6978C88.1712 -5.00283 119.829 -5.00284 133.57 16.6978L202.482 125.526C217.239 148.829 200.495 179.25 172.912 179.25H35.0878C7.5049 179.25 -9.23877 148.829 5.51768 125.526L74.4299 16.6978Z");
+        clip-path: path(
+          "M74.4299 16.6978C88.1712 -5.00283 119.829 -5.00284 133.57 16.6978L202.482 125.526C217.239 148.829 200.495 179.25 172.912 179.25H35.0878C7.5049 179.25 -9.23877 148.829 5.51768 125.526L74.4299 16.6978Z"
+        );
 
         @media (max-width: 768px) {
           width: 107.4px;
@@ -100,8 +102,10 @@ const CardContainer = styled.div`
   width: 275px;
   height: 260px;
   box-sizing: border-box;
-  background-color: ${({ $backgroundColor }) => `var(${getCSSVariable($backgroundColor)})` || "var(--surface"};
-  background-image: ${({ $backgroundImageURL }) => ($backgroundImageURL ? `url(${$backgroundImageURL})` : "none")};
+  background-color: ${({ $backgroundColor }) =>
+    `var(${getCSSVariable($backgroundColor)})` || "var(--surface"};
+  background-image: ${({ $backgroundImageURL }) =>
+    $backgroundImageURL ? `url(${$backgroundImageURL})` : "none"};
   background-size: cover;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 16px;
@@ -135,7 +139,11 @@ const CardContainer = styled.div`
 `;
 
 const Card = ({ backgroundColor, backgroundImageURL, children, ...props }) => (
-  <CardContainer $backgroundColor={backgroundColor} $backgroundImageURL={backgroundImageURL} {...props}>
+  <CardContainer
+    $backgroundColor={backgroundColor}
+    $backgroundImageURL={backgroundImageURL}
+    {...props}
+  >
     {children}
   </CardContainer>
 );

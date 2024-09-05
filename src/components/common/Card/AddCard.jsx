@@ -10,6 +10,8 @@ export const Container = styled.div`
   padding: 28px 24px;
   border-radius: 16px;
   background-color: var(--white);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
   @media (max-width: 768px) {
     width: 320px;
     height: 230px;
@@ -25,6 +27,10 @@ export const AddButton = styled.div`
   background-color: var(--gray-500);
   border-radius: 50%;
   cursor: pointer;
+  transition: transform 0.3s ease;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 export const Icon = styled.img`
@@ -33,10 +39,11 @@ export const Icon = styled.img`
 `;
 export function AddCard({ id }) {
   const { edit } = useParams();
+  console.log(edit);
 
   const navigate = useNavigate();
   const handleNavigate = () => {
-    if (edit === undefined) navigate(`message`);
+    if (edit == undefined) navigate(`message`);
     else alert("현재 페이지는 Edit 페이지입니다.");
   };
   return (
