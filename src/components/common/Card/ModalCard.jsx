@@ -27,7 +27,7 @@ const Container = styled.div`
   z-index: 99;
   width: 600px;
   height: 476px;
-  padding: 39px 40px;
+  padding: 40px;
   border-radius: 16px;
   background-color: var(--white);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -35,8 +35,9 @@ const Container = styled.div`
   overflow-y: auto;
   // 모바일 사이즈
   @media (max-width: 768px) {
-    width: 420px;
-    height: 384px;
+    width: 350px;
+    height: 354px;
+    padding: 20px;
   }
 `;
 
@@ -59,6 +60,9 @@ const ContentBox = styled.div`
   white-space: normal; /* 기본 줄바꿈 설정 */
   overflow: auto; /* 내용이 height을 넘으면 스크롤이 생김 */
   overflow-wrap: break-word; /* 긴 단어도 줄바꿈 */
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 `;
 const Divider = styled.div`
   width: 100%;
