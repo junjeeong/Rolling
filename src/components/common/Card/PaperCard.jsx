@@ -3,6 +3,8 @@ import styled from "styled-components";
 import parse from "html-react-parser";
 import { Toast } from "../Toast";
 import { useState } from "react";
+import { fontOptions } from "../../../constants/options";
+
 export const Container = styled.div`
   position: relative;
   display: flex;
@@ -64,7 +66,8 @@ export const Name = styled.div`
 export const ContentBox = styled.div`
   width: 336px;
   margin: 0 auto;
-  font-family: ${({ font }) => font};
+  font-family: ${({ fontFamily }) =>
+    fontFamily}; /* 폰트 패밀리를 받는 속성 추가 */
   font-size: 18px;
   color: var(--gray-600);
   /* 3줄 넘어가면 ...처리 하기 */
@@ -126,7 +129,7 @@ export function PaperCard({ message, isEdit, onClick }) {
     profileImageURL,
     relationship,
     content,
-    font,
+    font, // 이 값은 fontOptions의 label 값입니다.
     createdAt,
   } = message;
 
@@ -156,7 +159,7 @@ export function PaperCard({ message, isEdit, onClick }) {
           )}
         </ProfileWrap>
         <Divider />
-        <ContentBox font={font}>{parse(content)}</ContentBox>
+        <ContentBox fontFamily={`var(${selectedFont})`}>{parse(content)}</ContentBox>
         <CreatedTime>{formattedDate}</CreatedTime>
       </Container>
       {toastVisible && <Toast message="메세지가 성공적으로 삭제되었습니다." />}

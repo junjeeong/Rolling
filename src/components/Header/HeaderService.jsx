@@ -9,6 +9,7 @@ import ShareDropdown from "../Share/ShareDropdown";
 import useReactions from "../../hooks/useReactions";
 import { EMOJI_TYPES } from "../../constants/emojiTypes";
 import { Divider as Horizontal } from "../common/Card/PaperCard";
+import useRecipients from "../../hooks/useRecipients";
 
 const Container = styled.div`
   background-color: white;
@@ -104,8 +105,10 @@ const ArrowDownBtn = styled.button`
   }
 `;
 
-export const HeaderService = ({ recipient, setRecipient, messages }) => {
+export const HeaderService = ({ messages }) => {
   const [showAllBadge, setShowAllBadge] = useState(false);
+  // Jotai 쓴 useRecipients 훅을 사용해서 recipient 을 전역적으로 상태 관리
+  const { recipient, setRecipient } = useRecipients();
   // useReactions 훅을 사용하여 이모지 추가 기능을 구현
   const { reactions, setReactions, addReaction } = useReactions(recipient.id);
 

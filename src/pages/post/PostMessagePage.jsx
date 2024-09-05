@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Editor } from "@tinymce/tinymce-react";
 import { useAddMessageToRecipient } from "../../hooks/useAddRecipients";
 import useProfileImages from "../../hooks/useProfileImages";
-import { relationshipOptions, fontOptions } from "../../constants/options";
+import { fontOptions, relationshipOptions } from "../../constants/options";
 import styled from "styled-components";
 import { Toast } from "../../components/common/Toast";
+import TinyMCEEditor from "../../components/Editor/TinyMCEEditor";
 
 const PostMessagePageContainer = styled.div`
   margin-top: 50px;
@@ -148,7 +148,7 @@ const PostMessagePage = () => {
   const [content, setContent] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
   const [relationship, setRelationship] = useState(relationshipOptions[1]); // 디폴트 "지인"
-  const [font, setFont] = useState(fontOptions[0]); // 디폴트 "Noto Sans"
+  const [fontValue, setFontValue] = useState(fontOptions[0].value); // 디폴트 "var(--font-handwritten1)"
   const [isFormValid, setIsFormValid] = useState(false);
   const inputRef = useRef(null); // fromName 이름 입력 필드에 대한 ref
   const [fromNameError, setFromNameError] = useState(false); // fromName 이름 입력값 오류 상태
@@ -187,9 +187,9 @@ const PostMessagePage = () => {
     }
   };
 
-  // Editor 내용 입력 필드 변경 핸들러
-  const handleEditorChange = (content) => {
-    setContent(content);
+  // Editor 내용 변경 핸들러
+  const handleEditorChange = (newContent) => {
+    setContent(newContent); // 에디터 내용을 상태로 업데이트
   };
 
   const handleImageSelect = (image) => {
@@ -205,6 +205,11 @@ const PostMessagePage = () => {
     e.preventDefault();
 
     if (isFormValid) {
+      // 선택한 폰트 value 에 맞는 label 을 선택
+      const selectedFontLabel =
+        fontOptions.find((option) => option.value === fontValue)?.label ||
+        fontOptions[0].label; // 기본 폰트
+
       const payload = {
         team: TEAM,
         recipientId: recipientId,
@@ -212,7 +217,7 @@ const PostMessagePage = () => {
         profileImageURL: selectedImage, // 선택된 이미지 사용
         relationship,
         content,
-        font,
+        font: selectedFontLabel, // 선택된 폰트 사용
       };
       try {
         // 롤링페이퍼 대상에게 전할 메세지 생성
@@ -275,30 +280,27 @@ const PostMessagePage = () => {
 
         <Label htmlFor="editor">내용을 입력해 주세요</Label>
         <EditorContainer>
-          <Editor
-            id="editor"
-            apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
-            init={{
-              height: 200,
-              menubar: false,
-              toolbar: true,
-              branding: false,
-              statusbar: false,
-            }}
-            onEditorChange={handleEditorChange}
-            value={content}
+          <TinyMCEEditor
+            value={content} // 에디터에 표시될 내용 (state)
+            onEditorChange={handleEditorChange} // 에디터 내용 변경 시 호출될 함수
+            font={fontValue}
           />
         </EditorContainer>
 
         <Label htmlFor="fontSelect">폰트 선택</Label>
         <Select
           id="fontSelect"
-          value={font}
-          onChange={(e) => setFont(e.target.value)}
+          value={fontValue}
+          onChange={(e) => setFontValue(e.target.value)}
+          style={{ fontFamily: `var(${fontValue})` }} // 폰트 미리보기 적용
         >
-          {fontOptions.map((font) => (
-            <option key={font} value={font}>
-              {font}
+          {fontOptions.map(({ label, value }) => (
+            <option
+              key={label}
+              value={value}
+              style={{ fontFamily: `var(${value})` }} // 각 옵션의 폰트를 적용
+            >
+              {label}
             </option>
           ))}
         </Select>

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import parse from "html-react-parser";
 import { forwardRef } from "react";
 import { Profile, Info, Name, RelationShip } from "./PaperCard";
+import { fontOptions } from "../../../constants/options";
 
 const ModalBackground = styled.div`
   position: fixed;
@@ -52,7 +53,7 @@ const ContentBox = styled.div`
   width: 100%;
   height: 256px;
   line-height: 28px;
-  font-family: ${({ font }) => font};
+  font-family: ${({ font }) => font}; /* 폰트 패밀리 적용 */
   font-size: 18px;
   color: var(--gray-500);
   white-space: normal; /* 기본 줄바꿈 설정 */
@@ -95,6 +96,11 @@ const ModalCard = forwardRef(({ selectedCardInfo, onClose }, ref) => {
     selectedCardInfo;
   const formattedDate = new Date(createdAt).toLocaleDateString();
 
+  // fontOptions에서 label에 맞는 value를 찾음
+  const selectedFont =
+    fontOptions.find((option) => option.label === font)?.value ||
+    fontOptions[0].value; // 기본값 설정
+
   return (
     <ModalBackground>
       <Container ref={ref}>
@@ -109,7 +115,7 @@ const ModalCard = forwardRef(({ selectedCardInfo, onClose }, ref) => {
           <CreatedTime>{formattedDate}</CreatedTime>
         </ProfileWrap>
         <Divider />
-        <ContentBox font={font}>{parse(content)}</ContentBox>
+        <ContentBox font={`var(${selectedFont})`}>{parse(content)}</ContentBox>
         <Button onClick={() => onClose()}>확인</Button>
       </Container>
     </ModalBackground>
