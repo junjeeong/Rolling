@@ -80,7 +80,6 @@ const PostDetailPage = ({ isEdit }) => {
   // Jotai 쓴 useRecipients 훅을 사용해서 recipient 을 전역적으로 상태 관리
   const { recipient } = useRecipients();
   // 백그라운드 컬러 파스텔 컬러로 변경
-
   const pastelColor = getPastelColor(recipient?.backgroundColor);
   let isMoreCards = messages?.results?.length >= limit;
 

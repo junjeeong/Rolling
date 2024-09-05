@@ -133,7 +133,6 @@ export function PaperCard({ message, isEdit, onClick }) {
     createdAt,
   } = message;
   const formattedDate = new Date(createdAt).toLocaleDateString();
-
   const handleShowToast = () => {
     setToastVisible(true);
     setTimeout(() => {
