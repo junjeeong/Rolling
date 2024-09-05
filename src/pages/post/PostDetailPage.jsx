@@ -9,7 +9,7 @@ import { DeleteButtonContainer } from "../../containers/Post/DeleteButtonContain
 import HeaderContainer from "../../containers/Header/HeaderContainer.jsx";
 import ModalCardContainer from "../../containers/Modal/ModalCardContainer.jsx";
 import useRecipients from "../../hooks/useRecipients.jsx";
-import usePastelColor from "../../hooks/usePastelColor.jsx";
+import { getPastelColor } from "../../hooks/usePastelColor.jsx";
 import EllipsisLoading from "../../components/Loading/EllipsisLoading.jsx";
 
 const Container = styled.div`
@@ -71,7 +71,7 @@ const PostDetailPage = ({ isEdit }) => {
     limit
   );
   // 백그라운드 컬러 파스텔 컬러로 변경
-  const pastelColor = usePastelColor(recipient?.backgroundColor);
+  const pastelColor = getPastelColor(recipient?.backgroundColor);
 
   // 무한스크롤 관련 함수
   useEffect(() => {
