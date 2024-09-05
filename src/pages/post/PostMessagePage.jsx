@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Editor } from "@tinymce/tinymce-react";
 import { useAddMessageToRecipient } from "../../hooks/useAddRecipients";
 import useProfileImages from "../../hooks/useProfileImages";
 import { relationshipOptions, fontOptions } from "../../constants/options";
 import styled from "styled-components";
+import TinyMCEEditor from "../../components/Editor/TinyMCEEditor";
 
 const PostMessagePageContainer = styled.div`
   margin-top: 50px;
@@ -186,9 +186,9 @@ const PostMessagePage = () => {
     }
   };
 
-  // Editor 내용 입력 필드 변경 핸들러
-  const handleEditorChange = (content) => {
-    setContent(content);
+  // Editor 내용 변경 핸들러
+  const handleEditorChange = (newContent) => {
+    setContent(newContent); // 에디터 내용을 상태로 업데이트
   };
 
   const handleImageSelect = (image) => {
@@ -275,18 +275,9 @@ const PostMessagePage = () => {
 
         <Label htmlFor="editor">내용을 입력해 주세요</Label>
         <EditorContainer>
-          <Editor
-            id="editor"
-            apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
-            init={{
-              height: 200,
-              menubar: false,
-              toolbar: true,
-              branding: false,
-              statusbar: false,
-            }}
-            onEditorChange={handleEditorChange}
-            value={content}
+          <TinyMCEEditor
+            value={content} // 에디터에 표시될 내용 (state)
+            onEditorChange={handleEditorChange} // 에디터 내용 변경 시 호출될 함수
           />
         </EditorContainer>
 
