@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import useTinyMCE from "../../hooks/useTinyMCE.js"; // 커스텀 훅 불러오기
+import useTinyMCE from "../../hooks/useTinyMCE"; // 커스텀 훅 불러오기
 
 const TinyMCEEditor = ({ value, onEditorChange }) => {
   const isTinyMCEReady = useTinyMCE(); // TinyMCE가 로드되었는지 확인
