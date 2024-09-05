@@ -79,9 +79,9 @@ const MobileOnlyHorizontal = styled(Horizontal)`
   display: none;
 
   @media (max-width: 768px) {
-    position: fixed;
-    top: 45px;
-    left: 0;
+    // position: fixed;
+    // top: 45px;
+    // left: 0;
     display: block;
     height: 1px;
     margin-top: 0px;

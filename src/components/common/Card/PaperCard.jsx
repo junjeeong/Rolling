@@ -12,7 +12,7 @@ export const Container = styled.div`
   gap: 16px;
   width: 384px;
   height: 280px;
-  padding: 24px 24px;
+  padding: 24px;
   border-radius: 16px;
   background-color: var(--white);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -27,7 +27,7 @@ export const Container = styled.div`
 
   @media (max-width: 768px) {
     width: 320px;
-    height: 230px;
+    height: 250px;
   }
 `;
 export const ProfileWrap = styled.div`
@@ -61,10 +61,14 @@ export const Info = styled.div`
 
 export const Name = styled.div`
   font-size: 20px;
+  // 모바일
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 `;
 
 export const ContentBox = styled.div`
-  width: 336px;
+  width: 100%;
   margin: 0 auto;
   font-family: ${({ fontFamily }) =>
     fontFamily}; /* 폰트 패밀리를 받는 속성 추가 */
