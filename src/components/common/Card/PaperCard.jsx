@@ -132,7 +132,6 @@ export function PaperCard({ message, isEdit, onClick }) {
     font, // 이 값은 fontOptions의 label 값입니다.
     createdAt,
   } = message;
-
   const formattedDate = new Date(createdAt).toLocaleDateString();
   const handleShowToast = () => {
     setToastVisible(true);
@@ -140,6 +139,10 @@ export function PaperCard({ message, isEdit, onClick }) {
       setToastVisible(false);
     }, 1500);
   };
+  // fontOptions에서 label에 맞는 value를 가져옴
+  const selectedFont =
+    fontOptions.find((option) => option.label === font)?.value ||
+    fontOptions[0].value;
   return (
     <>
       <Container onClick={onClick}>
@@ -159,7 +162,9 @@ export function PaperCard({ message, isEdit, onClick }) {
           )}
         </ProfileWrap>
         <Divider />
-        <ContentBox fontFamily={`var(${selectedFont})`}>{parse(content)}</ContentBox>
+        <ContentBox fontFamily={`var(${selectedFont})`}>
+          {parse(content)}
+        </ContentBox>
         <CreatedTime>{formattedDate}</CreatedTime>
       </Container>
       {toastVisible && <Toast message="메세지가 성공적으로 삭제되었습니다." />}
