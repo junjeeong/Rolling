@@ -144,11 +144,7 @@ const PostDetailPage = ({ isEdit }) => {
       {recipient && messages?.results ? (
         <div style={{ height: "calc(100vh)" }}>
           <HeaderContainer />
-          <HeaderService
-            recipient={recipient}
-            setRecipient={setRecipient}
-            messages={messages.results}
-          />
+          <HeaderService messages={messages.results} />
           <Container
             $backgroundColor={pastelColor}
             $backgroundImage={recipient?.backgroundImageURL}

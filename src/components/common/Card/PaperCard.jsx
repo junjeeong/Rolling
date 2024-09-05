@@ -1,6 +1,7 @@
 import { TrashCanButtonContainer } from "../../../containers/Post/TrashCanButtonContainer";
 import styled from "styled-components";
 import parse from "html-react-parser";
+import { fontOptions } from "../../../constants/options";
 
 export const Container = styled.div`
   position: relative;
@@ -64,7 +65,8 @@ export const Name = styled.div`
 export const ContentBox = styled.div`
   width: 336px;
   margin: 0 auto;
-  font-family: ${({ font }) => font};
+  font-family: ${({ fontFamily }) =>
+    fontFamily}; /* 폰트 패밀리를 받는 속성 추가 */
   font-size: 18px;
   color: var(--gray-600);
   /* 3줄 넘어가면 ...처리 하기 */
@@ -124,11 +126,16 @@ export function PaperCard({ message, isEdit, onClick }) {
     profileImageURL,
     relationship,
     content,
-    font,
+    font, // 이 값은 fontOptions의 label 값입니다.
     createdAt,
   } = message;
 
   const formattedDate = new Date(createdAt).toLocaleDateString();
+
+  // fontOptions에서 label에 맞는 value를 가져옴
+  const selectedFont =
+    fontOptions.find((option) => option.label === font)?.value ||
+    fontOptions[0].value;
 
   return (
     <Container onClick={onClick}>
@@ -143,7 +150,9 @@ export function PaperCard({ message, isEdit, onClick }) {
         {isEdit && <TrashCanButtonContainer seletedCardId={id} />}
       </ProfileWrap>
       <Divider />
-      <ContentBox font={font}>{parse(content)}</ContentBox>
+      <ContentBox fontFamily={`var(${selectedFont})`}>
+        {parse(content)}
+      </ContentBox>
       <CreatedTime>{formattedDate}</CreatedTime>
     </Container>
   );

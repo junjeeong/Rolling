@@ -16,7 +16,6 @@ const useRecipients = () => {
     try {
       const responseInfo = await getRecipientById(recipientId);
       setRecipient(responseInfo); // Atom의 상태를 업데이트
-      console.log(recipient);
     } catch (err) {
       setError(err);
     } finally {
