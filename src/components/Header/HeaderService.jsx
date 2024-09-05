@@ -52,20 +52,21 @@ const ServiceWrap = styled.div`
   width: 100%;
   height: 100%;
   justify-content: space-between;
+  align-items: center;
   font-size: 28px;
   color: var(--gray-800);
   font-weight: var(--font-bold);
   // 모바일 사이즈
   @media (max-width: 768px) {
     flex-direction: column;
+    align-items: stretch;
     max-width: 320px;
   }
 `;
-const RecipientText = styled.p`
+const RecipientName = styled.p`
   //모바일
   @media (max-width: 768px) {
     font-size: 18px;
-    align-items: flex-start;
   }
 `;
 const Divider = styled.div`
@@ -141,7 +142,7 @@ export const HeaderService = ({ recipient, setRecipient, messages }) => {
     <Container>
       {recipient && (
         <ServiceWrap>
-          <RecipientText>To. {recipient.name}</RecipientText>
+          <RecipientName>To. {recipient.name}</RecipientName>
           <MobileOnlyHorizontal />
           <Wrap style={{ gap: "28px" }}>
             <AuthorWrap>

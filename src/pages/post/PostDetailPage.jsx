@@ -121,7 +121,7 @@ const PostDetailPage = ({ isEdit }) => {
   };
 
   return (
-    <div style={{ height: "calc(100vh - 133px)" }}>
+    <div>
       <HeaderContainer />
       {recipient && messages?.results ? (
         <HeaderService
