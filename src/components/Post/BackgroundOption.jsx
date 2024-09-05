@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import checkImage from "../../assets/images/bg_option_check.png";
-import usePastelColor from "../../hooks/usePastelColor";
+import { getPastelColor } from "../../hooks/usePastelColor";
 
 const Wrapper = styled.div`
   position: relative;
@@ -29,7 +29,8 @@ const CheckIcon = styled.img`
 `;
 
 const BackgroundOption = ({ color, size, isSelected, imgUrl }) => {
-  const pastelColor = usePastelColor(color);
+  // 배경 컬러를 원색에서 파스텔 컬러로 변경
+  const pastelColor = getPastelColor(color);
 
   return (
     <Wrapper size={size}>

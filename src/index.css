@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Nanum+Myeongjo&display=swap");
+
 :root {
   font-family:
     "Pretendard Variable",
@@ -18,10 +20,12 @@
   /* Font families */
   --font-primary: "Pretendard", sans-serif;
   --font-primary: "Pretendard", sans-serif;
-  --font-handwritten1: "KyoboHand", sans-serif;
-  --font-handwritten2: "KyoboHandwriting2023wsa", sans-serif;
-  --font-handwritten3: "Ssronet", sans-serif;
-  --font-handwritten4: "KyoboHandwriting2021sjy", sans-serif;
+
+  /* Message Font families */
+  --font-handwritten1: "Noto Sans", sans-serif;
+  --font-handwritten2: "Pretendard", sans-serif;
+  --font-handwritten3: "Nanum Myeongjo", serif; /* 글자의 끝에 장식적인 선이 있는 대체 글꼴 */
+  --font-handwritten4: "Nanum Pen Script", cursive; /* 필기체 느낌의 대체 글꼴 */
 
   /* Font weights */
   --font-thin: 100;
@@ -300,14 +304,14 @@ button {
 }
 /* 스크롤바 배경색 */
 ::-webkit-scrollbar-track {
-	background: var(--purple-100);
+  background: var(--purple-100);
 }
 /* 스크롤바 색 */
 ::-webkit-scrollbar-thumb {
   background: var(--purple-300);
-  border-radius: 12px;   
+  border-radius: 12px;
 }
 /* 호버됐을때 색 */
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--purple-400)
+  background: var(--purple-400);
 }
