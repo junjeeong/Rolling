@@ -1,6 +1,8 @@
 import { TrashCanButtonContainer } from "../../../containers/Post/TrashCanButtonContainer";
 import styled from "styled-components";
 import parse from "html-react-parser";
+import { Toast } from "../Toast";
+import { useState } from "react";
 export const Container = styled.div`
   position: relative;
   display: flex;
@@ -116,6 +118,7 @@ export const RelationShip = styled.div`
 
 export function PaperCard({ message, isEdit, onClick }) {
   if (!message) return null;
+  const [toastVisible, setToastVisible] = useState(false);
 
   const {
     id,
@@ -128,22 +131,35 @@ export function PaperCard({ message, isEdit, onClick }) {
   } = message;
 
   const formattedDate = new Date(createdAt).toLocaleDateString();
-
+  const handleShowToast = () => {
+    setToastVisible(true);
+    setTimeout(() => {
+      setToastVisible(false);
+    }, 1500);
+  };
   return (
-    <Container onClick={onClick}>
-      <ProfileWrap>
-        <Profile src={profileImageURL} alt="profile image" />
-        <Info>
-          <Name>
-            From.<strong>{sender}</strong>
-          </Name>
-          <RelationShip rel={relationship}>{relationship}</RelationShip>
-        </Info>
-        {isEdit && <TrashCanButtonContainer seletedCardId={id} />}
-      </ProfileWrap>
-      <Divider />
-      <ContentBox font={font}>{parse(content)}</ContentBox>
-      <CreatedTime>{formattedDate}</CreatedTime>
-    </Container>
+    <>
+      <Container onClick={onClick}>
+        <ProfileWrap>
+          <Profile src={profileImageURL} alt="profile image" />
+          <Info>
+            <Name>
+              From.<strong>{sender}</strong>
+            </Name>
+            <RelationShip rel={relationship}>{relationship}</RelationShip>
+          </Info>
+          {isEdit && (
+            <TrashCanButtonContainer
+              seletedCardId={id}
+              onShowToast={handleShowToast}
+            />
+          )}
+        </ProfileWrap>
+        <Divider />
+        <ContentBox font={font}>{parse(content)}</ContentBox>
+        <CreatedTime>{formattedDate}</CreatedTime>
+      </Container>
+      {toastVisible && <Toast message="메세지가 성공적으로 삭제되었습니다." />}
+    </>
   );
 }
