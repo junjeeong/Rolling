@@ -14,12 +14,14 @@ import EllipsisLoading from "../../components/Loading/EllipsisLoading.jsx";
 
 const Container = styled.div`
   display: flex;
-  position: relative;
   overflow: auto;
-  background-color: ${({ $backgroundColor }) => $backgroundColor || "white"};
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera에서 스크롤바 숨기기 */
+  }
+  background-color: ${({ $backgroundColor }) => $backgroundColor};
   ${({ $backgroundImage }) =>
     $backgroundImage &&
-    `background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${$backgroundImage}') no-repeat center/cover;`}
+    `background: linear-gradient(rgba(59, 46, 46, 0.5), rgba(0, 0, 0, 0.5)), url('${$backgroundImage}') no-repeat center/cover;`}
   background-size: cover;
   min-height: calc(100vh - 133px);
   @media (max-width: 1200px) {
@@ -27,7 +29,7 @@ const Container = styled.div`
     padding: 0 24px;
   }
   @media (max-width: 820px) {
-    // iPad Air
+    // iPad Air
     overflow-x: hidden;
     padding: 0 10px;
   }
@@ -40,6 +42,7 @@ const Container = styled.div`
 `;
 
 const GridWrap = styled.div`
+  position: relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 28px;
@@ -57,6 +60,12 @@ const GridWrap = styled.div`
   }
 `;
 
+const InfiniteScrollWrap = styled.div`
+  position: absolute;
+  bottom: -60px;
+  width: 100%;
+  height: 10px;
+`;
 const PostDetailPage = ({ isEdit }) => {
   const { id } = useParams();
   const targetDOM = useRef();
@@ -71,11 +80,15 @@ const PostDetailPage = ({ isEdit }) => {
   );
   // 백그라운드 컬러 파스텔 컬러로 변경
   const pastelColor = usePastelColor(recipient?.backgroundColor);
+  let isMoreCards = messages?.results?.length >= limit;
 
   // 무한스크롤 관련 함수
   useEffect(() => {
     if (!targetDOM.current || !id) return;
     // IntersectionObserver가 작동하는 방식을 정의
+
+    let timer;
+
     const options = {
       root: null, // null이면 기본값인 뷰포트를 기준으로 요소의 교차 상태를 관찰 -> 화면에 targetDOM이 보일 경우 callback 실행
       rootMargin: "0px",
@@ -87,9 +100,12 @@ const PostDetailPage = ({ isEdit }) => {
       if (messages.results.length < limit) return;
       // entries는 교차 상태가 변경될 때마다 객체가 추가되고 그러한 객체들이 모인 배열. 무한스크롤이기 때문에 targetDOM이 뷰포트에 보일때마다 동적으로 추가된다는 의미
       entries.forEach((entry) => {
+        // entry.isIntersecting는 Boolean 타입으로 true일 경우 교착되었음을 발견했다는 의미
         if (entry.isIntersecting) {
-          // entry.isIntersecting는 Boolean 타입으로 true일 경우 교착되었음을 발견했다는 의미
-          setLimit((prevLimit) => prevLimit + 3); // targetDOM이 뷰포트에 포착될 경우 기존에 messages를 8개만 불러왔다면 Limit미디어쿼리를 3씩 추가해서 다시 받아오기.
+          // 무한스크롤 targetDOM이 자연스럽게 보이도록 0.5초 뒤에 실행
+          timer = setTimeout(() => {
+            setLimit((prevLimit) => prevLimit + 3);
+          }, 500);
         }
       });
     };
@@ -97,14 +113,15 @@ const PostDetailPage = ({ isEdit }) => {
     // IntersectionObserver 객체를 생성하고, 관찰하려는 DOM 요소를 등록.
     // 옵저버 객체를 생성할 때 앞서 정의한 콜백 함수와 옵션을 인자로 넣어줌.
     const observer = new IntersectionObserver(observerCallback, options);
-    // targetDOM 요소를 옵저버에 등록하여, 이 요소의 교차 상태를 관찰하도록 합니다.
-    observer.observe(targetDOM.current);
+    observer.observe(targetDOM.current); // targetDOM 요소를 옵저버에 등록하여, 이 요소의 교차 상태를 관찰하도록 합니다.
 
     // 컴포넌트가 언마운트되거나, useEffect가 다시 실행될 때 옵저버를 해제하여 메모리 누수를 방지
     return () => {
       if (observer && targetDOM.current) {
-        // 옵저버가 더 이상 targetDOM 요소를 관찰하지 않도록 해제합니다.
-        observer.unobserve(targetDOM.current);
+        observer.unobserve(targetDOM.current); // 옵저버가 더 이상 targetDOM 요소를 관찰하지 않도록 해제합니다.
+      }
+      if (timer) {
+        clearTimeout(timer); // timer 해제
       }
     };
   }, [id, messages]);
@@ -121,52 +138,53 @@ const PostDetailPage = ({ isEdit }) => {
   };
 
   return (
-    <div>
-      <HeaderContainer />
+    <>
       {recipient && messages?.results ? (
-        <HeaderService
-          recipient={recipient}
-          setRecipient={setRecipient}
-          messages={messages.results}
-        />
-      ) : (
-        <p>Loading information...</p> // 로딩 중이거나 데이터가 없을 때 표시할 메시지
-      )}
-      <Container
-        $backgroundColor={pastelColor}
-        $backgroundImage={recipient?.backgroundImageURL}
-      >
-        <GridWrap>
-          <AddCard id={id} />
-          {/* messages가 존재하고, results 배열이 존재할 때만 렌더링 */}
-          {messages?.results ? (
-            messages.results.map((message) => (
-              <PaperCard
-                key={message.id}
-                message={message}
-                isEdit={isEdit}
-                onClick={() => openModal(message)}
-              />
-            ))
-          ) : (
-            <p>Loading messages...</p> // 데이터가 없거나 로딩 중일 때 표시할 메시지
+        <>
+          <HeaderContainer />
+          <HeaderService
+            recipient={recipient}
+            setRecipient={setRecipient}
+            messages={messages.results}
+          />
+          <Container
+            $backgroundColor={pastelColor}
+            $backgroundImage={recipient?.backgroundImageURL}
+          >
+            <GridWrap>
+              <AddCard id={id} />
+              {/* messages가 존재하고, results 배열이 존재할 때만 렌더링 */}
+              {messages.results.map((message) => (
+                <PaperCard
+                  key={message.id}
+                  message={message}
+                  isEdit={isEdit}
+                  onClick={() => openModal(message)}
+                />
+              ))}
+              {isMoreCards && (
+                <InfiniteScrollWrap ref={targetDOM}>
+                  <EllipsisLoading />
+                </InfiniteScrollWrap>
+              )}
+              {isEdit && (
+                <DeleteButtonContainer selectedPaperId={recipient?.id} />
+              )}
+            </GridWrap>
+          </Container>
+          {isModalOpen && (
+            <ModalCardContainer
+              onClose={closeModal}
+              selectedCardInfo={selectedCardInfo}
+            ></ModalCardContainer>
           )}
-          {isEdit && <DeleteButtonContainer selectedPaperId={recipient?.id} />}
-        </GridWrap>
-      </Container>
-      {messages?.results?.length >= limit && (
-        <div style={{ height: "15px" }} ref={targetDOM}>
+        </>
+      ) : (
+        <>
           <EllipsisLoading />
-        </div>
+        </>
       )}
-      {isModalOpen && (
-        <ModalCardContainer
-          onClose={closeModal}
-          selectedCardInfo={selectedCardInfo}
-        ></ModalCardContainer>
-      )}
-    </div>
+    </>
   );
 };
-
 export default PostDetailPage;

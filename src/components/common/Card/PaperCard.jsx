@@ -12,13 +12,22 @@ export const Container = styled.div`
   padding: 24px 24px;
   border-radius: 16px;
   background-color: var(--white);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   cursor: pointer;
+
+  &:hover {
+    transform: scale(1.05) rotateY(10deg); /* 마우스를 올렸을 때 살짝 확대되고 Y축으로 회전 */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); /* 그림자도 커짐 */
+  }
+
   @media (max-width: 768px) {
     width: 320px;
     height: 230px;
   }
 `;
-
 export const ProfileWrap = styled.div`
   display: flex;
   align-items: center;
