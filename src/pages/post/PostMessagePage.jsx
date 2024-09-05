@@ -292,6 +292,7 @@ const PostMessagePage = () => {
           id="fontSelect"
           value={fontValue}
           onChange={(e) => setFontValue(e.target.value)}
+          style={{ fontFamily: `var(${fontValue})` }} // 폰트 미리보기 적용
         >
           {fontOptions.map(({ label, value }) => (
             <option
