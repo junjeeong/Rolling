@@ -5,7 +5,7 @@ import useProfileImages from "../../hooks/useProfileImages";
 import { fontOptions, relationshipOptions } from "../../constants/options";
 import styled from "styled-components";
 import { Toast } from "../../components/common/Toast";
-import TinyMCEEditor from "../../components/Editor/TinyMCEEditor";
+import BundledEditor from "../../components/Editor/BundledEditor";
 
 const PostMessagePageContainer = styled.div`
   margin-top: 50px;
@@ -148,9 +148,10 @@ const PostMessagePage = () => {
   const [content, setContent] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
   const [relationship, setRelationship] = useState(relationshipOptions[1]); // 디폴트 "지인"
-  const [fontValue, setFontValue] = useState(fontOptions[0].value); // 디폴트 "var(--font-handwritten1)"
+  const [fontValue, setFontValue] = useState(fontOptions[0].value); // 디폴트 "'Noto Sans', sans-serif"
   const [isFormValid, setIsFormValid] = useState(false);
   const inputRef = useRef(null); // fromName 이름 입력 필드에 대한 ref
+  const editorRef = useRef(null); // editor 입력 필드에 대한 ref
   const [fromNameError, setFromNameError] = useState(false); // fromName 이름 입력값 오류 상태
   // 프로필 이미지 리스트 커스텀 훅
   const profileImages = useProfileImages();
@@ -172,6 +173,14 @@ const PostMessagePage = () => {
     }
   }, [profileImages]);
 
+  // 폰트 변경 시 에디터에 반영
+  useEffect(() => {
+    if (editorRef.current) {
+      const editor = editorRef.current;
+      editor.dom.setStyle(editor.getBody(), "font-family", fontValue); // 동적으로 폰트 스타일을 변경
+    }
+  }, [fontValue]); // fontValue가 변경될 때마다 실행
+
   // From 이름 입력 필드 변경 핸들러
   const handleInputChange = () => {
     const value = inputRef.current.value;
@@ -188,8 +197,10 @@ const PostMessagePage = () => {
   };
 
   // Editor 내용 변경 핸들러
-  const handleEditorChange = (newContent) => {
-    setContent(newContent); // 에디터 내용을 상태로 업데이트
+  const handleEditorChange = () => {
+    if (editorRef.current) {
+      setContent(editorRef.current.getContent());
+    }
   };
 
   const handleImageSelect = (image) => {
@@ -280,10 +291,22 @@ const PostMessagePage = () => {
 
         <Label htmlFor="editor">내용을 입력해 주세요</Label>
         <EditorContainer>
-          <TinyMCEEditor
-            value={content} // 에디터에 표시될 내용 (state)
+          <BundledEditor
+            id="editor"
+            onInit={(_evt, editor) => {
+              editorRef.current = editor;
+              // 에디터가 초기화된 후에 폰트 스타일 적용
+              editor.dom.setStyle(editor.getBody(), "font-family", fontValue);
+            }}
+            init={{
+              height: 200,
+              menubar: false,
+              plugins: [],
+              toolbar:
+                "undo redo | blocks | bold italic forecolor | alignleft aligncenter ",
+              statusbar: false,
+            }}
             onEditorChange={handleEditorChange} // 에디터 내용 변경 시 호출될 함수
-            font={fontValue}
           />
         </EditorContainer>
 
@@ -292,13 +315,13 @@ const PostMessagePage = () => {
           id="fontSelect"
           value={fontValue}
           onChange={(e) => setFontValue(e.target.value)}
-          style={{ fontFamily: `var(${fontValue})` }} // 폰트 미리보기 적용
+          style={{ fontFamily: fontValue }} // 폰트 미리보기 적용
         >
           {fontOptions.map(({ label, value }) => (
             <option
               key={label}
               value={value}
-              style={{ fontFamily: `var(${value})` }} // 각 옵션의 폰트를 적용
+              style={{ fontFamily: value }} // 각 옵션의 폰트를 적용
             >
               {label}
             </option>
