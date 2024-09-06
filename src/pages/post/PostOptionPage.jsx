@@ -5,6 +5,7 @@ import OptionsContainer from "../../containers/Post/OptionsContainer";
 import { useAddRecipient } from "../../hooks/useAddRecipients";
 import useBackgroundImages from "../../hooks/useBackgroundImages";
 import { COLORS } from "../../constants/colors";
+import { Toast } from "../../components/common/Toast";
 
 const PageContainer = styled.div`
   display: flex;
@@ -150,6 +151,7 @@ const PostOptionPage = () => {
   const { addRecipient } = useAddRecipient();
   const navigate = useNavigate();
 
+  const [toastVisible, setToastVisible] = useState(false);
   const TEAM = "9-3"; // 팀 이름 상수
 
   // 컬러 선택 핸들러
@@ -178,7 +180,9 @@ const PostOptionPage = () => {
         team: TEAM,
         name: recipientName,
         backgroundColor: selectedColor || COLORS[0], // 컬러가 선택되지 않았을 경우 기본 컬러를 설정
-        backgroundImageURL: selectedImage ? backgroundImages[selectedIndex] : null, // 이미지가 선택되지 않으면 null
+        backgroundImageURL: selectedImage
+          ? backgroundImages[selectedIndex]
+          : null, // 이미지가 선택되지 않으면 null
       };
 
       try {
@@ -186,8 +190,7 @@ const PostOptionPage = () => {
         const id = result.id; // 생성된 롤링페이퍼의 ID
         navigate(`/post/${id}`); // 생성된 롤링페이퍼 페이지로 이동
       } catch (error) {
-        console.error("Error creating post:", error);
-        alert("롤링 페이퍼 생성에 실패했습니다.");
+        setToastVisible(true);
       }
     }
   };
@@ -208,7 +211,9 @@ const PostOptionPage = () => {
 
   useEffect(() => {
     // 받는 사람과 현재 활성화된 탭에 따라 컬러 또는 이미지가 선택되었는지 확인
-    const isValid = recipientName.trim() && (activeTab === "color" ? selectedColor !== null : selectedImage !== null);
+    const isValid =
+      recipientName.trim() &&
+      (activeTab === "color" ? selectedColor !== null : selectedImage !== null);
 
     setIsButtonEnabled(isValid); // 조건에 따라 버튼 활성화
   }, [recipientName, selectedColor, selectedImage, activeTab]);
@@ -218,13 +223,21 @@ const PostOptionPage = () => {
       <Header>
         <Label>To.</Label>
         <InputContainer>
-          <Input placeholder="받는 사람 이름을 입력해 주세요" ref={inputRef} onChange={handleInputChange} onBlur={handleInputBlur} hasError={hasError} />
+          <Input
+            placeholder="받는 사람 이름을 입력해 주세요"
+            ref={inputRef}
+            onChange={handleInputChange}
+            onBlur={handleInputBlur}
+            hasError={hasError}
+          />
           {hasError && <ErrorMessage>값을 입력해 주세요.</ErrorMessage>}
         </InputContainer>
       </Header>
       <Content>
         <Instruction>배경화면을 선택해 주세요.</Instruction>
-        <SubInstruction>컬러를 선택하거나, 이미지를 선택할 수 있습니다.</SubInstruction>
+        <SubInstruction>
+          컬러를 선택하거나, 이미지를 선택할 수 있습니다.
+        </SubInstruction>
         <Tabs>
           <Tab
             isActive={activeTab === "color"} // 컬러 탭 활성화 여부
@@ -248,6 +261,7 @@ const PostOptionPage = () => {
       <GenerateButton onClick={handleGenerateClick} disabled={!isButtonEnabled}>
         생성하기
       </GenerateButton>
+      {toastVisible && <Toast message="롤링페이퍼 생성에 실패하였습니다." />}
     </PageContainer>
   );
 };
