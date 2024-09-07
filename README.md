@@ -1,6 +1,6 @@
 # 프로젝트 문서
 
-![alt text](public/logo.png)
+<img src="public/logo.png" width="24" height="24"/>
 
 ## 프로젝트 개요
 
