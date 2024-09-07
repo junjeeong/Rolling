@@ -1,6 +1,6 @@
 # 프로젝트 문서
 
-![alt text](src/assets/images/logo.png)
+![alt text](public/logo.png)
 
 ## 프로젝트 개요
 
