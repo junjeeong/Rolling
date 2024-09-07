@@ -1,6 +1,6 @@
 # 프로젝트 문서
 
-![alt text](src/assets/images/logo.png)
+### <img src="public/logo.png" width="24" height="24"/> Rolling
 
 ## 프로젝트 개요
 

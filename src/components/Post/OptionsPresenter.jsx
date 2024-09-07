@@ -18,7 +18,16 @@ const OptionWrapper = styled.div`
   cursor: pointer;
 `;
 
-const OptionsPresenter = ({ activeTab, colors, selectedColor, onColorSelect, backgroundThumbnails, selectedImage, onImageSelect, postOptionSize }) => {
+const OptionsPresenter = ({
+  activeTab,
+  colors,
+  selectedColor,
+  onColorSelect,
+  thumbnails,
+  selectedImage,
+  onImageSelect,
+  postOptionSize,
+}) => {
   const handleColorClick = (color) => {
     if (color !== selectedColor) {
       onColorSelect(color);
@@ -47,16 +56,16 @@ const OptionsPresenter = ({ activeTab, colors, selectedColor, onColorSelect, bac
           </OptionWrapper>
         ))}
       {activeTab === "image" &&
-        backgroundThumbnails.map((image, index) => (
+        thumbnails.map((thumbnail, index) => (
           <OptionWrapper
             key={index}
-            onClick={() => handleImageClick(image, index)} // 이미지 선택 시 콜백 호출
+            onClick={() => handleImageClick(thumbnail, index)} // 이미지 선택 시 콜백 호출
           >
             <BackgroundOption
               color="#fff"
               size={postOptionSize}
-              imgUrl={image}
-              isSelected={image === selectedImage} // 선택된 이미지 표시
+              imgUrl={thumbnail}
+              isSelected={thumbnail === selectedImage} // 선택된 이미지 표시
             />
           </OptionWrapper>
         ))}

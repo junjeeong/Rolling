@@ -16,7 +16,7 @@ const CardListWrapper = styled.div`
   }
 `;
 
-const CardList = ({ messages, loading }) => {
+const CardList = ({ messages = [], loading }) => {
   const [currentOffset, setCurrentOffset] = useState(0);
   const navigate = useNavigate();
 
@@ -39,20 +39,35 @@ const CardList = ({ messages, loading }) => {
   return (
     <>
       <CardListWrapper>
-        <PrevButton onClick={handlePrevClick} disabled={currentOffset === 0} inNext={false} />
+        <PrevButton onClick={handlePrevClick} disabled={currentOffset === 0} />
         {loading ? (
           <EllipsisLoading />
         ) : (
           <AnimatedCardList currentOffset={currentOffset}>
-            {!messages.length && <h2 style={{ fontSize: "2.4em" }}>롤링 페이퍼를 만들어 보세요</h2>}
+            {messages.length === 0 && (
+              <h2 style={{ fontSize: "2.4em" }}>롤링 페이퍼를 만들어 보세요</h2>
+            )}
             {messages.map((recipient) => (
               <div key={`post-${recipient.id}`}>
-                <CardContent id={recipient.id} recipientName={recipient.name} backgroundColor={recipient.backgroundColor} backgroundImageURL={recipient.backgroundImageURL} messageCount={recipient.messageCount} profileImage={recipient.recentMessages} handleCardClick={() => handleCardClick(recipient.id)} recipient={recipient} />
+                <CardContent
+                  id={recipient.id}
+                  recipientName={recipient.name}
+                  backgroundColor={recipient.backgroundColor}
+                  backgroundImageURL={recipient.backgroundImageURL}
+                  messageCount={recipient.messageCount}
+                  profileImage={recipient.recentMessages}
+                  handleCardClick={() => handleCardClick(recipient.id)}
+                  recipient={recipient}
+                />
               </div>
             ))}
           </AnimatedCardList>
         )}
-        <NextButton onClick={handleNextClick} disabled={(messages.length - 4) / currentOffset <= 4} isNext={true} />
+        <NextButton
+          onClick={handleNextClick}
+          disabled={(currentOffset + 1) * 4 >= messages.length}
+          isNext={true}
+        />
       </CardListWrapper>
     </>
   );
