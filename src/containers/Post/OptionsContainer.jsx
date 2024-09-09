@@ -6,7 +6,9 @@ import { IMAGE_TYPES } from "../../constants/imageTypes";
 import { COLORS } from "../../constants/colors";
 
 const OptionsContainer = ({ activeTab, onColorSelect, onImageSelect }) => {
-  const backgroundThumbnails = useThumbnailImages(IMAGE_TYPES.BACKGROUND);
+  const { thumbnails, isLoading, isError } = useThumbnailImages(
+    IMAGE_TYPES.BACKGROUND
+  );
   const postOptionSize = usePostOptionSize();
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -22,19 +24,47 @@ const OptionsContainer = ({ activeTab, onColorSelect, onImageSelect }) => {
     }
   }, [activeTab, onColorSelect, onImageSelect]);
 
-  const handleColorSelect = (color) => {
-    setSelectedColor(color);
-    setSelectedImage(null); // 이미지 선택 초기화
-    onColorSelect(color); // 부모 컴포넌트의 콜백 호출
-  };
+  // 색상 선택 처리
+  const handleColorSelect = useCallback(
+    (color) => {
+      setSelectedColor(color);
+      setSelectedImage(null); // 이미지 선택 초기화
+      onColorSelect(color); // 부모 컴포넌트에 선택한 색상 전달
+    },
+    [onColorSelect] // 의존성 배열에 onColorSelect 포함
+  );
 
-  const handleImageSelect = (image, index) => {
-    setSelectedImage(image);
-    setSelectedColor(null); // 색상 선택 초기화
-    onImageSelect(image, index); // 부모 컴포넌트의 콜백 호출, 인덱스 함께 전달
-  };
+  // 이미지 선택 처리
+  const handleImageSelect = useCallback(
+    (image, index) => {
+      setSelectedImage(image);
+      setSelectedColor(null); // 색상 선택 초기화
+      onImageSelect(image, index); // 부모 컴포넌트에 선택한 이미지와 인덱스 전달
+    },
+    [onImageSelect] // 의존성 배열에 onImageSelect 포함
+  );
 
-  return <OptionsPresenter activeTab={activeTab} colors={COLORS} selectedColor={selectedColor} onColorSelect={handleColorSelect} backgroundThumbnails={backgroundThumbnails} selectedImage={selectedImage} onImageSelect={handleImageSelect} postOptionSize={postOptionSize} />;
+  // 로딩 상태 및 에러 상태 처리 (훅 호출 후에 처리)
+  if (isLoading) {
+    return <div>Loading thumbnails...</div>;
+  }
+
+  if (isError) {
+    return <div>Error loading thumbnails.</div>;
+  }
+
+  return (
+    <OptionsPresenter
+      activeTab={activeTab}
+      colors={COLORS}
+      selectedColor={selectedColor}
+      onColorSelect={handleColorSelect}
+      thumbnails={thumbnails}
+      selectedImage={selectedImage}
+      onImageSelect={handleImageSelect}
+      postOptionSize={postOptionSize}
+    />
+  );
 };
 
 export default OptionsContainer;

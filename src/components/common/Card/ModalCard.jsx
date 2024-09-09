@@ -119,7 +119,7 @@ const ModalCard = forwardRef(({ selectedCardInfo, onClose }, ref) => {
           <CreatedTime>{formattedDate}</CreatedTime>
         </ProfileWrap>
         <Divider />
-        <ContentBox font={`var(${selectedFont})`}>{parse(content)}</ContentBox>
+        <ContentBox font={selectedFont}>{parse(content)}</ContentBox>
         <Button onClick={() => onClose()}>확인</Button>
       </Container>
     </ModalBackground>
