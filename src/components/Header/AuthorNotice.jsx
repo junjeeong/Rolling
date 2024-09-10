@@ -5,8 +5,7 @@ const AuthorCountNoticeWrap = styled.div`
   position: relative;
   align-items: center;
   justify-content: space-between;
-  width: 228px;
-  height: 28px;
+  width: 238px;
   font-size: 18px;
   font-weight: normal;
 `;
@@ -55,7 +54,17 @@ const OtherAuthorsCount = styled.div`
 export function AuthorNotice({ paperInfo, authors }) {
   return (
     <AuthorCountNoticeWrap>
-      <div style={{ width: "76px", height: "28px" }}>{authors.map((message, index) => (index < 3 ? <AuthorProfile key={index} src={message.profileImageURL} /> : index === 3 ? <OtherAuthorsCount key={index}>+{authors.length - 3}</OtherAuthorsCount> : null))}</div>
+      <div style={{ width: "76px", height: "28px" }}>
+        {authors.map((message, index) =>
+          index < 3 ? (
+            <AuthorProfile key={index} src={message.profileImageURL} />
+          ) : index === 3 ? (
+            <OtherAuthorsCount key={index}>
+              +{authors.length - 3}
+            </OtherAuthorsCount>
+          ) : null
+        )}
+      </div>
       <span>
         <span style={{ fontWeight: "bold" }}>{paperInfo.messageCount}</span>
         명이 작성했어요!

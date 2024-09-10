@@ -1,4 +1,7 @@
 import styled, { css } from "styled-components";
+import useThumbnailImages from "../../hooks/useThumbnailImages";
+import BackgroundImages from "../../constants/BackgroundImages";
+import { IMAGE_TYPES } from "../../constants/imageTypes";
 
 const getCSSVariable = (colorName) => {
   const colorMap = {
@@ -138,14 +141,35 @@ const CardContainer = styled.div`
   }
 `;
 
-const Card = ({ backgroundColor, backgroundImageURL, children, ...props }) => (
-  <CardContainer
-    $backgroundColor={backgroundColor}
-    $backgroundImageURL={backgroundImageURL}
-    {...props}
-  >
-    {children}
-  </CardContainer>
-);
+const Card = ({ backgroundColor, backgroundImageURL, children, ...props }) => {
+  const { thumbnails, isLoading, isError } = useThumbnailImages(
+    IMAGE_TYPES.BACKGROUND
+  );
+
+  const thumbnailIndex =
+    BackgroundImages.indexOf(backgroundImageURL) === -1
+      ? null
+      : BackgroundImages.indexOf(backgroundImageURL);
+  const thumbnail = thumbnailIndex !== null ? thumbnails[thumbnailIndex] : null;
+
+  // 로딩 상태 및 에러 상태 처리 (훅 호출 후에 처리)
+  if (isLoading) {
+    return <div>Loading thumbnails...</div>;
+  }
+
+  if (isError) {
+    return <div>Error loading thumbnails.</div>;
+  }
+
+  return (
+    <CardContainer
+      $backgroundColor={backgroundColor}
+      $backgroundImageURL={thumbnail}
+      {...props}
+    >
+      {children}
+    </CardContainer>
+  );
+};
 
 export { Card };

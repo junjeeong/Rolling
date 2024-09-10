@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import ShareDropdown from "../Share/ShareDropdown";
 import useReactions from "../../hooks/useReactions";
 import { EMOJI_TYPES } from "../../constants/emojiTypes";
+import { Divider as Horizontal } from "../common/Card/PaperCard";
+import useRecipients from "../../hooks/useRecipients";
 
 const Container = styled.div`
   background-color: white;
@@ -58,15 +60,35 @@ const ServiceWrap = styled.div`
   // 모바일 사이즈
   @media (max-width: 768px) {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+    // min-width: 320px;
   }
 `;
-
+const RecipientName = styled.p`
+  //모바일
+  @media (max-width: 768px) {
+    font-size: 18px;
+  }
+`;
 const Divider = styled.div`
   width: 1px;
   height: 28px;
   border: 1px solid var(--gray-200);
 `;
+const MobileOnlyHorizontal = styled(Horizontal)`
+  display: none;
+
+  @media (max-width: 768px) {
+    // position: fixed;
+    // top: 45px;
+    // left: 0;
+    display: block;
+    height: 1px;
+    margin-top: 0px;
+    border: 1px solid var(--gray-200);
+  }
+`;
+
 const ArrowDown = styled.img`
   width: 12px;
   height: 7px;
@@ -83,8 +105,10 @@ const ArrowDownBtn = styled.button`
   }
 `;
 
-export const HeaderService = ({ recipient, setRecipient, messages }) => {
+export const HeaderService = ({ messages }) => {
   const [showAllBadge, setShowAllBadge] = useState(false);
+  // Jotai 쓴 useRecipients 훅을 사용해서 recipient 을 전역적으로 상태 관리
+  const { recipient, setRecipient } = useRecipients();
   // useReactions 훅을 사용하여 이모지 추가 기능을 구현
   const { reactions, setReactions, addReaction } = useReactions(recipient.id);
 
@@ -121,7 +145,8 @@ export const HeaderService = ({ recipient, setRecipient, messages }) => {
     <Container>
       {recipient && (
         <ServiceWrap>
-          <p>To: {recipient.name}</p>
+          <RecipientName>To. {recipient.name}</RecipientName>
+          <MobileOnlyHorizontal />
           <Wrap style={{ gap: "28px" }}>
             <AuthorWrap>
               <AuthorNotice paperInfo={recipient} authors={messages} />

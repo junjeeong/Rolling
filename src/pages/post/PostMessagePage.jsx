@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Editor } from "@tinymce/tinymce-react";
 import { useAddMessageToRecipient } from "../../hooks/useAddRecipients";
 import useProfileImages from "../../hooks/useProfileImages";
-import { relationshipOptions, fontOptions } from "../../constants/options";
+import { fontOptions, relationshipOptions } from "../../constants/options";
 import styled from "styled-components";
+import { Toast } from "../../components/common/Toast";
+import BundledEditor from "../../components/Editor/BundledEditor";
 
 const PostMessagePageContainer = styled.div`
   margin-top: 50px;
@@ -147,9 +148,10 @@ const PostMessagePage = () => {
   const [content, setContent] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
   const [relationship, setRelationship] = useState(relationshipOptions[1]); // 디폴트 "지인"
-  const [font, setFont] = useState(fontOptions[0]); // 디폴트 "Noto Sans"
+  const [fontValue, setFontValue] = useState(fontOptions[0].value); // 디폴트 "'Noto Sans', sans-serif"
   const [isFormValid, setIsFormValid] = useState(false);
   const inputRef = useRef(null); // fromName 이름 입력 필드에 대한 ref
+  const editorRef = useRef(null); // editor 입력 필드에 대한 ref
   const [fromNameError, setFromNameError] = useState(false); // fromName 이름 입력값 오류 상태
   // 프로필 이미지 리스트 커스텀 훅
   const profileImages = useProfileImages();
@@ -157,7 +159,7 @@ const PostMessagePage = () => {
   const { addMessage } = useAddMessageToRecipient();
   // 롤링페이퍼 대상에게 전할 메세지 생성 성공 후에 이동할 navigate 훅
   const navigate = useNavigate();
-
+  const [toastVisible, setToastVisible] = useState(false);
   const TEAM = "9-3";
 
   useEffect(() => {
@@ -170,6 +172,14 @@ const PostMessagePage = () => {
       setSelectedImage(profileImages[0]); // 디폴트 이미지로 설정
     }
   }, [profileImages]);
+
+  // 폰트 변경 시 에디터에 반영
+  useEffect(() => {
+    if (editorRef.current) {
+      const editor = editorRef.current;
+      editor.dom.setStyle(editor.getBody(), "font-family", fontValue); // 동적으로 폰트 스타일을 변경
+    }
+  }, [fontValue]); // fontValue가 변경될 때마다 실행
 
   // From 이름 입력 필드 변경 핸들러
   const handleInputChange = () => {
@@ -186,9 +196,11 @@ const PostMessagePage = () => {
     }
   };
 
-  // Editor 내용 입력 필드 변경 핸들러
-  const handleEditorChange = (content) => {
-    setContent(content);
+  // Editor 내용 변경 핸들러
+  const handleEditorChange = () => {
+    if (editorRef.current) {
+      setContent(editorRef.current.getContent());
+    }
   };
 
   const handleImageSelect = (image) => {
@@ -204,6 +216,11 @@ const PostMessagePage = () => {
     e.preventDefault();
 
     if (isFormValid) {
+      // 선택한 폰트 value 에 맞는 label 을 선택
+      const selectedFontLabel =
+        fontOptions.find((option) => option.value === fontValue)?.label ||
+        fontOptions[0].label; // 기본 폰트
+
       const payload = {
         team: TEAM,
         recipientId: recipientId,
@@ -211,7 +228,7 @@ const PostMessagePage = () => {
         profileImageURL: selectedImage, // 선택된 이미지 사용
         relationship,
         content,
-        font,
+        font: selectedFontLabel, // 선택된 폰트 사용
       };
       try {
         // 롤링페이퍼 대상에게 전할 메세지 생성
@@ -219,8 +236,7 @@ const PostMessagePage = () => {
         // 롤링페이퍼 페이지로 이동
         navigate(`/post/${recipientId}`);
       } catch (error) {
-        console.error("Error creating post:", error);
-        alert("메세지 생성에 실패했습니다.");
+        setToastVisible(true);
       }
     }
   };
@@ -275,30 +291,39 @@ const PostMessagePage = () => {
 
         <Label htmlFor="editor">내용을 입력해 주세요</Label>
         <EditorContainer>
-          <Editor
+          <BundledEditor
             id="editor"
-            apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
+            onInit={(_evt, editor) => {
+              editorRef.current = editor;
+              // 에디터가 초기화된 후에 폰트 스타일 적용
+              editor.dom.setStyle(editor.getBody(), "font-family", fontValue);
+            }}
             init={{
               height: 200,
               menubar: false,
-              toolbar: true,
-              branding: false,
+              plugins: [],
+              toolbar:
+                "undo redo | blocks | bold italic forecolor | alignleft aligncenter ",
               statusbar: false,
             }}
-            onEditorChange={handleEditorChange}
-            value={content}
+            onEditorChange={handleEditorChange} // 에디터 내용 변경 시 호출될 함수
           />
         </EditorContainer>
 
         <Label htmlFor="fontSelect">폰트 선택</Label>
         <Select
           id="fontSelect"
-          value={font}
-          onChange={(e) => setFont(e.target.value)}
+          value={fontValue}
+          onChange={(e) => setFontValue(e.target.value)}
+          style={{ fontFamily: fontValue }} // 폰트 미리보기 적용
         >
-          {fontOptions.map((font) => (
-            <option key={font} value={font}>
-              {font}
+          {fontOptions.map(({ label, value }) => (
+            <option
+              key={label}
+              value={value}
+              style={{ fontFamily: value }} // 각 옵션의 폰트를 적용
+            >
+              {label}
             </option>
           ))}
         </Select>
@@ -307,6 +332,9 @@ const PostMessagePage = () => {
           생성하기
         </Button>
       </FormContainer>
+      {toastVisible && (
+        <Toast message="메세지 생성에 실패했습니다." type="error" />
+      )}
     </PostMessagePageContainer>
   );
 };

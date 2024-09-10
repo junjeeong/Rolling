@@ -2,6 +2,7 @@ import styled from "styled-components";
 import parse from "html-react-parser";
 import { forwardRef } from "react";
 import { Profile, Info, Name, RelationShip } from "./PaperCard";
+import { fontOptions } from "../../../constants/options";
 
 const ModalBackground = styled.div`
   position: fixed;
@@ -26,7 +27,7 @@ const Container = styled.div`
   z-index: 99;
   width: 600px;
   height: 476px;
-  padding: 39px 40px;
+  padding: 40px;
   border-radius: 16px;
   background-color: var(--white);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -34,8 +35,9 @@ const Container = styled.div`
   overflow-y: auto;
   // 모바일 사이즈
   @media (max-width: 768px) {
-    width: 420px;
-    height: 384px;
+    width: 350px;
+    height: 354px;
+    padding: 20px;
   }
 `;
 
@@ -52,12 +54,15 @@ const ContentBox = styled.div`
   width: 100%;
   height: 256px;
   line-height: 28px;
-  font-family: ${({ font }) => font};
+  font-family: ${({ font }) => font}; /* 폰트 패밀리 적용 */
   font-size: 18px;
   color: var(--gray-500);
   white-space: normal; /* 기본 줄바꿈 설정 */
   overflow: auto; /* 내용이 height을 넘으면 스크롤이 생김 */
   overflow-wrap: break-word; /* 긴 단어도 줄바꿈 */
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 `;
 const Divider = styled.div`
   width: 100%;
@@ -95,6 +100,11 @@ const ModalCard = forwardRef(({ selectedCardInfo, onClose }, ref) => {
     selectedCardInfo;
   const formattedDate = new Date(createdAt).toLocaleDateString();
 
+  // fontOptions에서 label에 맞는 value를 찾음
+  const selectedFont =
+    fontOptions.find((option) => option.label === font)?.value ||
+    fontOptions[0].value; // 기본값 설정
+
   return (
     <ModalBackground>
       <Container ref={ref}>
@@ -109,7 +119,7 @@ const ModalCard = forwardRef(({ selectedCardInfo, onClose }, ref) => {
           <CreatedTime>{formattedDate}</CreatedTime>
         </ProfileWrap>
         <Divider />
-        <ContentBox font={font}>{parse(content)}</ContentBox>
+        <ContentBox font={selectedFont}>{parse(content)}</ContentBox>
         <Button onClick={() => onClose()}>확인</Button>
       </Container>
     </ModalBackground>

@@ -10,6 +10,10 @@ const Container = styled.div`
 const EmojiBadgeWrap = styled.div`
   display: flex;
   gap: 8px;
+  // 모바일
+  @media (max-width: 768px) {
+    gap: 4px;
+  }
 `;
 
 // reaction 받은 상위 이모티콘을 시각적으로 표시합니다.
@@ -17,9 +21,13 @@ const EmojiBadgeWrap = styled.div`
 export const EmojiTopBadge = ({ recipient }) => {
   return (
     <Container>
-      <EmojiBadgeWrap >
+      <EmojiBadgeWrap>
         {recipient.topReactions.map((reaction) => (
-          <EmojiBadge key={reaction.id} emoji={reaction.emoji} count={reaction.count} />
+          <EmojiBadge
+            key={reaction.id}
+            emoji={reaction.emoji}
+            count={reaction.count}
+          />
         ))}
       </EmojiBadgeWrap>
     </Container>

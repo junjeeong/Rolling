@@ -1,6 +1,9 @@
 import { TrashCanButtonContainer } from "../../../containers/Post/TrashCanButtonContainer";
 import styled from "styled-components";
 import parse from "html-react-parser";
+import { Toast } from "../Toast";
+import { useState } from "react";
+import { fontOptions } from "../../../constants/options";
 
 export const Container = styled.div`
   position: relative;
@@ -9,7 +12,7 @@ export const Container = styled.div`
   gap: 16px;
   width: 384px;
   height: 280px;
-  padding: 24px 24px;
+  padding: 24px;
   border-radius: 16px;
   background-color: var(--white);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -17,7 +20,6 @@ export const Container = styled.div`
     transform 0.3s ease,
     box-shadow 0.3s ease;
   cursor: pointer;
-
   &:hover {
     transform: scale(1.05) rotateY(10deg); /* 마우스를 올렸을 때 살짝 확대되고 Y축으로 회전 */
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); /* 그림자도 커짐 */
@@ -25,7 +27,7 @@ export const Container = styled.div`
 
   @media (max-width: 768px) {
     width: 320px;
-    height: 230px;
+    height: 250px;
   }
 `;
 export const ProfileWrap = styled.div`
@@ -59,12 +61,17 @@ export const Info = styled.div`
 
 export const Name = styled.div`
   font-size: 20px;
+  // 모바일
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 `;
 
 export const ContentBox = styled.div`
-  width: 336px;
+  width: 100%;
   margin: 0 auto;
-  font-family: ${({ font }) => font};
+  font-family: ${({ fontFamily }) =>
+    fontFamily}; /* 폰트 패밀리를 받는 속성 추가 */
   font-size: 18px;
   color: var(--gray-600);
   /* 3줄 넘어가면 ...처리 하기 */
@@ -105,6 +112,7 @@ export const RelationShip = styled.div`
         : rel === "지인"
           ? "var(--beige-500)"
           : "var(--blue-500)"};
+
   background-color: ${({ rel }) =>
     rel === "가족"
       ? "var(--green-100)"
@@ -117,6 +125,7 @@ export const RelationShip = styled.div`
 
 export function PaperCard({ message, isEdit, onClick }) {
   if (!message) return null;
+  const [toastVisible, setToastVisible] = useState(false);
 
   const {
     id,
@@ -124,27 +133,43 @@ export function PaperCard({ message, isEdit, onClick }) {
     profileImageURL,
     relationship,
     content,
-    font,
+    font, // 이 값은 fontOptions의 label 값입니다.
     createdAt,
   } = message;
-
   const formattedDate = new Date(createdAt).toLocaleDateString();
-
+  const handleShowToast = () => {
+    setToastVisible(true);
+    setTimeout(() => {
+      setToastVisible(false);
+    }, 1500);
+  };
+  // fontOptions에서 label에 맞는 value를 가져옴
+  const selectedFont =
+    fontOptions.find((option) => option.label === font)?.value ||
+    fontOptions[0].value;
   return (
-    <Container onClick={onClick}>
-      <ProfileWrap>
-        <Profile src={profileImageURL} alt="profile image" />
-        <Info>
-          <Name>
-            From.<strong>{sender}</strong>
-          </Name>
-          <RelationShip rel={relationship}>{relationship}</RelationShip>
-        </Info>
-        {isEdit && <TrashCanButtonContainer seletedCardId={id} />}
-      </ProfileWrap>
-      <Divider />
-      <ContentBox font={font}>{parse(content)}</ContentBox>
-      <CreatedTime>{formattedDate}</CreatedTime>
-    </Container>
+    <>
+      <Container onClick={onClick}>
+        <ProfileWrap>
+          <Profile src={profileImageURL} alt="profile image" />
+          <Info>
+            <Name>
+              From.<strong>{sender}</strong>
+            </Name>
+            <RelationShip rel={relationship}>{relationship}</RelationShip>
+          </Info>
+          {isEdit && (
+            <TrashCanButtonContainer
+              seletedCardId={id}
+              onShowToast={handleShowToast}
+            />
+          )}
+        </ProfileWrap>
+        <Divider />
+        <ContentBox fontFamily={selectedFont}>{parse(content)}</ContentBox>
+        <CreatedTime>{formattedDate}</CreatedTime>
+      </Container>
+      {toastVisible && <Toast message="메세지가 성공적으로 삭제되었습니다." />}
+    </>
   );
 }
