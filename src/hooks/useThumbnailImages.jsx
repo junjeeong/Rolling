@@ -4,7 +4,7 @@ import { getBackgroundImages } from "../api/backgroundImages";
 import { getProfileImages } from "../api/profileImages";
 import { IMAGE_TYPES } from "../constants/imageTypes";
 
-// 썸네일 생성 함수 (기존 코드 유지)
+// 썸네일 생성 함수
 const createThumbnail = async (imageUrl, maxWidth = 300, maxHeight = 300) => {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -55,6 +55,10 @@ const fetchThumbnails = async (type) => {
     throw new Error("Unknown image type");
   }
 
+  if (!imageUrls || imageUrls.length === 0) {
+    throw new Error("No images found");
+  }
+
   const thumbnails = await Promise.all(
     imageUrls.map((url) => createThumbnail(url))
   );
@@ -89,22 +93,27 @@ const useThumbnailImages = (type) => {
   const fallbackData = loadFromLocalStorage(localStorageKey);
 
   // SWR을 사용하여 썸네일 데이터를 불러옴
-  const { data: thumbnails, error } = useSWR(
-    [type, "thumbnails"],
-    () => fetchThumbnails(type),
-    {
-      fallbackData,
-      revalidateOnFocus: false,
-      refreshInterval: 0,
-    }
-  );
+  const {
+    data: thumbnails,
+    error,
+    mutate,
+  } = useSWR([type, "thumbnails"], () => fetchThumbnails(type), {
+    fallbackData,
+    revalidateOnFocus: true, // 포커스할 때 자동으로 갱신
+    refreshInterval: 0, // 자동 갱신 비활성화
+  });
 
   // thumbnails가 업데이트되었을 때만 LocalStorage에 저장
   useEffect(() => {
+    // SWR의 데이터가 로딩 중일 때 또는 초기값일 때는 실행하지 않음
     if (thumbnails && thumbnails.length > 0) {
       saveToLocalStorage(localStorageKey, thumbnails); // 데이터를 저장할 때만 실행
+    } else if (!thumbnails && !error && fallbackData) {
+      console.log("Mutating: no thumbnails but fallback data exists");
+      // thumbnails가 없고 에러가 없으면 수동으로 갱신 시도
+      mutate();
     }
-  }, [thumbnails, localStorageKey]);
+  }, [thumbnails, localStorageKey, mutate, error, fallbackData]);
 
   return {
     thumbnails,

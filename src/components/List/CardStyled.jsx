@@ -1,9 +1,9 @@
 import styled, { css } from "styled-components";
 import useThumbnailImages from "../../hooks/useThumbnailImages";
 import useBackgroundImages from "../../hooks/useBackgroundImages";
-import BackgroundImages from "../../constants/BackgroundImages";
 import { IMAGE_TYPES } from "../../constants/imageTypes";
 
+// 배경 컬러에 따른 CSS 변수를 가져오는 함수
 const getCSSVariable = (colorName) => {
   const colorMap = {
     purple: "--purple-200",
@@ -15,6 +15,7 @@ const getCSSVariable = (colorName) => {
   return colorMap[colorName] || colorName;
 };
 
+// 특별한 배경 스타일
 const specialShapeStyles = css`
   ${({ $backgroundColor, $backgroundImageURL }) =>
     !$backgroundImageURL &&
@@ -55,7 +56,6 @@ const specialShapeStyles = css`
         }
       }
     `}
-
   ${({ $backgroundColor, $backgroundImageURL }) =>
     !$backgroundImageURL &&
     $backgroundColor === "blue" &&
@@ -101,13 +101,14 @@ const specialShapeStyles = css`
     `}
 `;
 
+// CardContainer 스타일 정의
 const CardContainer = styled.div`
   position: relative;
   width: 275px;
   height: 260px;
   box-sizing: border-box;
   background-color: ${({ $backgroundColor }) =>
-    `var(${getCSSVariable($backgroundColor)})` || "var(--surface"};
+    `var(${getCSSVariable($backgroundColor)})` || "var(--surface)"};
   background-image: ${({ $backgroundImageURL }) =>
     $backgroundImageURL ? `url(${$backgroundImageURL})` : "none"};
   background-size: cover;
@@ -119,19 +120,19 @@ const CardContainer = styled.div`
   ${({ $backgroundImageURL }) =>
     $backgroundImageURL &&
     css`
-			border: 1px solid rgba(0, 0, 0, 0.1);
-			&:before {
-				content: '';
-				position: absolute;
-				top: 0px;
-				left: 0px;
-				width: 100%
-				height: 100%;
-				background: rgba(0, 0, 0, 0.5);
-				box-sizing: content-box;
-				z-index: 2;
-			}
-		`}
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        box-sizing: content-box;
+        z-index: 2;
+      }
+    `}
   cursor: pointer;
   ${specialShapeStyles}
 
@@ -143,28 +144,33 @@ const CardContainer = styled.div`
 `;
 
 const Card = ({ backgroundColor, backgroundImageURL, children, ...props }) => {
-  // 배경 컬러 커스텀 훅
-  const backgroundImages = useBackgroundImages();
-  // 배경 썸네일 이미지 커스텀 훅
+  // 배경 이미지 URL 리스트 훅
+  const { backgroundImages } = useBackgroundImages();
+  // 배경 썸네일 이미지 훅
   const { thumbnails, isLoading, isError } = useThumbnailImages(
     IMAGE_TYPES.BACKGROUND
   );
 
-  const thumbnailIndex = backgroundImages.indexOf(backgroundImageURL);
+  // backgroundImages가 배열인지 확인하고 indexOf 호출
+  const thumbnailIndex =
+    Array.isArray(backgroundImages) && backgroundImageURL
+      ? backgroundImages.indexOf(backgroundImageURL)
+      : -1;
 
-  // thumbnailIndex가 유효하지 않을 경우 처리
   const thumbnail =
-    thumbnailIndex !== -1 && thumbnails[thumbnailIndex]
+    thumbnailIndex !== -1 && Array.isArray(thumbnails)
       ? thumbnails[thumbnailIndex]
       : null;
+  //console.log("🚀 ~ Card ~ thumbnail:", thumbnail);
 
-  // 로딩 상태 및 에러 상태 처리 (훅 호출 후에 처리)
+  // 로딩 상태 처리
   if (isLoading) {
     return <div>Loading thumbnails...</div>;
   }
 
+  // 에러 상태 처리 (개선된 에러 메시지 처리)
   if (isError) {
-    return <div>Error loading thumbnails.</div>;
+    return <div>Error loading thumbnails: {isError.message}</div>;
   }
 
   return (
