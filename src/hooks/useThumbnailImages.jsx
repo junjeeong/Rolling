@@ -4,11 +4,11 @@ import { getBackgroundImages } from "../api/backgroundImages";
 import { getProfileImages } from "../api/profileImages";
 import { IMAGE_TYPES } from "../constants/imageTypes";
 
-// 이미지 크기를 줄이고 썸네일로 변환하는 함수
+// 썸네일 생성 함수
 const createThumbnail = async (imageUrl, maxWidth = 300, maxHeight = 300) => {
   return new Promise((resolve, reject) => {
     const img = new Image();
-    img.crossOrigin = "Anonymous"; // CORS 문제 방지
+    img.crossOrigin = "Anonymous";
 
     img.onload = () => {
       const canvas = document.createElement("canvas");
@@ -33,7 +33,6 @@ const createThumbnail = async (imageUrl, maxWidth = 300, maxHeight = 300) => {
       canvas.height = height;
       ctx.drawImage(img, 0, 0, width, height);
 
-      // 썸네일을 Base64 데이터 URL로 반환
       resolve(canvas.toDataURL("image/jpeg"));
     };
 
@@ -43,7 +42,7 @@ const createThumbnail = async (imageUrl, maxWidth = 300, maxHeight = 300) => {
   });
 };
 
-// fetcher 함수로 이미지 데이터를 가져와 썸네일을 생성
+// 이미지 URL에서 썸네일을 가져오는 함수
 const fetchThumbnails = async (type) => {
   let imageUrls;
   if (type === IMAGE_TYPES.BACKGROUND) {
@@ -56,11 +55,14 @@ const fetchThumbnails = async (type) => {
     throw new Error("Unknown image type");
   }
 
-  // 이미지 URL에서 썸네일 생성
+  if (!imageUrls || imageUrls.length === 0) {
+    throw new Error("No images found");
+  }
+
   const thumbnails = await Promise.all(
     imageUrls.map((url) => createThumbnail(url))
   );
-  return thumbnails; // 썸네일(Base64 데이터 URL)의 배열 반환
+  return thumbnails;
 };
 
 // LocalStorage에서 데이터를 불러오는 함수
@@ -83,35 +85,40 @@ const saveToLocalStorage = (key, data) => {
   }
 };
 
-// SWR을 이용한 썸네일 이미지 생성 및 캐싱 훅
+// SWR을 사용한 썸네일 이미지 훅
 const useThumbnailImages = (type) => {
   const localStorageKey = `${type}Thumbnails`;
 
   // LocalStorage에서 초기 데이터를 불러옴
   const fallbackData = loadFromLocalStorage(localStorageKey);
 
-  // SWR을 사용하여 썸네일 자체를 캐싱
-  const { data: thumbnails, error } = useSWR(
-    [type, "thumbnails"],
-    () => fetchThumbnails(type),
-    {
-      fallbackData, // LocalStorage에서 가져온 데이터로 초기화
-      revalidateOnFocus: false, // 포커스할 때마다 재검증 비활성화
-      refreshInterval: 0, // 자동 갱신 비활성화
-    }
-  );
+  // SWR을 사용하여 썸네일 데이터를 불러옴
+  const {
+    data: thumbnails,
+    error,
+    mutate,
+  } = useSWR([type, "thumbnails"], () => fetchThumbnails(type), {
+    fallbackData,
+    revalidateOnFocus: true, // 포커스할 때 자동으로 갱신
+    refreshInterval: 0, // 자동 갱신 비활성화
+  });
 
-  // 최신 데이터를 가져온 경우 LocalStorage에 저장
+  // thumbnails가 업데이트되었을 때만 LocalStorage에 저장
   useEffect(() => {
-    if (thumbnails) {
-      saveToLocalStorage(localStorageKey, thumbnails); // LocalStorage에 저장
+    // SWR의 데이터가 로딩 중일 때 또는 초기값일 때는 실행하지 않음
+    if (thumbnails && thumbnails.length > 0) {
+      saveToLocalStorage(localStorageKey, thumbnails); // 데이터를 저장할 때만 실행
+    } else if (!thumbnails && !error && fallbackData) {
+      console.log("Mutating: no thumbnails but fallback data exists");
+      // thumbnails가 없고 에러가 없으면 수동으로 갱신 시도
+      mutate();
     }
-  }, [thumbnails, localStorageKey]);
+  }, [thumbnails, localStorageKey, mutate, error, fallbackData]);
 
   return {
     thumbnails,
-    isLoading: !error && !thumbnails, // 로딩 상태
-    isError: error, // 에러 상태
+    isLoading: !error && !thumbnails, // 로딩 중인지 확인
+    isError: error, // 에러 확인
   };
 };
 
