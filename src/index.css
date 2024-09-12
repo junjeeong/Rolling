@@ -1,0 +1,317 @@
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Nanum+Myeongjo&display=swap");
+
+:root {
+  font-family:
+    "Pretendard Variable",
+    Pretendard,
+    -apple-system,
+    BlinkMacSystemFont,
+    system-ui,
+    Roboto,
+    "Helvetica Neue",
+    "Segoe UI",
+    "Apple SD Gothic Neo",
+    "Noto Sans KR",
+    "Malgun Gothic",
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    sans-serif;
+  /* Font families */
+  --font-primary: "Pretendard", sans-serif;
+  --font-primary: "Pretendard", sans-serif;
+
+  /* Message Font families */
+  --font-handwritten1: "Noto Sans", sans-serif;
+  --font-handwritten2: "Pretendard", sans-serif;
+  --font-handwritten3: "Nanum Myeongjo", serif; /* 글자의 끝에 장식적인 선이 있는 대체 글꼴 */
+  --font-handwritten4: "Nanum Pen Script", cursive; /* 필기체 느낌의 대체 글꼴 */
+
+  /* Font weights */
+  --font-thin: 100;
+  --font-light: 300;
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-bold: 700;
+  --font-black: 900;
+
+  /* Gray scale */
+  --gray-100: #f6f6f6;
+  --gray-200: #eeeeee;
+  --gray-300: #cccccc;
+  --gray-400: #999999;
+  --gray-500: #555555;
+  --gray-600: #4a4a4a;
+  --gray-700: #3a3a3a;
+  --gray-800: #2b2b2b;
+  --gray-900: #181818;
+
+  /* primary color */
+  --purple-100: #f8f0ff;
+  --purple-200: #ecd9ff;
+  --purple-300: #dcb9ff;
+  --purple-400: #c894fd;
+  --purple-500: #ab57ff;
+  --purple-600: #9935ff;
+  --purple-700: #861dee;
+  --purple-800: #6e0ad1;
+  --purple-900: #5603a7;
+
+  --beige-100: #fff0d6;
+  --beige-200: #ffe2ad;
+  --beige-300: #ffc583;
+  --beige-400: #ffae65;
+  --beige-500: #ff8832;
+
+  --blue-100: #e2f5ff;
+  --blue-200: #b1e4ff;
+  --blue-300: #7cd2ff;
+  --blue-400: #34b9ff;
+  --blue-500: #00a2fe;
+
+  --green-100: #e4fbdc;
+  --green-200: #d0f5c3;
+  --green-300: #9be282;
+  --green-400: #60cf37;
+  --green-500: #2ba600;
+
+  --white: #ffffff;
+  --black: #000000;
+  --error: #dc3a3a;
+  --surface: #f6f8ff;
+  --gray-100: #f6f6f6;
+  --gray-200: #eeeeee;
+  --gray-300: #cccccc;
+  --gray-400: #999999;
+  --gray-500: #555555;
+  --gray-600: #4a4a4a;
+  --gray-700: #3a3a3a;
+  --gray-800: #2b2b2b;
+  --gray-900: #181818;
+
+  /* primary color */
+  --purple-100: #f8f0ff;
+  --purple-200: #ecd9ff;
+  --purple-300: #dcb9ff;
+  --purple-400: #c894fd;
+  --purple-500: #ab57ff;
+  --purple-600: #9935ff;
+  --purple-700: #861dee;
+  --purple-800: #6e0ad1;
+  --purple-900: #5603a7;
+
+  --beige-100: #fff0d6;
+  --beige-200: #ffe2ad;
+  --beige-300: #ffc583;
+  --beige-400: #ffae65;
+  --beige-500: #ff8832;
+
+  --blue-100: #e2f5ff;
+  --blue-200: #b1e4ff;
+  --blue-300: #7cd2ff;
+  --blue-400: #34b9ff;
+  --blue-500: #00a2fe;
+
+  --green-100: #e4fbdc;
+  --green-200: #d0f5c3;
+  --green-300: #9be282;
+  --green-400: #60cf37;
+  --green-500: #2ba600;
+
+  --white: #ffffff;
+  --black: #000000;
+  --error: #dc3a3a;
+  --surface: #f6f8ff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+/* 블릿기호 초기화 */
+ol,
+ul {
+  list-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* a 링크 초기화 */
+a {
+  color: #222;
+  text-decoration: none;
+}
+
+/* 폰트 스타일 초기화 */
+em,
+address {
+  font-style: normal;
+}
+
+/* 제목 태그 초기화 */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+/* 테두리 초기화 */
+img,
+fieldset {
+  border: 0 none;
+}
+
+/* 버튼 초기화 */
+button {
+  cursor: pointer;
+  border: 0;
+  background: none;
+}
+
+/* 스크롤 디자인 */
+/* 스크롤바 두께 */
+::-webkit-scrollbar {
+  width: 9px;
+}
+/* 스크롤바 배경색 */
+::-webkit-scrollbar-track {
+  background: var(--purple-100);
+}
+/* 스크롤바 색 */
+::-webkit-scrollbar-thumb {
+  background: var(--purple-300);
+  border-radius: 12px;
+}
+/* 호버됐을때 색 */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--purple-400);
+}
