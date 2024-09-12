@@ -1,9 +1,12 @@
-import axios from "./axios";
+import api from "./axios"; // 위에서 설정한 axios 인스턴스 사용
 
-// 배경 이미지 목록 가져오기
-const getBackgroundImages = async () => {
-  const response = await axios.get("/background-images/");
-  return response.data;
+export const getBackgroundImages = async () => {
+  try {
+    const response = await api.get("/background-images/?format=json");
+    //console.log("🚀 ~ getBackgroundImages ~ response.data:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch background images:", error);
+    throw error;
+  }
 };
-
-export { getBackgroundImages };
